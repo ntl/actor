@@ -1,24 +1,24 @@
 require_relative '../../test_init'
 
-context "Thread synchronization for consuming" do
+context "Thread synchronization for reading" do
   queue = Queue.new
 
   object = Object.new
 
   iterations, threads = TestFixtures::ParallelIteration.(
-    'All objects are consumed',
+    'All objects are read',
 
     setup: proc {
-      queue.consumer_started
+      queue.reader_started
       queue.write object
     },
 
     teardown: proc {
-      queue.consumer_stopped 0
+      queue.reader_stopped 0
     },
 
     each_iteration: proc {
-      position = queue.consumer_started
+      position = queue.reader_started
 
       object_read = queue.read position
 

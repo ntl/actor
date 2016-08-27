@@ -7,7 +7,7 @@ context "Thread synchronization for writing objects" do
     'All objects are written',
 
     setup: proc {
-      queue.consumer_started
+      queue.reader_started
     },
 
     each_iteration: proc {

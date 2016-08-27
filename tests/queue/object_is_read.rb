@@ -7,20 +7,20 @@ context "Object is read from queue" do
     queue = Queue.new
     queue.list << object
     queue.tail = 11
-    queue.consumer_started
+    queue.reader_started
 
-    test "Consumer reads enqueued object" do
-      consumed_object = queue.read 11
+    test "Reader reads enqueued object" do
+      read_object = queue.read 11
 
-      assert consumed_object == object
+      assert read_object == object
     end
 
-    test "Reference count of previous position is decreased" do
-      assert queue.consumer_positions[11] == 0
+    test "Reference count of previous reader position is decreased" do
+      assert queue.reader_positions[11] == 0
     end
 
-    test "Reference count of next position is increased" do
-      assert queue.consumer_positions[12] == 1
+    test "Reference count of next reader position is increased" do
+      assert queue.reader_positions[12] == 1
     end
   end
 
@@ -28,33 +28,33 @@ context "Object is read from queue" do
     context "Wait is not specified (default)" do
       queue = Queue.new
       queue.tail = 11
-      queue.consumer_started
+      queue.reader_started
 
       test "Nothing is returned" do
-        consumed_object = queue.read 11
+        read_object = queue.read 11
 
-        assert consumed_object == nil
+        assert read_object == nil
       end
 
-      test "Reference count of previous position is not decreased" do
-        assert queue.consumer_positions[11] == 1
+      test "Reference count of previous reader position is not decreased" do
+        assert queue.reader_positions[11] == 1
       end
 
-      test "Reference count of next position is not increased" do
-        assert queue.consumer_positions[12] == 0
+      test "Reference count of next reader position is not increased" do
+        assert queue.reader_positions[12] == 0
       end
     end
 
     context "Wait is specified" do
       queue = Queue.new
       queue.tail = 11
-      queue.consumer_started
+      queue.reader_started
 
-      consumed_object = nil
+      read_object = nil
 
       thread = Thread.new do
         Thread.current.abort_on_exception = true
-        consumed_object = queue.read 11, wait: true
+        read_object = queue.read 11, wait: true
       end
 
       Thread.pass until thread.status == 'sleep'
@@ -63,7 +63,7 @@ context "Object is read from queue" do
 
       thread.join
 
-      assert consumed_object == object
+      assert read_object == object
     end
   end
 end

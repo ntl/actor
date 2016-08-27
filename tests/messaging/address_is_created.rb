@@ -6,9 +6,9 @@ context "Address is created" do
   address.queue.tail = 11
   address.queue.list << Object.new
 
-  address.queue.consumer_started
-  address.queue.consumer_started
-  address.queue.consumer_started
+  address.queue.reader_started
+  address.queue.reader_started
+  address.queue.reader_started
 
   test "UUID v4 is assigned to address" do
     uuid_v4_pattern = %r{
@@ -39,7 +39,7 @@ context "Address is created" do
     assert address.queue_size == 1
   end
 
-  test "Number of consumers of queue can be queried" do
+  test "Number of consumers can be queried" do
     assert address.consumer_count == 3
   end
 

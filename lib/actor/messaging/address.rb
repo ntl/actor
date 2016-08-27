@@ -16,7 +16,7 @@ module Actor
     end
 
     def consumer_count
-      queue.consumer_count
+      queue.reader_count
     end
 
     def inspect

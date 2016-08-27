@@ -1,14 +1,14 @@
 require_relative '../test_init'
 
-context "Objects that have been read by all consumers are expired" do
+context "Objects that have been read by all readers are expired" do
   queue = Queue.new
 
-  queue.consumer_started 0
-  queue.consumer_started 3
+  queue.reader_started 0
+  queue.reader_started 3
 
   5.times { queue.write Object.new }
 
-  context "Consumed object has yet to be read by all other consumers" do
+  context "Object that is read has yet to be read by all other readers" do
     queue.read 3
 
     test "Object is not removed" do
@@ -20,7 +20,7 @@ context "Objects that have been read by all consumers are expired" do
     end
   end
 
-  context "Consumed object has been read by all other consumers" do
+  context "Object that is read has been read by all other readers" do
     queue.read 0
 
     test "Object is removed" do
@@ -32,10 +32,10 @@ context "Objects that have been read by all consumers are expired" do
     end
   end
 
-  context "Consumer at tail of queue stops" do
-    queue.consumer_stopped 1
+  context "Reader at tail of queue stops" do
+    queue.reader_stopped 1
 
-    test "Tail is advanced to the next most delayed consumer" do
+    test "Tail is advanced to the next most delayed reader" do
       assert queue.tail == 4
     end
 

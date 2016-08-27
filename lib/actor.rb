@@ -4,10 +4,10 @@ require 'set'
 
 require 'actor/queue'
 require 'actor/queue/assertions'
-require 'actor/queue/consumer'
+require 'actor/queue/reader'
 
 require 'actor/statistics'
 require 'actor/statistics/copy'
 require 'actor/statistics/timer'
 
-require 'actor/address'
+require 'actor/messaging/address'

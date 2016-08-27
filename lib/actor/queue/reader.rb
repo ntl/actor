@@ -1,6 +1,6 @@
 module Actor
   class Queue
-    class Consumer
+    class Reader
       attr_reader :queue
       attr_accessor :position
       attr_accessor :stopped
@@ -11,7 +11,7 @@ module Actor
       end
 
       def self.build queue
-        position = queue.consumer_started
+        position = queue.reader_started
 
         new queue, position
       end
@@ -29,7 +29,7 @@ module Actor
 
       def next wait: nil
         if stopped?
-          raise Stopped, "Consumer has stopped"
+          raise Stopped, "Reader has stopped"
         end
 
         object = queue.read position, wait: wait
@@ -44,7 +44,7 @@ module Actor
       def stop
         self.stopped = true
 
-        queue.consumer_stopped position
+        queue.reader_stopped position
       end
 
       def stopped?

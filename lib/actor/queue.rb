@@ -1,41 +1,17 @@
 module Actor
   class Queue
     attr_reader :blocked_threads
-    attr_reader :consumer_positions
+    attr_reader :reader_positions
     attr_reader :list
     attr_reader :mutex
     attr_accessor :tail
 
     def initialize
       @blocked_threads = Set.new
-      @consumer_positions = Hash.new 0
+      @reader_positions = Hash.new 0
       @list = []
       @mutex = Mutex.new
       @tail = 0
-    end
-
-    def consumer_started position=nil
-      mutex.synchronize do
-        position ||= tail
-
-        up position
-
-        position
-      end
-    end
-
-    def consumers?
-      consumer_positions.any?
-    end
-
-    def consumer_count
-      consumer_positions.values.reduce &:+
-    end
-
-    def consumer_stopped position
-      mutex.synchronize do
-        down position
-      end
     end
 
     def head
@@ -63,14 +39,38 @@ module Actor
       end
     end
 
+    def reader_started position=nil
+      mutex.synchronize do
+        position ||= tail
+
+        up position
+
+        position
+      end
+    end
+
+    def readers?
+      reader_positions.any?
+    end
+
+    def reader_count
+      reader_positions.values.reduce &:+
+    end
+
+    def reader_stopped position
+      mutex.synchronize do
+        down position
+      end
+    end
+
     def size
       list.size
     end
 
     def write object
       # Owning the mutex is not necessary here; the worst that can happen is
-      # that occasionally we write a object when there aren't any consumers.
-      return unless consumers?
+      # that occasionally we write a object when there aren't any readers.
+      return unless readers?
 
       mutex.synchronize do
         list << object
@@ -84,17 +84,17 @@ module Actor
     private
 
     def down position
-      ref_count = consumer_positions[position] - 1
+      ref_count = reader_positions[position] - 1
 
       if ref_count.zero?
-        consumer_positions.delete position
+        reader_positions.delete position
       else
-        consumer_positions[position] = ref_count
+        reader_positions[position] = ref_count
       end
 
       if ref_count.zero?
-        if consumers? and position == tail
-          new_tail = consumer_positions.keys.min
+        if readers? and position == tail
+          new_tail = reader_positions.keys.min
 
           expired_objects = new_tail - tail
 
@@ -108,7 +108,7 @@ module Actor
     end
 
     def up position
-      consumer_positions[position] += 1
+      reader_positions[position] += 1
     end
   end
 end
