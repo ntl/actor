@@ -1,10 +1,12 @@
 require_relative '../test_init'
 
-context "Message is written to queue" do
+context "Object is written to queue" do
+  object = Object.new
+
   context "Queue has no consumers" do
     queue = Queue.new
 
-    queue.write 'some-message'
+    queue.write object
 
     test "Message is not recorded" do
       assert queue, &:empty?
@@ -15,11 +17,11 @@ context "Message is written to queue" do
     queue = Queue.new
     queue.consumer_started
 
-    queue.write 'some-message'
+    queue.write object
 
     test "Message is recorded" do
       assert queue do
-        contains? 'some-message'
+        contains? object
       end
     end
   end

@@ -42,22 +42,22 @@ module Actor
           blocked_threads.delete Thread.current
         end
 
-        message = list[relative_position]
+        object = list[relative_position]
 
         up position.next
         down position
 
-        message
+        object
       end
     end
 
-    def write message
+    def write object
       # Owning the mutex is not necessary here; the worst that can happen is
-      # that occasionally we write a message when there aren't any consumers.
+      # that occasionally we write a object when there aren't any consumers.
       return unless consumers?
 
       mutex.synchronize do
-        list << message
+        list << object
       end
 
       blocked_threads.each &:wakeup
@@ -94,9 +94,9 @@ module Actor
         if consumers? and position == tail
           new_tail = consumer_positions.keys.min
 
-          expired_messages = new_tail - tail
+          expired_objects = new_tail - tail
 
-          list.slice! 0, expired_messages
+          list.slice! 0, expired_objects
 
           self.tail = new_tail
         end

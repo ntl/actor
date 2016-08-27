@@ -1,8 +1,8 @@
 module Actor
   class Queue
     module Assertions
-      def contains? message
-        if list.find message then true else false end
+      def contains? object
+        if list.find object then true else false end
       end
 
       def empty?

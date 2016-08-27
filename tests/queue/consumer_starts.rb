@@ -1,6 +1,6 @@
 require_relative '../test_init'
 
-context "Consumer starts consuming a queue" do
+context "Consumer starts reading a queue" do
   queue = Queue.new
   queue.tail = 11
 
@@ -33,7 +33,7 @@ context "Consumer starts consuming a queue" do
           assert queue.consumer_positions[11] == 1
         end
 
-        test "Consumers predicate returns true inside block" do
+        test "Consumers predicate returns true" do
           assert queue.consumers?
         end
       end

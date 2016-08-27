@@ -3,16 +3,16 @@ require_relative '../../test_init'
 context "Thread synchronization between a producer and multiple consumers" do
   queue = Queue.new
 
-  message = 'some-message'
+  object = Object.new
 
   iterations, _ = TestFixtures::ParallelIteration.(
-    'All produced messages were consumed',
+    'All produced objects were consumed',
 
     setup: proc {
       queue.consumer_started
 
       iteration_count.times do
-        queue.write message
+        queue.write object
       end
     },
 
@@ -25,11 +25,9 @@ context "Thread synchronization between a producer and multiple consumers" do
     },
 
     each_iteration: proc {
-      read_message = thread[:consumer].next wait: true
+      object_read = thread[:consumer].next wait: true
 
-      unless read_message == message
-        fail "Did not read message; read #{read_message.inspect}"
-      end
+      fail "Did not read object" unless object_read == object
     },
 
     test: proc {

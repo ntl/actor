@@ -1,16 +1,18 @@
 require_relative '../test_init'
 
-context "Message is read" do
-  context "Message is available to be read" do
+context "Object is read from queue" do
+  object = Object.new
+
+  context "Queue is not empty" do
     queue = Queue.new
-    queue.list << 'some-message'
+    queue.list << object
     queue.tail = 11
     queue.consumer_started
 
-    test "Consumer reads message" do
-      message = queue.read 11
+    test "Consumer reads enqueued object" do
+      consumed_object = queue.read 11
 
-      assert message == 'some-message'
+      assert consumed_object == object
     end
 
     test "Reference count of previous position is decreased" do
@@ -22,16 +24,16 @@ context "Message is read" do
     end
   end
 
-  context "No message is available to be read" do
-    context "Non-blocking read (default)" do
+  context "Queue is empty" do
+    context "Wait is not specified (default)" do
       queue = Queue.new
       queue.tail = 11
       queue.consumer_started
 
       test "Nothing is returned" do
-        message = queue.read 11
+        consumed_object = queue.read 11
 
-        assert message == nil
+        assert consumed_object == nil
       end
 
       test "Reference count of previous position is not decreased" do
@@ -43,25 +45,25 @@ context "Message is read" do
       end
     end
 
-    context "Blocking read" do
+    context "Wait is specified" do
       queue = Queue.new
       queue.tail = 11
       queue.consumer_started
 
-      message = nil
+      consumed_object = nil
 
       thread = Thread.new do
         Thread.current.abort_on_exception = true
-        message = queue.read 11, wait: true
+        consumed_object = queue.read 11, wait: true
       end
 
       Thread.pass until thread.status == 'sleep'
 
-      queue.write 'some-message'
+      queue.write object
 
       thread.join
 
-      assert message == 'some-message'
+      assert consumed_object == object
     end
   end
 end

@@ -27,13 +27,13 @@ module Actor
       end
 
       def next wait: nil
-        message = queue.read position, wait: wait
+        object = queue.read position, wait: wait
 
-        return nil if message.nil?
+        return nil if object.nil?
 
         self.position = position.next
 
-        message
+        object
       end
 
       def stop

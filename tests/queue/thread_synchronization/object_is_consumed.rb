@@ -1,16 +1,16 @@
 require_relative '../../test_init'
 
-context "Thread synchronization for reading messages" do
+context "Thread synchronization for consuming" do
   queue = Queue.new
 
-  message = 'some-message'
+  object = Object.new
 
   iterations, threads = TestFixtures::ParallelIteration.(
-    'All messages are read',
+    'All objects are consumed',
 
     setup: proc {
       queue.consumer_started
-      queue.write message
+      queue.write object
     },
 
     teardown: proc {
@@ -20,15 +20,13 @@ context "Thread synchronization for reading messages" do
     each_iteration: proc {
       position = queue.consumer_started
 
-      read_message = queue.read position
+      object_read = queue.read position
 
-      unless read_message == message
-        fail "Did not read message; read #{read_message.inspect}"
-      end
+      fail "Did not read object" unless object_read == object
     },
   )
 
-  test "All messages were read" do
+  test "Tail is advanced" do
     assert queue.tail == 1
   end
 end

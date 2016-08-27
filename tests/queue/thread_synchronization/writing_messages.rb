@@ -1,23 +1,21 @@
 require_relative '../../test_init'
 
-context "Thread synchronization for writing messages" do
+context "Thread synchronization for writing objects" do
   queue = Queue.new
 
-  message = 'some-message'
-
   iterations, threads = TestFixtures::ParallelIteration.(
-    'All messages are written',
+    'All objects are written',
 
     setup: proc {
       queue.consumer_started
     },
 
     each_iteration: proc {
-      queue.write message
+      queue.write Object.new
     },
   )
 
-  test "Queue contains all messages written by all threads" do
+  test "Queue contains all objects written by all threads" do
     assert queue.size == iterations * threads
   end
 end
