@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+source /usr/local/share/chruby/chruby.sh
+
+STRESS_TEST=$1
+
+set -eu
+
+export STRESS_TEST=${STRESS_TEST:=low}
+
+function testRubyVersion() {
+  ruby=$1
+
+  chruby $ruby
+
+  echo
+  echo "Testing $ruby $(ruby -e 'puts RUBY_DESCRIPTION')"
+  echo "= = ="
+  echo
+
+  bin/bench -q
+}
+
+testRubyVersion ruby
+testRubyVersion rbx
+testRubyVersion jruby
