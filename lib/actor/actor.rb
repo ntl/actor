@@ -16,14 +16,6 @@ module Actor
     # XXX
   end
 
-  def actor_paused?
-    actor_state == State::Paused
-  end
-
-  def actor_running?
-    actor_state == State::Running
-  end
-
   def actor_statistics
     @actor_statistics ||= Statistics.new
   end
@@ -40,12 +32,12 @@ module Actor
   def start reader
     loop do
       begin
-        message = reader.read wait: actor_paused?
+        message = reader.read wait: actor_state == State::Paused
 
         handle message if message
       end until message.nil?
 
-      action if actor_running?
+      action if actor_state == State::Running
 
       Thread.pass
     end
