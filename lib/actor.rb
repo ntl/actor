@@ -15,3 +15,10 @@ require 'actor/messaging/reader'
 require 'actor/messaging/reader/substitute'
 require 'actor/messaging/writer'
 require 'actor/messaging/writer/substitute'
+require 'actor/messaging/system_message'
+
+require 'actor/destructure'
+require 'actor/handle'
+require 'actor/spawn_thread'
+
+require 'actor/actor'

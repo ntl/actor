@@ -7,6 +7,6 @@ context "Reading an address whose queue is not empty" do
   address.queue.write 'some-message'
 
   test "Message is returned" do
-    assert reader.next == 'some-message'
+    assert reader.read == 'some-message'
   end
 end

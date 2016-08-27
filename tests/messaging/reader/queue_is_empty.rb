@@ -6,7 +6,7 @@ context "Reading an address whose queue is empty" do
 
   context "Wait is not requested (default)" do
     test "Nothing is returned" do
-      assert reader.next == nil
+      assert reader.read == nil
     end
   end
 
@@ -14,7 +14,7 @@ context "Reading an address whose queue is empty" do
     message = nil
 
     thread = Thread.new do
-      message = reader.next wait: true
+      message = reader.read wait: true
     end
     Thread.pass until thread.stop?
 

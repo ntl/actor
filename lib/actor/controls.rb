@@ -1,3 +1,4 @@
+require 'actor/controls/actor'
 require 'actor/controls/statistics'
 require 'actor/controls/statistics/elapsed_time'
 require 'actor/controls/statistics/elapsed_time/average'
