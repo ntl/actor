@@ -22,5 +22,5 @@ function testRubyVersion() {
 }
 
 testRubyVersion ruby
-testRubyVersion rbx
 testRubyVersion jruby
+testRubyVersion rbx
