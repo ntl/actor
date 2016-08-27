@@ -2,11 +2,7 @@
 
 set -eu
 
-CLEAN=${CLEAN:=off}
-
-if [ $CLEAN = 'on' ]; then
-  rm -rf installed-packages
-fi
+rm -rf installed-packages
 
 gem install --conservative --no-post-install-message --norc --no-document --install-dir ./installed-packages/rubygems test_bench benchmark-ips
 
@@ -18,5 +14,5 @@ for entry in installed-packages/rubygems/gems/test_bench*/lib/*; do
 done
 
 for entry in installed-packages/rubygems/gems/benchmark-ips*/lib/benchmark/*; do
-  ln -sf ../../$entry installed-packages/lib/benchmark
+  ln -sf ../../../$entry installed-packages/lib/benchmark
 done
