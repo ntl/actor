@@ -1,7 +1,7 @@
 require_relative '../test_init'
 
 context "Address is created" do
-  address = Address.get
+  address = Messaging::Address.get
 
   address.queue.tail = 11
   address.queue.list << Object.new
@@ -44,6 +44,6 @@ context "Address is created" do
   end
 
   test "Inspect method" do
-    assert address.inspect == %{#<Actor::Address id=#{address.id.inspect}, queue=11..12, consumers=3>}
+    assert address.inspect == %{#<Actor::Messaging::Address id=#{address.id.inspect}, queue=11..12, consumers=3>}
   end
 end

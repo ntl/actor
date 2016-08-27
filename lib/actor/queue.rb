@@ -54,6 +54,8 @@ module Actor
     end
 
     def reader_count
+      return 0 unless readers?
+
       reader_positions.values.reduce &:+
     end
 

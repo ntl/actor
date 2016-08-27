@@ -11,3 +11,5 @@ require 'actor/statistics/copy'
 require 'actor/statistics/timer'
 
 require 'actor/messaging/address'
+require 'actor/messaging/consumer'
+require 'actor/messaging/consumer/substitute'
