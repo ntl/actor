@@ -11,6 +11,7 @@ module Actor
 
   attr_accessor :actor_address
   attr_accessor :actor_state
+  attr_writer :reader
 
   def action
     # XXX
@@ -24,12 +25,11 @@ module Actor
     # XXX
   end
 
-  def publish_telemetry event, argument=nil
-    changed
-    notify_observers event, argument
+  def reader
+    @reader ||= Reader::Substitute.new
   end
 
-  def start reader
+  def start
     loop do
       begin
         message = reader.read wait: actor_state == State::Paused

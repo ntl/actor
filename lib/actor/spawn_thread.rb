@@ -13,9 +13,10 @@ module Actor
 
       instance.actor_address = address
       instance.actor_state = State::Paused
+      instance.reader = reader
 
       thread = ::Thread.new do
-        instance.start reader
+        instance.start
       end
 
       destructure instance, address, thread, include: include
