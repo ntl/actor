@@ -21,7 +21,7 @@ context "Reader stops reading a queue" do
   end
 
   test "Subsequent reads fail immediately" do
-    assert proc { reader.next } do
+    assert proc { reader.read } do
       raises_error? Queue::Reader::Stopped
     end
   end

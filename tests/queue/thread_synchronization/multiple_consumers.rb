@@ -25,7 +25,7 @@ context "Thread synchronization between a writer and multiple readers" do
     },
 
     each_iteration: proc {
-      object_read = thread[:reader].next wait: true
+      object_read = thread[:reader].read wait: true
 
       fail "Did not read object" unless object_read == object
     },

@@ -27,7 +27,7 @@ module Actor
         end
       end
 
-      def next wait: nil
+      def read wait: nil
         if stopped?
           raise Stopped, "Reader has stopped"
         end
