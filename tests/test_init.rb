@@ -5,8 +5,10 @@ require 'actor/test_fixtures'
 
 require 'test_bench/activate'
 
-Object.send :const_set, :RbQueue, Queue
-Object.send :remove_const, :Queue
+if defined? Queue
+  Object.send :const_set, :RbQueue, Queue
+  Object.send :remove_const, :Queue
+end
 
 include Actor
 
