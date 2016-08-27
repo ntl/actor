@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Thread synchronization between a producer and multiple consumers" do
-  queue = MessageQueue.new
+  queue = Queue.new
 
   message = 'some-message'
 
@@ -21,7 +21,7 @@ context "Thread synchronization between a producer and multiple consumers" do
     },
 
     setup_thread: proc {
-      thread[:consumer] = MessageQueue::Consumer.build queue
+      thread[:consumer] = Queue::Consumer.build queue
     },
 
     each_iteration: proc {

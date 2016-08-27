@@ -1,7 +1,7 @@
 require_relative '../test_init'
 
 context "Messages that have been read by all consumers are expired" do
-  queue = MessageQueue.new
+  queue = Queue.new
 
   queue.consumer_started 0
   queue.consumer_started 3

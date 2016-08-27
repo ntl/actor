@@ -1,5 +1,5 @@
 module Actor
-  class MessageQueue
+  class Queue
     class Consumer
       attr_reader :queue
       attr_accessor :position

@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Thread synchronization for reading messages" do
-  queue = MessageQueue.new
+  queue = Queue.new
 
   message = 'some-message'
 

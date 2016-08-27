@@ -1,13 +1,13 @@
 require_relative '../../test_init'
 
 context "Thread synchronization for start and stop of consumers" do
-  queue = MessageQueue.new
+  queue = Queue.new
 
   iterations, _ = TestFixtures::ParallelIteration.(
     'Consumer started and stopped',
 
     each_iteration: proc {
-      consumer = MessageQueue::Consumer.build queue
+      consumer = Queue::Consumer.build queue
       consumer.stop
     }
   )

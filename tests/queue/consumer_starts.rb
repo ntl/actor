@@ -1,11 +1,11 @@
 require_relative '../test_init'
 
 context "Consumer starts consuming a queue" do
-  queue = MessageQueue.new
+  queue = Queue.new
   queue.tail = 11
 
   context do
-    consumer = MessageQueue::Consumer.build queue
+    consumer = Queue::Consumer.build queue
 
     test "Position is set to tail of queue" do
       assert consumer.position == 11
@@ -24,7 +24,7 @@ context "Consumer starts consuming a queue" do
 
   context "Block form start method" do
     context do
-      consumer = MessageQueue::Consumer.start queue do |consumer|
+      consumer = Queue::Consumer.start queue do |consumer|
         test "Position is set to tail of queue" do
           assert consumer.position == 11
         end
@@ -47,7 +47,7 @@ context "Consumer starts consuming a queue" do
       consumer = nil
       
       begin
-        MessageQueue::Consumer.start queue do |_consumer|
+        Queue::Consumer.start queue do |_consumer|
           consumer = _consumer
           fail
         end

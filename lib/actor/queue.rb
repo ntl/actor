@@ -1,5 +1,5 @@
 module Actor
-  class MessageQueue
+  class Queue
     attr_reader :blocked_threads
     attr_reader :consumer_positions
     attr_reader :list

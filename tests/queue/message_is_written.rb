@@ -2,7 +2,7 @@ require_relative '../test_init'
 
 context "Message is written to queue" do
   context "Queue has no consumers" do
-    queue = MessageQueue.new
+    queue = Queue.new
 
     queue.write 'some-message'
 
@@ -12,7 +12,7 @@ context "Message is written to queue" do
   end
 
   context "Queue has a consumer" do
-    queue = MessageQueue.new
+    queue = Queue.new
     queue.consumer_started
 
     queue.write 'some-message'

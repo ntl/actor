@@ -2,7 +2,7 @@ require_relative '../test_init'
 
 context "Message is read" do
   context "Message is available to be read" do
-    queue = MessageQueue.new
+    queue = Queue.new
     queue.list << 'some-message'
     queue.tail = 11
     queue.consumer_started
@@ -24,7 +24,7 @@ context "Message is read" do
 
   context "No message is available to be read" do
     context "Non-blocking read (default)" do
-      queue = MessageQueue.new
+      queue = Queue.new
       queue.tail = 11
       queue.consumer_started
 
@@ -44,7 +44,7 @@ context "Message is read" do
     end
 
     context "Blocking read" do
-      queue = MessageQueue.new
+      queue = Queue.new
       queue.tail = 11
       queue.consumer_started
 

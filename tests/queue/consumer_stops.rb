@@ -1,10 +1,10 @@
 require_relative '../test_init'
 
 context "Consumer stops consuming a queue" do
-  queue = MessageQueue.new
+  queue = Queue.new
   queue.tail = 11
 
-  consumer = MessageQueue::Consumer.build queue
+  consumer = Queue::Consumer.build queue
 
   consumer.stop
 
