@@ -25,7 +25,6 @@ context "Actor lifecycle" do
       address: writer,
       test: proc { |status, initial_status|
         assert status.state == :running
-        assert initial_status.executions == 0
         assert status.executions > initial_status.executions
       }
     )

@@ -5,7 +5,7 @@ context "Thread synchronization for reading" do
 
   object = Object.new
 
-  iterations, threads = TestFixtures::ParallelIteration.(
+  TestFixtures::ParallelIteration.(
     'All objects are read',
 
     setup: proc {
