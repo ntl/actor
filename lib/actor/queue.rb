@@ -24,10 +24,22 @@ module Actor
       end
     end
 
+    def consumers?
+      consumer_positions.any?
+    end
+
+    def consumer_count
+      consumer_positions.values.reduce &:+
+    end
+
     def consumer_stopped position
       mutex.synchronize do
         down position
       end
+    end
+
+    def head
+      tail + size
     end
 
     def read position, wait: nil
@@ -51,6 +63,10 @@ module Actor
       end
     end
 
+    def size
+      list.size
+    end
+
     def write object
       # Owning the mutex is not necessary here; the worst that can happen is
       # that occasionally we write a object when there aren't any consumers.
@@ -61,20 +77,6 @@ module Actor
       end
 
       blocked_threads.each &:wakeup
-    end
-
-    # These query methods are not to be believed without owning the mutex, but
-    # might prove useful in cases where precise accuracy is not needed.
-    def consumers?
-      consumer_positions.any?
-    end
-
-    def head
-      tail + size
-    end
-
-    def size
-      list.size
     end
 
     # These command methods are highly unsafe to call without owning the mutex;
