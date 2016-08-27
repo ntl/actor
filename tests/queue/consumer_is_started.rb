@@ -1,10 +1,10 @@
 require_relative '../test_init'
 
 context "Consumer starts reading a queue" do
-  queue = Queue.new
-  queue.tail = 11
-
   context do
+    queue = Queue.new
+    queue.tail = 11
+
     consumer = Queue::Consumer.build queue
 
     test "Position is set to tail of queue" do
@@ -15,14 +15,19 @@ context "Consumer starts reading a queue" do
       assert queue.consumer_positions[11] == 1
     end
 
-    test "Consumers predicate returns true" do
-      assert queue.consumers?
+    test "Stopped predicate returns false" do
+      refute consumer.stopped?
     end
 
-    consumer.stop
+    test "Consumers predicate on queue returns true" do
+      assert queue.consumers?
+    end
   end
 
   context "Block form start method" do
+    queue = Queue.new
+    queue.tail = 11
+
     context do
       consumer = Queue::Consumer.start queue do |consumer|
         test "Position is set to tail of queue" do
@@ -33,19 +38,19 @@ context "Consumer starts reading a queue" do
           assert queue.consumer_positions[11] == 1
         end
 
-        test "Consumers predicate returns true" do
-          assert queue.consumers?
+        test "Consumer is not stopped within block" do
+          refute consumer.stopped?
         end
       end
 
       test "Consumer is stopped automatically" do
-        refute queue.consumers?
+        assert consumer.stopped?
       end
     end
 
     context "An error is raised within the block" do
       consumer = nil
-      
+
       begin
         Queue::Consumer.start queue do |_consumer|
           consumer = _consumer
@@ -55,7 +60,7 @@ context "Consumer starts reading a queue" do
       end
 
       test "Consumer is still stopped" do
-        refute queue.consumers?
+        assert consumer.stopped?
       end
     end
   end

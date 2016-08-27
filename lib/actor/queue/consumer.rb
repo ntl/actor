@@ -3,6 +3,7 @@ module Actor
     class Consumer
       attr_reader :queue
       attr_accessor :position
+      attr_accessor :stopped
 
       def initialize queue, position
         @queue = queue
@@ -27,6 +28,10 @@ module Actor
       end
 
       def next wait: nil
+        if stopped?
+          raise Stopped, "Consumer has stopped"
+        end
+
         object = queue.read position, wait: wait
 
         return nil if object.nil?
@@ -37,8 +42,16 @@ module Actor
       end
 
       def stop
+        self.stopped = true
+
         queue.consumer_stopped position
       end
+
+      def stopped?
+        stopped
+      end
+
+      Stopped = Class.new StandardError
     end
   end
 end

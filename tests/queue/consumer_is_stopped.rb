@@ -12,7 +12,13 @@ context "Consumer stops consuming a queue" do
     assert queue.consumer_positions[11] == 0
   end
 
-  test "Consumers predicate returns false" do
+  test "Consumers predicate on queue returns false" do
     refute queue.consumers?
+  end
+
+  test "Subsequent reads fail immediately" do
+    assert proc { consumer.next } do
+      raises_error? Queue::Consumer::Stopped
+    end
   end
 end
