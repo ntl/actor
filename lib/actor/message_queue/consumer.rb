@@ -16,10 +16,11 @@ module Actor
       end
 
       def self.start queue, &block
-        instance = build
+        instance = build queue
 
         begin
           block.(instance)
+          return instance
         ensure
           instance.stop
         end
