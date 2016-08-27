@@ -26,8 +26,8 @@ module Actor
         end
       end
 
-      def next block: nil
-        message = queue.read position, block: block
+      def next wait: nil
+        message = queue.read position, wait: wait
 
         return nil if message.nil?
 

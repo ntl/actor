@@ -25,7 +25,7 @@ context "Thread synchronization between a producer and multiple consumers" do
     },
 
     each_iteration: proc {
-      read_message = thread[:consumer].next block: true
+      read_message = thread[:consumer].next wait: true
 
       unless read_message == message
         fail "Did not read message; read #{read_message.inspect}"

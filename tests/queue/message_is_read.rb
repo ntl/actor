@@ -52,7 +52,7 @@ context "Message is read" do
 
       thread = Thread.new do
         Thread.current.abort_on_exception = true
-        message = queue.read 11, block: true
+        message = queue.read 11, wait: true
       end
 
       Thread.pass until thread.status == 'sleep'

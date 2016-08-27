@@ -30,12 +30,12 @@ module Actor
       end
     end
 
-    def read position, block: nil
+    def read position, wait: nil
       mutex.synchronize do
         relative_position = position - tail
 
         until list.count > relative_position
-          return nil unless block
+          return nil unless wait
 
           blocked_threads << Thread.current
           mutex.sleep

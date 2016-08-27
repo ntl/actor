@@ -18,7 +18,7 @@ Benchmark.ips do |bm|
 
     iterations.times do |position| 
       actor_queue.write object
-      actor_queue.read position, block: true
+      actor_queue.read position, wait: true
     end
   end
 
