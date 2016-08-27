@@ -1,12 +1,12 @@
 require_relative '../../test_init'
 
-context "Consuming an address whose queue is empty" do
+context "Reading an address whose queue is empty" do
   address = Messaging::Address.get
-  consumer = Messaging::Consumer.build address
+  reader = Messaging::Reader.build address
 
   context "Wait is not requested (default)" do
     test "Nothing is returned" do
-      assert consumer.next == nil
+      assert reader.next == nil
     end
   end
 
@@ -14,7 +14,7 @@ context "Consuming an address whose queue is empty" do
     message = nil
 
     thread = Thread.new do
-      message = consumer.next wait: true
+      message = reader.next wait: true
     end
     Thread.pass until thread.stop?
 

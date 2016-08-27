@@ -1,9 +1,9 @@
 require_relative '../../test_init'
 
-context "Consumer substitute" do
-  context "Consuming" do
+context "Reader substitute" do
+  context "Reading" do
     context "Message has not been added" do
-      substitute = Messaging::Consumer::Substitute.new
+      substitute = Messaging::Reader::Substitute.new
 
       context "Wait is not requested (default)" do
         message = substitute.next
@@ -16,7 +16,7 @@ context "Consumer substitute" do
       context "Wait is requested" do
         test "Error is raised" do
           assert proc { substitute.next wait: true } do
-            raises_error? Messaging::Consumer::Substitute::Wait
+            raises_error? Messaging::Reader::Substitute::Wait
           end
         end
       end
@@ -24,7 +24,7 @@ context "Consumer substitute" do
 
     context "Message has been added" do
       context "Wait is not specified (default)" do
-        substitute = Messaging::Consumer::Substitute.new
+        substitute = Messaging::Reader::Substitute.new
         substitute.add_message 'some-message'
 
         message = substitute.next
@@ -35,7 +35,7 @@ context "Consumer substitute" do
       end
 
       context "Wait is specified" do
-        substitute = Messaging::Consumer::Substitute.new
+        substitute = Messaging::Reader::Substitute.new
         substitute.add_message 'some-message'
 
         message = substitute.next wait: true
@@ -48,7 +48,7 @@ context "Consumer substitute" do
   end
 
   context "Stopped predicate" do
-    substitute = Messaging::Consumer::Substitute.new
+    substitute = Messaging::Reader::Substitute.new
 
     context "Substitute has not been stopped" do
       test "False is returned" do

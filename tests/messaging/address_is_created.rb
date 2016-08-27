@@ -39,11 +39,11 @@ context "Address is created" do
     assert address.queue_size == 1
   end
 
-  test "Number of consumers can be queried" do
-    assert address.consumer_count == 3
+  test "Number of readers can be queried" do
+    assert address.reader_count == 3
   end
 
   test "Inspect method" do
-    assert address.inspect == %{#<Actor::Messaging::Address id=#{address.id.inspect}, queue=11..12, consumers=3>}
+    assert address.inspect == %{#<Actor::Messaging::Address id=#{address.id.inspect}, queue=11..12, readers=3>}
   end
 end

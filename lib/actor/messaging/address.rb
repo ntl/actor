@@ -16,12 +16,12 @@ module Actor
         new id, queue
       end
 
-      def consumer_count
+      def reader_count
         queue.reader_count
       end
 
       def inspect
-        %{#<#{self.class.name} id=#{id.inspect}, queue=#{queue_tail}..#{queue_head}, consumers=#{consumer_count}>}
+        %{#<#{self.class.name} id=#{id.inspect}, queue=#{queue_tail}..#{queue_head}, readers=#{reader_count}>}
       end
 
       def queue_head

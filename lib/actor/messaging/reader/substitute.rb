@@ -1,6 +1,6 @@
 module Actor
   module Messaging
-    class Consumer
+    class Reader
       class Substitute
         attr_accessor :stopped
 

@@ -1,11 +1,11 @@
 require_relative '../../test_init'
 
-context "Starting a consumer" do
+context "Starting a reader" do
   address = Messaging::Address.get
-  consumer = Messaging::Consumer.build address
+  reader = Messaging::Reader.build address
 
-  test "Consumer count on address is increased" do
-    assert address.consumer_count == 1
+  test "Reader count on address is increased" do
+    assert address.reader_count == 1
   end
 
   test "Address queue indicates it has a reader" do
