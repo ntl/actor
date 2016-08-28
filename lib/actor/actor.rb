@@ -25,17 +25,17 @@ module Actor
 
   def handle_system_message message
     case message
-    when SystemMessage::Pause then
+    when Message::Pause then
       self.actor_state = State::Paused
 
-    when SystemMessage::Resume then
+    when Message::Resume then
       self.actor_state = State::Running
 
-    when SystemMessage::Stop then
+    when Message::Stop then
       self.actor_state = State::Running
       raise StopIteration
 
-    when SystemMessage::RecordStatus then
+    when Message::RecordStatus then
       status = message.status
 
       Statistics::Copy.(status, actor_statistics)
@@ -55,7 +55,7 @@ module Actor
       while message = reader.read(wait: actor_state == State::Paused)
         handle message
 
-        if message.is_a? SystemMessage
+        if message.is_a? Message
           handle_system_message message
         end
       end
@@ -120,7 +120,7 @@ module Actor
       )
 
       Messaging::Writer.write(
-        SystemMessage::Resume.new,
+        Message::Resume.new,
         address
       )
 

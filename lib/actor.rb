@@ -16,6 +16,6 @@ require 'actor/messaging/reader/substitute'
 require 'actor/messaging/writer'
 require 'actor/messaging/writer/substitute'
 
-require 'actor/system_message'
+require 'actor/message'
 
 require 'actor/actor'

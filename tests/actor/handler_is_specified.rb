@@ -20,7 +20,7 @@ context "Handler is specified by actor implementation" do
   address, thread, actor = actor_cls.spawn include: %i(thread actor)
 
   Messaging::Writer.write 'some-message', address
-  Messaging::Writer.write SystemMessage::Resume.new, address
+  Messaging::Writer.write Message::Resume.new, address
 
   thread.join
 

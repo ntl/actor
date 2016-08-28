@@ -89,13 +89,13 @@ sleep 1
 
 The simplest way for an actor to be terminated is for it to raise a +StopIteration+ exception when it is done. However, many actors are designed to run indefinitely, and thus need to be terminated by another actor. This can be achieved through sending a message that (eventually) _tells_ the actor to stop.
 
-All actors are assigned a unique address when they are started. You can write messages to this address and control its execution. The address is returned by the +.start+ method, and you can send the actor a stop message by writing an instance of +Actor::SystemMessage::Stop+ to the address. When the actor eventually handles this message, it will stop running and its surrounding thread will terminate.
+All actors are assigned a unique address when they are started. You can write messages to this address and control its execution. The address is returned by the +.start+ method, and you can send the actor a stop message by writing an instance of +Actor::Message::Stop+ to the address. When the actor eventually handles this message, it will stop running and its surrounding thread will terminate.
 
 [source,ruby]
 ----
 address = FizzBuzz.start 1000
 
-stop_message = Actor::SystemMessage::Stop.new
+stop_message = Actor::Message::Stop.new
 
 Actor::Messaging::Writer.write stop_message, address
 ----
@@ -124,16 +124,16 @@ address, thread, actor = FizzBuzz.start 1000, include: %i(thread actor)
 
 The Actor instance should not be used outside of testing purposes, as communication across thread boundaries is meant to be achieved by passing messages through the actor's address.
 
-=== System Messages
+=== Messages Handled Internally
 
-In addition to +Actor::SystemMessage::Stop+, there are other system messages. +Pause+ and +Resume+ will cause the actor to pause and resume execution in between successive invocations of +action+. +RecordStatus+ will instruct an Actor to report some statistical information as well as general status. That message requires a reply address to be specified, which can be obtained via calling +Actor::Messaging::Address.get+. The reply can then be read by instantiating a reader for the reply address.
+In addition to +Actor::Message::Stop+, there are other messages defined internally by Actor. +Pause+ and +Resume+ will cause the actor to pause and resume execution in between successive invocations of +action+. +RecordStatus+ will instruct an Actor to report some statistical information as well as general status. That message requires a reply address to be specified, which can be obtained via calling +Actor::Messaging::Address.get+. The reply can then be read by instantiating a reader for the reply address.
 
 [source,ruby]
 ----
 reply_address = Actor::Messaging::Address.get
 reply_reader = Actor::Messaging::Reader.build reply_address
 
-record_status = Actor::SystemMessage::RecordStatus.new reply_address
+record_status = Actor::Message::RecordStatus.new reply_address
 
 Actor::Messaging::Writer.write record_status, address
 

@@ -17,8 +17,8 @@ context "Actor lifecycle" do
     )
   end
 
-  context "Actor is sent a pause system message" do
-    writer.write SystemMessage::Pause.new
+  context "Actor is sent a pause message" do
+    writer.write Message::Pause.new
 
     TestFixtures::SampleActorStatus.(
       "Actor is paused",
@@ -30,8 +30,8 @@ context "Actor lifecycle" do
     )
   end
 
-  context "Actor is sent a resume system message" do
-    writer.write SystemMessage::Resume.new
+  context "Actor is sent a resume message" do
+    writer.write Message::Resume.new
 
     TestFixtures::SampleActorStatus.(
       "Actor is running",
@@ -43,8 +43,8 @@ context "Actor lifecycle" do
     )
   end
 
-  context "Actor is sent a stop system message" do
-    writer.write SystemMessage::Stop.new
+  context "Actor is sent a stop message" do
+    writer.write Message::Stop.new
 
     test "Thread terminates" do
       thread.join

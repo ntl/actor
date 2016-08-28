@@ -1,11 +1,11 @@
 module Actor
-  module SystemMessage
-    Pause = Class.new { include SystemMessage }
-    Resume = Class.new { include SystemMessage }
-    Stop = Class.new { include SystemMessage }
+  module Message
+    Pause = Class.new { include Message }
+    Resume = Class.new { include Message }
+    Stop = Class.new { include Message }
 
     class RecordStatus
-      include SystemMessage
+      include Message
 
       attr_reader :reply_address
       attr_reader :status
@@ -17,7 +17,7 @@ module Actor
     end
 
     class Status < OpenStruct
-      include SystemMessage
+      include Message
     end
   end
 end

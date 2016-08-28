@@ -38,7 +38,7 @@ module Actor
       end
 
       def record_status_message
-        SystemMessage::RecordStatus.new reply_address
+        Message::RecordStatus.new reply_address
       end
     end
   end
