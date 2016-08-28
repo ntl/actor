@@ -129,6 +129,7 @@ module Actor
   end
 
   module State
+    Crashed = :crashed
     Paused = :paused
     Running = :running
     Stopped = :stopped

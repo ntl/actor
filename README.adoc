@@ -173,6 +173,10 @@ Actor::Messaging::Writer.write SomeMessage.new, address
 
 System messages can additionally be handled via the +handle+ method, and they will not interfere with the normal internal handling of such messages.
 
+=== Errors
+
+When an actor raises an error, its thread immediately stops, but the rest of the ruby program remains unaffected. If you call +#join+ on the thread object returned by +.start+, the error will be re-raised. It is recommended to keep track of actors by starting them from within a +ThreadGroup+ and periodically joining each of the actor threads. The actor will not restart itself or deliver an exception notification. It should go without saying that errors are undesirable and Actor makes no effort to make them easier to work with. "_Don't_ let it crash" is the idea.
+
 === License
 
 Actor is licensed under the link:doc/MIT-License.txt[MIT license]
