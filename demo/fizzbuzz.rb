@@ -9,6 +9,8 @@ class Fizzbuzz
     @position = 0
   end
 
+  # When the actor is running, this method will be executed in rapid succession
+  # by an infinite loop.
   def action
     @position += 1
 
