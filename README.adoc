@@ -145,16 +145,23 @@ You can send _any_ ruby object to the actor with +Actor::Messaging::Writer+; tho
 
 [source,ruby]
 ----
-class Actor
+class SomeActor
+  include Actor
+
   # ...
 
   def handle message
     case message
-    when SomeClass then do_something
-    when OtherClass then do_something_else
+    when SomeMessage then do_something
+    when OtherMessage then do_something_else
     end
   end
 end
+
+# Start an actor and send a custom message to it
+address = Actor.start
+
+Actor::Messaging::Writer.write SomeMessage.new, address
 ----
 
 System messages can additionally be handled via the +handle+ method, and they will not interfere with the normal internal handling of such messages.
