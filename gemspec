@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = ENV.fetch 'GEM_NAME' do 'actor' end
+  s.name = [ENV['GEM_NAME_PREFIX'], 'actor'].compact.join '-'
   s.version = ENV.fetch 'GEM_VERSION'
 
   s.authors = ['Nathan Ladd']

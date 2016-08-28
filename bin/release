@@ -17,7 +17,7 @@ curl -F package="@actor-$GEM_VERSION.gem" "https://$PERSONAL_GEMFURY_SECRET@push
 echo
 echo "Building version for rubygems.org"
 echo "= = ="
-GEM_NAME="ntl-actor" gem build --norc gemspec
+GEM_NAME_PREFIX=ntl gem build --norc gemspec
 
 gem push ntl-actor-$GEM_VERSION.gem
 
