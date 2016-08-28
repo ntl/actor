@@ -16,7 +16,7 @@ module Actor
       instance.reader = reader
 
       thread = ::Thread.new do
-        instance.start
+        instance.run_loop
       end
 
       destructure instance, address, thread, include: include
