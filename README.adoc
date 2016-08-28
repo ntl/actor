@@ -11,19 +11,31 @@ NOTE: Documentation is incomplete.
 
 To install +actor+ via rubygems.org, you will have to refer to the gem as +ntl-actor+ when running +gem install+ or adding the gem to Bundler.
 
-+gem install ntl-actor+
+[source,sh]
+----
+gem install ntl-actor
+----
 
 Bundler:
 
-+gem 'ntl-actor', require: 'actor'+
+[source,ruby]
+----
+gem 'ntl-actor', require: 'actor'
+----
 
 If you add +https://repo.fury.io/ntl/+ to your list of gem sources, you can install the library by its proper name:
 
-+gem install actor+
+[source,sh]
+----
+gem install actor
+----
 
 Bundler:
 
-+gem 'actor'+
+[source,ruby]
+----
+gem 'actor'
+----
 
 === Defining an Actor
 
