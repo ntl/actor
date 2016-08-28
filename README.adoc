@@ -89,7 +89,7 @@ sleep 1
 
 The simplest way for an actor to be terminated is for it to raise a +StopIteration+ exception when it is done. However, many actors are designed to run indefinitely, and thus need to be terminated by another actor. This can be achieved through sending a message that (eventually) _tells_ the actor to stop.
 
-All actors are assigned a unique address when they are started. You can write messages to this address and control its execution. The address is returned by the +.start+ method, and you can send the actor an instance of +Actor::Messaging::SystemMessage::Stop+ to the address. This will cause the actor to stop running and its surrounding thread to terminate.
+All actors are assigned a unique address when they are started. You can write messages to this address and control its execution. The address is returned by the +.start+ method, and you can send the actor a stop message by writing an instance of +Actor::Messaging::SystemMessage::Stop+ to the address. When the actor eventually handles this message, it will stop running and its surrounding thread will terminate.
 
 [source,ruby]
 ----
@@ -115,7 +115,14 @@ Actor::Messaging::Writer.write stop_message, address
 thread.join
 ----
 
-You can also cause +.start+ to return the instance of the actor, e.g. +address, thread, actor = FizzBuzz.start 1000, include: %i(thread actor)+. The Actor instance should not be used outside of testing purposes, as communication across thread boundaries is meant to be achieved by passing messages through the actor's address.
+You can also cause +.start+ to return the instance of the actor, e.g.
+
+[source,ruby]
+----
+address, thread, actor = FizzBuzz.start 1000, include: %i(thread actor)
+----
+
+The Actor instance should not be used outside of testing purposes, as communication across thread boundaries is meant to be achieved by passing messages through the actor's address.
 
 === System Messages
 
