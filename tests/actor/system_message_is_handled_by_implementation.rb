@@ -5,7 +5,7 @@ context "Handler specified by actor implementation handles system message" do
     include Actor
 
     def handle message
-      @handled = true if Messaging::SystemMessage::Stop === message
+      @handled = true if SystemMessage::Stop === message
     end
 
     def handled_system_message?
@@ -16,7 +16,7 @@ context "Handler specified by actor implementation handles system message" do
   address, thread, actor = actor_cls.start include: %i(thread actor)
 
   Messaging::Writer.write(
-    Messaging::SystemMessage::Stop.new,
+    SystemMessage::Stop.new,
     address
   )
 
