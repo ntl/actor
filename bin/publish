@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -eu
+
+export GEM_VERSION=$1
+
+git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION"
+git push
+
+echo
+echo "Building version for ntl.fury.io"
+echo "= = ="
+gem build --norc gemspec
+
+curl -F package="@actor-$GEM_VERSION.gem" "https://$PERSONAL_GEMFURY_SECRET@push.fury.io/ntl/"
+
+echo
+echo "Building version for rubygems.org"
+echo "= = ="
+GEM_NAME="ntl-actor" gem build --norc gemspec
+
+gem push ntl-actor-$GEM_VERSION.gem
+
+echo
+echo "Cleaning up"
+echo "= = ="
+
+rm -vf *.gem
