@@ -14,7 +14,6 @@ module Actor
   attr_writer :reader
 
   def action
-    # XXX
   end
 
   def actor_statistics
@@ -22,7 +21,6 @@ module Actor
   end
 
   def handle _
-    # XXX
   end
 
   def reader
