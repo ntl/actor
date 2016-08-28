@@ -8,7 +8,7 @@ echo
 echo "Running tests"
 echo "= = ="
 
-bin/bench
+bin/stress-test
 
 echo
 echo "Tagging release"
