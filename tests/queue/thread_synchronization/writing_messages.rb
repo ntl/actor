@@ -12,7 +12,7 @@ context "Thread synchronization for writing objects" do
 
     each_iteration: proc {
       queue.write Object.new
-    },
+    }
   )
 
   test "Queue contains all objects written by all threads" do

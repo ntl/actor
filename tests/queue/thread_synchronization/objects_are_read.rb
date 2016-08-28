@@ -23,7 +23,7 @@ context "Thread synchronization for reading" do
       object_read = queue.read position
 
       fail "Did not read object" unless object_read == object
-    },
+    }
   )
 
   test "Tail is advanced" do

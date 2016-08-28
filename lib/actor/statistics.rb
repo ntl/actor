@@ -54,8 +54,7 @@ module Actor
       deviation = Math.sqrt(
         [
           0,
-          Rational(sum_elapsed_time_squared, executions) -
-          average_elapsed_time ** 2
+          Rational(sum_elapsed_time_squared, executions) - average_elapsed_time ** 2
         ].max
       )
 
