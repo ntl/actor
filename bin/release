@@ -4,6 +4,12 @@ set -eu
 
 export GEM_VERSION=$1
 
+echo
+echo "Running tests"
+echo "= = ="
+
+bin/stress-test
+
 git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION"
 git push github "v$GEM_VERSION"
 
