@@ -66,6 +66,10 @@ module Actor
     end
 
     self.actor_state = State::Stopped
+
+  rescue => error
+    self.actor_state = State::Crashed
+    raise error
   end
 
   module Destructure

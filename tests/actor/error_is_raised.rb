@@ -20,6 +20,6 @@ context "Error is raised, causing actor to crash" do
   end
 
   test "Actor state is set to crashed" do
-    assert actor.state == :crashed
+    assert actor.actor_state == :crashed
   end
 end
