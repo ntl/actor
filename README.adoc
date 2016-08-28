@@ -1,0 +1,134 @@
+Actor
+=====
+
+Implementation of actor pattern for ruby designed for simplicity and frugality.
+
+NOTE: Documentation is incomplete.
+
+== Basic Usage
+
+=== Defining an Actor
+
+[source,ruby]
+----
+class Fizzbuzz
+  include Actor
+
+  def initialize stop_position
+    @stop_position = stop_position
+
+    @position = 0
+  end
+
+  def action
+    @position += 1
+
+    output = String.new
+
+    output << 'Fizz' if @position % 3 == 0
+    output << 'Buzz' if @position % 5 == 0
+    output << @position.to_s if output.empty?
+
+    puts output
+
+    if @position == @stop_position
+      puts "Done!"
+      # Raising StopIteration anywhere in this method will cause both the actor
+      # (self) and the thread executing it to terminate.
+      raise StopIteration 
+    end
+  end
+end
+----
+
+=== Starting an Actor
+
+[source,ruby]
+----
+# Thread will be started in the background. An instance of Fizzbuzz will count
+# up to 1000.
+Fizzbuzz.start 1000
+
+# Sleep will ensure the ruby script doesn't exit before Fizzbuzz finishes
+sleep 1
+----
+
+=== Terminating an Actor
+
+The simplest way for an actor to be terminated is for it to raise a +StopIteration+ exception when it is done. However, many actors are designed to run indefinitely, and thus need to be terminated by another actor. This can be achieved through sending a message that (eventually) _tells_ the actor to stop.
+
+All actors are assigned a unique address when they are started. You can write messages to this address and control its execution. The address is returned by the +.start+ method, and you can send the actor an instance of +Actor::Messaging::SystemMessage::Stop+ to the address. This will cause the actor to stop running and its surrounding thread to terminate.
+
+[source,ruby]
+----
+address = FizzBuzz.start 1000
+
+stop_message = Actor::Messaging::SystemMessage::Stop.new
+
+Actor::Messaging::Writer.write stop_message, address
+----
+
+Of course, while this will cause the actor to stop _fairly soon_, it won't be immediate.
+
+To wait for an actor to actually terminate, you'll want to call +Thread#join+ on the the thread spawned by this library. To do so, you will need access to the +Thread+ instance that is running the actor. You can cause the +.start+ method to return the thread with a special +include+ parameter:
+
+[source,ruby]
+----
+address, thread = FizzBuzz.start 1000, include: %i(thread)
+
+# See instantiation of stop_message above
+Actor::Messaging::Writer.write stop_message, address
+
+# Ruby will block until the thread terminates
+thread.join
+----
+
+You can also cause +.start+ to return the instance of the actor, e.g. +address, thread, actor = FizzBuzz.start 1000, include: %i(thread actor)+. The Actor instance should not be used outside of testing purposes, as communication across thread boundaries is meant to be achieved by passing messages through the actor's address.
+
+=== System Messages
+
+In addition to +Actor::Messaging::SystemMessage::Stop+, there are other system messages. +Pause+ and +Resume+ will cause the actor to pause and resume execution in between successive invocations of +action+. +RecordStatus+ will instruct an Actor to report some statistical information as well as general status. That message requires a reply address to be specified, which can be obtained via calling +Actor::Messaging::Address.get+. The reply can then be read by instantiating a reader for the reply address.
+
+[source,ruby]
+----
+reply_address = Actor::Messaging::Address.get
+reply_reader = Actor::Messaging::Reader.build reply_address
+
+record_status = Actor::Messaging::SystemMessage::RecordStatus.new reply_address
+
+Actor::Messaging::Writer.write record_status, address
+
+# Wait for the reply to be issued by the actor
+status_reply = reply_reader.read wait: true
+
+# Query e.g. the number of times #action has been executed
+status_reply.executions
+----
+
+NOTE: Make sure at least one reader is constructed before writing any message to an address, as messages that are written to addresses without any readers are dropped in order to prevent memory leaks. Every actor uses a reader for handling messages, so this is a concern when using addresses returned by +Actor::Messaging::Address.get+. Also note that an address is a resource, and must be stopped via the +#stop+ method when it is no longer needed.
+
+=== Handling Custom Messages
+
+You can send _any_ ruby object to the actor with +Actor::Messaging::Writer+; though mutable objects aren't recommended, as messages will be read by other threads. Those messages can be handled by implementing +handle+ on the Actor class.
+
+[source,ruby]
+----
+class Actor
+  # ...
+
+  def handle message
+    case message
+    when SomeClass then do_something
+    when OtherClass then do_something_else
+    end
+  end
+end
+----
+
+System messages can additionally be handled via the +handle+ method, and they will not interfere with the normal internal handling of such messages.
+
+=== License
+
+Actor is licensed under the link:doc/MIT-License.txt[MIT license]
+
+Copyright © Nathan Ladd
