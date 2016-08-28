@@ -32,7 +32,7 @@ module Actor
       self.actor_state = State::Running
 
     when SystemMessage::Stop then
-      self.actor_state = State::Stopped
+      self.actor_state = State::Running
       raise StopIteration
 
     when SystemMessage::RecordStatus then
@@ -64,6 +64,8 @@ module Actor
 
       Thread.pass
     end
+
+    self.actor_state = State::Stopped
   end
 
   module Destructure
