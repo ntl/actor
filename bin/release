@@ -5,7 +5,7 @@ set -eu
 export GEM_VERSION=$1
 
 git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION"
-git push
+git push github "v$GEM_VERSION"
 
 echo
 echo "Building version for ntl.fury.io"
