@@ -8,8 +8,11 @@ echo
 echo "Running tests"
 echo "= = ="
 
-bin/stress-test
+bin/bench
 
+echo
+echo "Tagging release"
+echo "= = ="
 git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION"
 git push github "v$GEM_VERSION"
 
