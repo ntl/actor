@@ -8,19 +8,6 @@ context "Actor lifecycle" do
 
   context "Initial state" do
     TestFixtures::SampleActorStatus.(
-      "Actor is paused",
-      address: writer,
-      test: proc { |status|
-        assert status.state == :paused
-        assert status.executions == 0
-      }
-    )
-  end
-
-  context "Actor is sent a resume system message" do
-    writer.write Messaging::SystemMessage::Resume.new
-
-    TestFixtures::SampleActorStatus.(
       "Actor is running",
       address: writer,
       test: proc { |status, initial_status|
@@ -39,6 +26,19 @@ context "Actor lifecycle" do
       test: proc { |status, initial_status|
         assert status.state == :paused
         assert status.executions == initial_status.executions
+      }
+    )
+  end
+
+  context "Actor is sent a resume system message" do
+    writer.write Messaging::SystemMessage::Resume.new
+
+    TestFixtures::SampleActorStatus.(
+      "Actor is running",
+      address: writer,
+      test: proc { |status, initial_status|
+        assert status.state == :running
+        assert status.executions > initial_status.executions
       }
     )
   end

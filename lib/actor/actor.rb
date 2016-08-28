@@ -2,6 +2,7 @@ module Actor
   def self.included cls
     cls.class_exec do
       extend Destructure
+      extend Spawn
       extend Start
 
       prepend UpdateStatistics
@@ -81,14 +82,16 @@ module Actor
     end
   end
 
-  module Start
-    def start *positional_arguments, include: nil, **keyword_arguments, &block
+  module Spawn
+    def spawn *positional_arguments, include: nil, **keyword_arguments, &block
       address = Messaging::Address.get
 
+      method = if respond_to? :build then :build else :new end
+
       if keyword_arguments.empty?
-        instance = new *positional_arguments, &block
+        instance = __send__ method, *positional_arguments, &block
       else
-        instance = new *positional_arguments, **keyword_arguments, &block
+        instance = __send__ method, *positional_arguments, **keyword_arguments, &block
       end
 
       reader = Messaging::Reader.build address
@@ -100,6 +103,24 @@ module Actor
       thread = ::Thread.new do
         instance.run_loop
       end
+
+      destructure instance, address, thread, include: include
+    end
+  end
+
+  module Start
+    def start *positional_arguments, include: nil, **keyword_arguments, &block
+      address, instance, thread = spawn(
+        *positional_arguments,
+        include: %i(actor thread),
+        **keyword_arguments,
+        &block
+      )
+
+      Messaging::Writer.write(
+        Messaging::SystemMessage::Resume.new,
+        address
+      )
 
       destructure instance, address, thread, include: include
     end

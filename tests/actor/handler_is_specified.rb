@@ -4,9 +4,12 @@ context "Handler is specified by actor implementation" do
   actor_cls = Class.new do
     include Actor
 
+    def action
+      raise StopIteration
+    end
+
     def handle message
       @handled = true if message == 'some-message'
-      raise StopIteration
     end
 
     def handled_message?

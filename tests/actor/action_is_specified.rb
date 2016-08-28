@@ -14,12 +14,7 @@ context "Action is specified by actor implementation" do
     end
   end
 
-  address, thread, actor = actor_cls.start include: %i(thread actor)
-
-  Messaging::Writer.write(
-    Messaging::SystemMessage::Resume.new,
-    address
-  )
+  _, actor, thread = actor_cls.start include: %i(actor thread)
 
   thread.join
 
