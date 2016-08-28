@@ -1,17 +1,14 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = 'test_bench'
-  s.version = '1.1.1'
+  s.name = ENV.fetch 'GEM_NAME' do 'actor' end
+  s.version = ENV.fetch 'GEM_VERSION'
 
   s.authors = ['Nathan Ladd']
-  s.homepage = 'https://github.com/ntl/test-bench'
+  s.homepage = 'https://github.com/ntl/actor'
   s.email = 'nathanladd+github@gmail.com'
   s.licenses = %w(MIT)
-  s.summary = "A frugal test framework for ruby"
-  s.description = "Test Bench is a test framework for ruby designed to offer the minimum set of features necessary to test well designed code effectively."
-
-  s.executables = ['bench']
-  s.bindir = 'bin'
+  s.summary = "Implementation of actor pattern for ruby"
+  s.description = "Implementation of actor pattern for ruby designed for simplicity and frugality"
 
   s.require_paths = %w(lib)
   s.files = Dir.glob 'lib/**/*'
