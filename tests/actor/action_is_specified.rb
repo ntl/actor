@@ -1,20 +1,17 @@
 require_relative '../test_init'
 
 context "Action is specified by actor implementation" do
-  actor_cls = Class.new do
-    include Actor
+  address, actor, thread = Controls::Actor::Example.start include: %i(actor thread)
 
-    def action
-      @acted = true
-      raise StopIteration
-    end
+  TestFixtures::SampleActorStatus.(
+    "Action is executed",
+    address: address,
+    test: proc {
+      assert actor.action_executed?
+    }
+  )
 
-    def action_executed?
-      @acted
-    end
-  end
-
-  _, actor, thread = actor_cls.start include: %i(actor thread)
+  Messaging::Writer.write Message::Stop.new, address
 
   thread.join
 

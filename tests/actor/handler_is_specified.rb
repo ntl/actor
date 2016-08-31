@@ -1,30 +1,18 @@
 require_relative '../test_init'
 
 context "Handler is specified by actor implementation" do
-  actor_cls = Class.new do
-    include Actor
+  address, thread, actor = Controls::Actor::StopsImmediately.spawn include: %i(thread actor)
 
-    def action
-      raise StopIteration
-    end
+  message = Controls::Message.example
 
-    def handle message
-      @handled = true if message == 'some-message'
-    end
-
-    def handled_message?
-      @handled
-    end
-  end
-
-  address, thread, actor = actor_cls.spawn include: %i(thread actor)
-
-  Messaging::Writer.write 'some-message', address
+  Messaging::Writer.write message, address
   Messaging::Writer.write Message::Resume.new, address
 
   thread.join
 
   test "Message is handled" do
-    assert actor.handled_message?
+    assert actor do
+      handled_message? message
+    end
   end
 end

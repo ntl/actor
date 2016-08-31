@@ -9,7 +9,7 @@ context "Actor lifecycle" do
   context "Initial state" do
     TestFixtures::SampleActorStatus.(
       "Actor is running",
-      address: writer,
+      address: address,
       test: proc { |status, initial_status|
         assert status.state == :running
         assert status.executions > initial_status.executions
@@ -22,7 +22,7 @@ context "Actor lifecycle" do
 
     TestFixtures::SampleActorStatus.(
       "Actor is paused",
-      address: writer,
+      address: address,
       test: proc { |status, initial_status|
         assert status.state == :paused
         assert status.executions == initial_status.executions
@@ -35,7 +35,7 @@ context "Actor lifecycle" do
 
     TestFixtures::SampleActorStatus.(
       "Actor is running",
-      address: writer,
+      address: address,
       test: proc { |status, initial_status|
         assert status.state == :running
         assert status.executions > initial_status.executions

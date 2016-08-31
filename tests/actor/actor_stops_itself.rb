@@ -1,15 +1,7 @@
 require_relative '../test_init'
 
 context "Actor stops itself" do
-  actor_cls = Class.new do
-    include Actor
-
-    def action
-      raise StopIteration
-    end
-  end
-
-  _, actor, thread = actor_cls.start include: %i(actor thread)
+  _, actor, thread = Controls::Actor::StopsImmediately.start include: %i(actor thread)
 
   thread.join
 

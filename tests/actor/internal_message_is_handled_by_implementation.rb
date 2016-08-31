@@ -1,28 +1,17 @@
 require_relative '../test_init'
 
 context "Handler specified by actor implementation handles internal message" do
-  actor_cls = Class.new do
-    include Actor
+  address, thread, actor = Controls::Actor::Example.start include: %i(thread actor)
 
-    def handle message
-      @handled = true if Message::Stop === message
-    end
+  stop_message = Message::Stop.new
 
-    def handled_internal_message?
-      @handled
-    end
-  end
-
-  address, thread, actor = actor_cls.start include: %i(thread actor)
-
-  Messaging::Writer.write(
-    Message::Stop.new,
-    address
-  )
+  Messaging::Writer.write stop_message, address
 
   thread.join
 
   test "Internal message is handled" do
-    assert actor.handled_internal_message?
+    assert actor do
+      handled_message? stop_message
+    end
   end
 end

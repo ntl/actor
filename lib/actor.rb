@@ -19,3 +19,4 @@ require 'actor/messaging/writer/substitute'
 require 'actor/message'
 
 require 'actor/actor'
+require 'actor/supervisor'
