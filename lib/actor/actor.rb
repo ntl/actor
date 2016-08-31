@@ -90,7 +90,7 @@ module Actor
 
   module Spawn
     def spawn *positional_arguments, include: nil, **keyword_arguments, &block
-      address = Messaging::Address.get
+      address = Messaging::Address.build
 
       method = if respond_to? :build then :build else :new end
 

@@ -1,7 +1,7 @@
 require_relative '../test_init'
 
 context "Address is created" do
-  address = Messaging::Address.get
+  address = Messaging::Address.build
 
   address.queue.tail = 11
   address.queue.list << Object.new

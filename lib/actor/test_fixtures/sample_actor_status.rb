@@ -14,7 +14,7 @@ module Actor
       end
 
       def self.call prose, address:, test:
-        reply_address = Messaging::Address.get
+        reply_address = Messaging::Address.build
         reader = Messaging::Reader.build reply_address
 
         writer = Messaging::Writer.build address

@@ -1,7 +1,7 @@
 require_relative '../test_init'
 
 context "Writing a message" do
-  address = Messaging::Address.get
+  address = Messaging::Address.build
   writer = Messaging::Writer.build address
 
   context "Address has no readers" do

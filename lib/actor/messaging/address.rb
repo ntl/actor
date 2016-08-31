@@ -9,7 +9,7 @@ module Actor
         @queue = queue
       end
 
-      def self.get
+      def self.build
         id = SecureRandom.uuid
         queue = Queue.new
 

@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Starting a reader" do
-  address = Messaging::Address.get
+  address = Messaging::Address.build
   reader = Messaging::Reader.build address
 
   test "Reader count on address is increased" do

@@ -2,7 +2,7 @@ require_relative '../test_init'
 
 context "Destructuring the artifacts instantiated by starting" do
   actor = Controls::Actor.example
-  address = Messaging::Address.get
+  address = Messaging::Address.build
   thread = Thread.current
 
   test "Address is returned by default" do

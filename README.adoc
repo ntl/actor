@@ -126,11 +126,11 @@ The Actor instance should not be used outside of testing purposes, as communicat
 
 === Messages Handled Internally
 
-In addition to +Actor::Message::Stop+, there are other messages defined internally by Actor. +Pause+ and +Resume+ will cause the actor to pause and resume execution in between successive invocations of +action+. +RecordStatus+ will instruct an Actor to report some statistical information as well as general status. That message requires a reply address to be specified, which can be obtained via calling +Actor::Messaging::Address.get+. The reply can then be read by instantiating a reader for the reply address.
+In addition to +Actor::Message::Stop+, there are other messages defined internally by Actor. +Pause+ and +Resume+ will cause the actor to pause and resume execution in between successive invocations of +action+. +RecordStatus+ will instruct an Actor to report some statistical information as well as general status. That message requires a reply address to be specified, which can be obtained via calling +Actor::Messaging::Address.build+. The reply can then be read by instantiating a reader for the reply address.
 
 [source,ruby]
 ----
-reply_address = Actor::Messaging::Address.get
+reply_address = Actor::Messaging::Address.build
 reply_reader = Actor::Messaging::Reader.build reply_address
 
 record_status = Actor::Message::RecordStatus.new reply_address
@@ -144,7 +144,7 @@ status_reply = reply_reader.read wait: true
 status_reply.executions
 ----
 
-NOTE: Make sure at least one reader is constructed before writing any message to an address, as messages that are written to addresses without any readers are dropped in order to prevent memory leaks. Every actor uses a reader for handling messages, so this is a concern when using addresses returned by +Actor::Messaging::Address.get+. Also note that an address is a resource, and must be stopped via the +#stop+ method when it is no longer needed.
+NOTE: Make sure at least one reader is constructed before writing any message to an address, as messages that are written to addresses without any readers are dropped in order to prevent memory leaks. Every actor uses a reader for handling messages, so this is a concern when using addresses returned by +Actor::Messaging::Address.build+. Also note that an address is a resource, and must be stopped via the +#stop+ method when it is no longer needed.
 
 === Handling Custom Messages
 
