@@ -97,7 +97,7 @@ address = FizzBuzz.start 1000
 
 stop_message = Actor::Message::Stop.new
 
-Actor::Messaging::Writer.write stop_message, address
+Actor::Messaging::Writer.(stop_message, address)
 ----
 
 Of course, while this will cause the actor to stop _fairly soon_, it won't be immediate.
@@ -109,7 +109,7 @@ To wait for an actor to actually terminate, you'll want to call +Thread#join+ on
 address, thread = FizzBuzz.start 1000, include: %i(thread)
 
 # See instantiation of stop_message above
-Actor::Messaging::Writer.write stop_message, address
+Actor::Messaging::Writer.(stop_message, address)
 
 # Ruby will block until the thread terminates
 thread.join
@@ -135,10 +135,10 @@ reply_reader = Actor::Messaging::Reader.build reply_address
 
 record_status = Actor::Message::RecordStatus.new reply_address
 
-Actor::Messaging::Writer.write record_status, address
+Actor::Messaging::Writer.(record_status, address)
 
 # Wait for the reply to be issued by the actor
-status_reply = reply_reader.read wait: true
+status_reply = reply_reader.(wait: true)
 
 # Query e.g. the number of times #action has been executed
 status_reply.executions
@@ -168,7 +168,7 @@ end
 # Start an actor and send a custom message to it
 address = Actor.start
 
-Actor::Messaging::Writer.write SomeMessage.new, address
+Actor::Messaging::Writer.(SomeMessage.new, address)
 ----
 
 System messages can additionally be handled via the +handle+ method, and they will not interfere with the normal internal handling of such messages.

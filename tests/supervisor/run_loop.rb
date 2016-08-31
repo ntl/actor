@@ -17,8 +17,8 @@ context "Supervisor run loop" do
     supervisor.start do
       counter += 1
 
-      Actor::Messaging::Writer.write stop_message, address_1 if counter == 1
-      Actor::Messaging::Writer.write stop_message, address_2 if counter == 11
+      Actor::Messaging::Writer.(stop_message, address_1) if counter == 1
+      Actor::Messaging::Writer.(stop_message, address_2) if counter == 11
     end
 
     refute thread_1.alive?

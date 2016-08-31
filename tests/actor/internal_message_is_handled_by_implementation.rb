@@ -5,7 +5,7 @@ context "Handler specified by actor implementation handles internal message" do
 
   stop_message = Message::Stop.new
 
-  Messaging::Writer.write stop_message, address
+  Messaging::Writer.(stop_message, address)
 
   thread.join
 

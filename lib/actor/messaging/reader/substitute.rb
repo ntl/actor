@@ -4,7 +4,7 @@ module Actor
       class Substitute
         attr_accessor :stopped
 
-        def read wait: nil
+        def call wait: nil
           message = messages.shift
 
           return message if message

@@ -7,9 +7,9 @@ context "Actor status is queried" do
   reader = Messaging::Reader.build reply_address
 
   record_status_message = Message::RecordStatus.new reply_address
-  Messaging::Writer.write record_status_message, address
+  Messaging::Writer.(record_status_message, address)
 
-  status = reader.read wait: true
+  status = reader.(wait: true)
 
   test "Executions count is copied" do
     assert status.executions.is_a? Integer

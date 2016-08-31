@@ -5,7 +5,7 @@ context "Writing a message" do
   writer = Messaging::Writer.build address
 
   context "Address has no readers" do
-    writer.write 'some-message'
+    writer.('some-message')
 
     test "Message is not written to address queue" do
       assert address.queue, &:empty?
@@ -15,7 +15,7 @@ context "Writing a message" do
   context "Address has a reader" do
     Messaging::Reader.build address
 
-    writer.write 'some-message'
+    writer.('some-message')
 
     test "Message is written to address queue" do
       assert address.queue do

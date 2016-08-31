@@ -15,7 +15,7 @@ module Actor
         new queue_reader
       end
 
-      def read wait: nil
+      def call wait: nil
         queue_reader.read wait: wait
       end
 

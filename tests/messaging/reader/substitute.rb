@@ -6,7 +6,7 @@ context "Reader substitute" do
       substitute = Messaging::Reader::Substitute.new
 
       context "Wait is not requested (default)" do
-        message = substitute.read
+        message = substitute.()
 
         test "Nothing is returned" do
           assert message.nil?
@@ -15,7 +15,7 @@ context "Reader substitute" do
 
       context "Wait is requested" do
         test "Error is raised" do
-          assert proc { substitute.read wait: true } do
+          assert proc { substitute.(wait: true) } do
             raises_error? Messaging::Reader::Substitute::Wait
           end
         end
@@ -27,7 +27,7 @@ context "Reader substitute" do
         substitute = Messaging::Reader::Substitute.new
         substitute.add_message 'some-message'
 
-        message = substitute.read
+        message = substitute.()
 
         test "Message is returned" do
           assert message == 'some-message'
@@ -38,7 +38,7 @@ context "Reader substitute" do
         substitute = Messaging::Reader::Substitute.new
         substitute.add_message 'some-message'
 
-        message = substitute.read wait: true
+        message = substitute.(wait: true)
 
         test "Message is returned" do
           assert message == 'some-message'

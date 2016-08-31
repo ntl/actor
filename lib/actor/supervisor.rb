@@ -25,20 +25,20 @@ module Actor
       addresses = actors.map &:address
 
       addresses.each do |address|
-        ::Actor::Messaging::Writer.write message, address
+        Messaging::Writer.(message, address)
       end
     end
 
     def pause
-      broadcast ::Actor::Message::Pause.new
+      broadcast Message::Pause.new
     end
 
     def resume
-      broadcast ::Actor::Message::Resume.new
+      broadcast Message::Resume.new
     end
 
     def stop
-      broadcast ::Actor::Message::Stop.new
+      broadcast Message::Stop.new
     end
 
     def start &supplementary_action

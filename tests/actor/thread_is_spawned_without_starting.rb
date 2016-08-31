@@ -9,7 +9,7 @@ context "Thread is spawned with actor in paused state" do
 
   initial_state = actor.actor_state
 
-  Messaging::Writer.write Message::Stop.new, address
+  Messaging::Writer.(Message::Stop.new, address)
 
   thread.join
 

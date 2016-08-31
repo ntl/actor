@@ -22,7 +22,7 @@ context "Writer substitute" do
   end
 
   context "Message was written" do
-    substitute.write 'some-message'
+    substitute.('some-message')
 
     context "Written predicate" do
       context "Block is not specified" do

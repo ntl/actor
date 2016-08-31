@@ -43,7 +43,7 @@ module Actor
       status.state = actor_state
       status.actor_class = self.class.name
 
-      Messaging::Writer.write status, message.reply_address
+      Messaging::Writer.(status, message.reply_address)
     end
   end
 
@@ -53,7 +53,7 @@ module Actor
 
   def run_loop
     loop do
-      while message = reader.read(wait: actor_state == State::Paused)
+      while message = reader.(wait: actor_state == State::Paused)
         handle message
 
         if message.is_a? Message
@@ -124,10 +124,7 @@ module Actor
         &block
       )
 
-      Messaging::Writer.write(
-        Message::Resume.new,
-        address
-      )
+      Messaging::Writer.(Message::Resume.new, address)
 
       destructure instance, address, thread, include: include
     end

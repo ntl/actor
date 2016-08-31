@@ -2,7 +2,7 @@ module Actor
   module Messaging
     class Writer
       class Substitute
-        def write message
+        def call message
           messages << message
         end
 

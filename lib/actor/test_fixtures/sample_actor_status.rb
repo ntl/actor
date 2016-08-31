@@ -24,13 +24,13 @@ module Actor
       end
 
       def call test_prose, &block
-        writer.write record_status_message
+        writer.(record_status_message)
 
-        status_0 = reader.read wait: true
+        status_0 = reader.(wait: true)
 
-        writer.write record_status_message
+        writer.(record_status_message)
 
-        status_1 = reader.read wait: true
+        status_1 = reader.(wait: true)
 
         test test_prose do
           block.(status_1, status_0)

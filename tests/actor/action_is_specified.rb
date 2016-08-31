@@ -11,7 +11,7 @@ context "Action is specified by actor implementation" do
     }
   )
 
-  Messaging::Writer.write Message::Stop.new, address
+  Messaging::Writer.(Message::Stop.new, address)
 
   thread.join
 

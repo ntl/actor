@@ -5,8 +5,8 @@ context "Handler is specified by actor implementation" do
 
   message = Controls::Message.example
 
-  Messaging::Writer.write message, address
-  Messaging::Writer.write Message::Resume.new, address
+  Messaging::Writer.(message, address)
+  Messaging::Writer.(Message::Resume.new, address)
 
   thread.join
 

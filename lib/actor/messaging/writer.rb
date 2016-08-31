@@ -13,12 +13,12 @@ module Actor
         new queue
       end
 
-      def self.write message, address
+      def self.call message, address
         instance = build address
-        instance.write message
+        instance.(message)
       end
 
-      def write message
+      def call message
         queue.write message
       end
     end
