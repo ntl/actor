@@ -47,7 +47,7 @@ module Actor
 
         actors.delete_if do |actor|
           thread = actor.thread
-          thread.join 0
+          thread.join TimeUnit.millisecond
         end
 
         break if actors.empty?

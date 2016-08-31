@@ -18,5 +18,7 @@ require 'actor/messaging/writer/substitute'
 
 require 'actor/message'
 
+require 'actor/time_unit'
+
 require 'actor/actor'
 require 'actor/supervisor'
