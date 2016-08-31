@@ -41,6 +41,7 @@ module Actor
       Statistics::Copy.(status, actor_statistics)
 
       status.state = actor_state
+      status.actor_class = self.class.name
 
       Messaging::Writer.write status, message.reply_address
     end

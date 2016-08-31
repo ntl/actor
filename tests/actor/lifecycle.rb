@@ -2,7 +2,6 @@ require_relative '../test_init'
 
 context "Actor lifecycle" do
   address, thread, actor = Controls::Actor::Example.start include: %i(thread actor)
-  thread.abort_on_exception = true
 
   writer = Messaging::Writer.build address
 
