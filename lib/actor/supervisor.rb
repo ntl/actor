@@ -42,6 +42,10 @@ module Actor
     end
 
     def start &supplementary_action
+      Signal.trap 'CONT' do resume end
+      Signal.trap 'INT' do stop end
+      Signal.trap 'TSTP' do pause end
+
       loop do
         supplementary_action.() if supplementary_action
 
