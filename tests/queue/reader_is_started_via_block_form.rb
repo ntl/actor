@@ -1,11 +1,11 @@
 require_relative '../test_init'
 
 context "Reader is started via block form" do
-  queue = Queue.new
+  queue = Actor::Queue.new
   queue.tail = 11
 
   context do
-    reader = Queue::Reader.start queue do |reader|
+    reader = Actor::Queue::Reader.start queue do |reader|
       test "Position is set to tail of queue" do
         assert reader.position == 11
       end
@@ -32,7 +32,7 @@ context "Reader is started via block form" do
     reader = nil
 
     begin
-      Queue::Reader.start queue do |_reader|
+      Actor::Queue::Reader.start queue do |_reader|
         reader = _reader
         fail
       end

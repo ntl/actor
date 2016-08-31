@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Thread synchronization between a writer and multiple readers" do
-  queue = Queue.new
+  queue = Actor::Queue.new
 
   object = Object.new
 
@@ -21,7 +21,7 @@ context "Thread synchronization between a writer and multiple readers" do
     },
 
     setup_thread: proc {
-      thread[:reader] = Queue::Reader.build queue
+      thread[:reader] = Actor::Queue::Reader.build queue
     },
 
     each_iteration: proc {

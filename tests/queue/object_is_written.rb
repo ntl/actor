@@ -4,7 +4,7 @@ context "Object is written to queue" do
   object = Object.new
 
   context "Queue has no readers" do
-    queue = Queue.new
+    queue = Actor::Queue.new
 
     queue.write object
 
@@ -14,7 +14,7 @@ context "Object is written to queue" do
   end
 
   context "Queue has a reader" do
-    queue = Queue.new
+    queue = Actor::Queue.new
     queue.reader_started
 
     queue.write object

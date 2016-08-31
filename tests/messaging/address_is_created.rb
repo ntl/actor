@@ -27,7 +27,7 @@ context "Address is created" do
   end
 
   test "Queue is assigned to address" do
-    assert address.queue.instance_of? Queue
+    assert address.queue.instance_of? Actor::Queue
   end
 
   test "Queue position details can be queried" do

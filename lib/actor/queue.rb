@@ -4,6 +4,7 @@ module Actor
     attr_reader :reader_positions
     attr_reader :list
     attr_reader :mutex
+    attr_reader :write_queue
     attr_accessor :tail
 
     def initialize
@@ -11,6 +12,7 @@ module Actor
       @reader_positions = Hash.new 0
       @list = []
       @mutex = Mutex.new
+      @write_queue = ::Queue.new
       @tail = 0
     end
 
@@ -22,7 +24,11 @@ module Actor
       mutex.synchronize do
         relative_position = position - tail
 
-        until list.count > relative_position
+        loop do
+          flush_write_queue
+
+          break if list.count > relative_position
+
           return nil unless wait
 
           blocked_threads << Thread.current
@@ -66,17 +72,13 @@ module Actor
     end
 
     def size
-      list.size
+      list.size + write_queue.size
     end
 
     def write object
-      # Owning the mutex is not necessary here; the worst that can happen is
-      # that occasionally we write a object when there aren't any readers.
       return unless readers?
 
-      mutex.synchronize do
-        list << object
-      end
+      write_queue << object
 
       blocked_threads.each &:wakeup
     end
@@ -107,6 +109,10 @@ module Actor
       end
 
       ref_count
+    end
+
+    def flush_write_queue
+      list << write_queue.deq until write_queue.empty?
     end
 
     def up position

@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Thread synchronization for writing objects" do
-  queue = Queue.new
+  queue = Actor::Queue.new
 
   iterations, threads = TestFixtures::ParallelIteration.(
     'All objects are written',

@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Thread synchronization for reading" do
-  queue = Queue.new
+  queue = Actor::Queue.new
 
   object = Object.new
 

@@ -1,10 +1,10 @@
 require_relative '../test_init'
 
 context "Reader starts reading a queue" do
-  queue = Queue.new
+  queue = Actor::Queue.new
   queue.tail = 11
 
-  reader = Queue::Reader.build queue
+  reader = Actor::Queue::Reader.build queue
 
   test "Position is set to tail of queue" do
     assert reader.position == 11

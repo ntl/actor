@@ -1,10 +1,10 @@
 require_relative '../test_init'
 
 context "Reader stops reading a queue" do
-  queue = Queue.new
+  queue = Actor::Queue.new
   queue.tail = 11
 
-  reader = Queue::Reader.build queue
+  reader = Actor::Queue::Reader.build queue
 
   reader.stop
 
@@ -22,7 +22,7 @@ context "Reader stops reading a queue" do
 
   test "Subsequent reads fail immediately" do
     assert proc { reader.read } do
-      raises_error? Queue::Reader::Stopped
+      raises_error? Actor::Queue::Reader::Stopped
     end
   end
 end

@@ -4,7 +4,7 @@ context "Object is read from queue" do
   object = Object.new
 
   context "Queue is not empty" do
-    queue = Queue.new
+    queue = Actor::Queue.new
     queue.list << object
     queue.tail = 11
     queue.reader_started
@@ -26,7 +26,7 @@ context "Object is read from queue" do
 
   context "Queue is empty" do
     context "Wait is not requested (default)" do
-      queue = Queue.new
+      queue = Actor::Queue.new
       queue.tail = 11
       queue.reader_started
 
@@ -46,7 +46,7 @@ context "Object is read from queue" do
     end
 
     context "Wait is requested" do
-      queue = Queue.new
+      queue = Actor::Queue.new
       queue.tail = 11
       queue.reader_started
 

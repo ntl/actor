@@ -1,7 +1,7 @@
 require_relative '../test_init'
 
 context "Objects that have been read by all readers are expired" do
-  queue = Queue.new
+  queue = Actor::Queue.new
 
   queue.reader_started 0
   queue.reader_started 3
