@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby --disable-gems
+
+require_relative '../init'
+
+require 'test_bench/cli'
+
+TestBench::CLI.() or exit 1

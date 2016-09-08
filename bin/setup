@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eu
+
+rm -rf installed-packages
+
+gem install --conservative --no-post-install-message --norc --no-document --install-dir ./installed-packages/rubygems test_bench benchmark-ips
+
+mkdir -p installed-packages/lib
+mkdir -p installed-packages/lib/benchmark
+
+for entry in installed-packages/rubygems/gems/test_bench*/lib/*; do
+  ln -sf ../../$entry installed-packages/lib
+done
+
+for entry in installed-packages/rubygems/gems/benchmark-ips*/lib/benchmark/*; do
+  ln -sf ../../../$entry installed-packages/lib/benchmark
+done
