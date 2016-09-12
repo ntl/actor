@@ -2,6 +2,7 @@ module Actor
   class Supervisor
     include Actor
 
+    attr_accessor :error
     attr_writer :thread_group
 
     handle :start do
@@ -14,6 +15,12 @@ module Actor
       message
     end
 
+    handle :actor_crashed do |message|
+      self.error ||= message.error
+
+      Messages::Stop.new
+    end
+
     def actor_threads
       list = thread_group.list
       list.delete Thread.current
@@ -24,6 +31,7 @@ module Actor
       @thread_group ||= Substitutes::ThreadGroup.new
     end
 
+    ActorCrashed = Struct.new :error
     Continue = Class.new
   end
 end
