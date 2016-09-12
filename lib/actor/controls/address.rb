@@ -6,7 +6,7 @@ module Actor
 
         uuid = UUID.example id_offset
 
-        Actor::Address.new stream, uuid
+        ::Actor::Address.new stream, uuid
       end
 
       def self.pair
