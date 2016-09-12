@@ -1,7 +1,12 @@
 require 'securerandom'
 require 'set'
 
+require 'actor/substitutes/kernel'
+require 'actor/substitutes/thread_group'
+require 'actor/substitutes/thread'
+
 require 'actor/destructure'
+require 'actor/duration'
 require 'actor/messages'
 require 'actor/stream'
 
@@ -13,3 +18,6 @@ require 'actor/messaging/write/substitute'
 
 require 'actor/handle_macro'
 require 'actor/actor'
+
+require 'actor/router'
+require 'actor/supervisor'
