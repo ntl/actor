@@ -18,6 +18,14 @@ module Actor
       Example = Struct.new :some_attribute do
         include Messaging::Message
       end
+
+      module ActorStarted
+        def self.example
+          actor_address = Address.example
+
+          Messages::ActorStarted.new actor_address
+        end
+      end
     end
   end
 end

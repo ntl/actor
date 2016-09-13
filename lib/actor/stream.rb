@@ -19,5 +19,18 @@ module Actor
         queue.enq message
       end
     end
+
+    module Null
+      extend self
+
+      def add_queue queue
+      end
+
+      def remove_queue queue
+      end
+
+      def write message
+      end
+    end
   end
 end

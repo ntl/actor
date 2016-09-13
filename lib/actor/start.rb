@@ -1,5 +1,6 @@
 module Actor
   class Start
+    attr_writer :supervisor_address
     attr_writer :thread
     attr_writer :writer
 
@@ -11,15 +12,21 @@ module Actor
     end
 
     def call actor, address, include: nil
-      start_message = Messages::Start.new
+      address ||= Address.build
 
-      writer.(start_message, address)
+      start = Messages::Start.new
+      writer.(start, address)
 
-      thread = self.thread.new do
+      actor_started = Messages::ActorStarted.new address
+      writer.(actor_started, supervisor_address)
+
+      self.thread.new do
         actor.start
       end
+    end
 
-      thread
+    def supervisor_address
+      @supervisor_address ||= Address::Substitute.build
     end
 
     def thread
