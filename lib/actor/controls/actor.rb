@@ -7,6 +7,18 @@ module Actor
 
       class Example
         include ::Actor
+
+        def initialize
+          @messages = []
+        end
+
+        handle Message::Example do |message|
+          @messages << message
+        end
+
+        def handled? message
+          @messages.include? message
+        end
       end
 
       class Singleton

@@ -19,31 +19,30 @@ module Actor
     attr_writer :reader
     attr_writer :writer
 
-    def handle message, address=nil
+    def handle message
       method_name = HandleMacro::MethodName.get message
 
       return unless respond_to? method_name
 
       method = self.method method_name
 
-      case method.arity
-      when 0
+      if method.arity == 0
         method.()
-
-      when 1
-        method.(message)
-
-      when -1 then
-        if method.parameters.count == 1
-          method.(message)
-        else
-          method.(message, address)
-        end
-
       else
-        method.(message, address)
+        method.(message)
       end
     end
+
+    def next
+      message = reader.(wait: true)
+
+      handle message
+    end
+
+    def run_loop
+      loop do self.next end
+    end
+    alias_method :start, :run_loop
 
     def reader
       @reader ||= Messaging::Read::Substitute.new

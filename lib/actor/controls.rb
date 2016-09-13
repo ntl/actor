@@ -1,7 +1,7 @@
-require 'actor/controls/actor'
 require 'actor/controls/address'
 require 'actor/controls/error'
 require 'actor/controls/message'
+require 'actor/controls/actor'
 require 'actor/controls/message/attribute'
 require 'actor/controls/uuid'
 require 'actor/controls/thread'
