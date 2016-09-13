@@ -19,6 +19,14 @@ module Actor
         instance
       end
 
+      def self.configure receiver, address, attr_name: nil
+        attr_name ||= :reader
+
+        instance = build address
+        receiver.public_send "#{attr_name}=", instance
+        instance
+      end
+
       def call wait: nil
         if wait
           queue.deq

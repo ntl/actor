@@ -52,4 +52,56 @@ context "Thread substitute" do
       assert thread.name == 'some-thread'
     end
   end
+
+  context "Thread is joined" do
+    context "Limit is not specified" do
+      executed_block = false
+
+      thread = Substitutes::Thread.new do
+        executed_block = true
+      end
+
+      return_value = thread.join
+
+      test "Thread is returned" do
+        assert return_value == thread
+      end
+
+      test "Block supplied on initialization is executed" do
+        assert executed_block
+      end
+    end
+
+    context "Limit is specified" do
+      context "Limit is not exceeded" do
+        executed_block = false
+
+        thread = Substitutes::Thread.new do
+          executed_block = true
+        end
+
+        return_value = thread.join
+
+        test "Thread is returned" do
+          assert return_value == thread
+        end
+
+        test "Block supplied on initialization is executed" do
+          assert executed_block
+        end
+      end
+
+      context "Limit is exceeded" do
+        thread = Substitutes::Thread.new do
+          sleep
+        end
+
+        return_value = thread.join Duration.millisecond
+
+        test "Nothing is returned" do
+          assert return_value == nil
+        end
+      end
+    end
+  end
 end

@@ -34,6 +34,20 @@ module Actor
         end
       end
 
+      class Stops
+        include ::Actor
+
+        handle :start do
+          @stopped = true
+
+          raise StopIteration
+        end
+
+        def stopped?
+          @stopped ? true : false
+        end
+      end
+
       class Singleton
         include ::Actor
 
