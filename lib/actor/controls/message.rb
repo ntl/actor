@@ -15,7 +15,9 @@ module Actor
         end
       end
 
-      Example = Struct.new :some_attribute
+      Example = Struct.new :some_attribute do
+        include Messaging::Message
+      end
     end
   end
 end

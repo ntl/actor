@@ -14,10 +14,23 @@ module Actor
 
         handle Message::Example do |message|
           @messages << message
+          nil
         end
 
         def handled? message
           @messages.include? message
+        end
+      end
+
+      class Continues
+        include ::Actor
+
+        def handle message
+          if message == Message.example
+            Message::Other.example
+          else
+            Message.example
+          end
         end
       end
 

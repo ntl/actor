@@ -1,6 +1,11 @@
 module Actor
   module Messages
-    Start = Class.new
-    Stop = Class.new
+    class Start
+      include Messaging::Message
+    end
+
+    class Stop
+      include Messaging::Message
+    end
   end
 end

@@ -19,12 +19,14 @@ module Actor
     attr_writer :reader
     attr_writer :writer
 
+    def continuations
+      @continuations ||= []
+    end
+
     def handle message
-      method_name = HandleMacro::MethodName.get message
+      method = handle? message
 
-      return unless respond_to? method_name
-
-      method = self.method method_name
+      return if method.nil?
 
       if method.arity == 0
         method.()
@@ -33,10 +35,27 @@ module Actor
       end
     end
 
-    def next
-      message = reader.(wait: true)
+    def handle? message
+      method_name = HandleMacro::MethodName.get message
 
-      handle message
+      if respond_to? method_name
+        method method_name
+      end
+    end
+
+    def next
+      if continuations.empty?
+        message = reader.(wait: true)
+      else
+        message = reader.(wait: false)
+        message ||= continuations.shift
+      end
+
+      continuation_message = handle message
+
+      if continuation_message.is_a? Messaging::Message
+        continuations << continuation_message
+      end
     end
 
     def run_loop
