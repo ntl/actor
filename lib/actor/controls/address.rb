@@ -19,6 +19,24 @@ module Actor
 
         return address, queue
       end
+
+      module Actor
+        def self.example
+          Address.example 0
+        end
+      end
+
+      module Supervisor
+        def self.example
+          Address.example 1
+        end
+      end
+
+      module Router
+        def self.example
+          Address.example 2
+        end
+      end
     end
   end
 end

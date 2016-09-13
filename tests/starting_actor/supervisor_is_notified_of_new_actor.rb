@@ -2,8 +2,8 @@ require_relative '../test_init'
 
 context "Supervisor is notified when actor is started" do
   actor = Controls::Actor::Stops.new
-  address = Controls::Address.example
-  supervisor_address = Controls::Address.example 1
+  address = Controls::Address::Actor.example
+  supervisor_address = Controls::Address::Supervisor.example
 
   start = Start.new
   start.supervisor_address = supervisor_address

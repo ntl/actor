@@ -2,8 +2,10 @@ module Actor
   class Supervisor
     include Actor
 
+    attr_writer :address
     attr_accessor :error
     attr_writer :thread_group
+    attr_writer :router_address
 
     handle :start do
       Continue.new
@@ -21,10 +23,27 @@ module Actor
       Messages::Stop.new
     end
 
+    handle :actor_started do |message|
+      reader = Messaging::Read.build address
+      output_address = message.actor_address
+
+      add_route = Router::AddRoute.new reader, output_address
+
+      writer.(add_route, router_address)
+    end
+
     def actor_threads
       list = thread_group.list
       list.delete Thread.current
       list
+    end
+
+    def address
+      @address ||= Address::Substitute.build
+    end
+
+    def router_address
+      @router_address ||= Address::Substitute.build
     end
 
     def thread_group

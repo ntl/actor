@@ -21,7 +21,7 @@ module Actor
 
       module ActorStarted
         def self.example
-          actor_address = Address.example
+          actor_address = Address::Actor.example
 
           Messages::ActorStarted.new actor_address
         end

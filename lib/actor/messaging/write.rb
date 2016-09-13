@@ -18,6 +18,8 @@ module Actor
         stream = address.stream
 
         stream.write message
+
+        nil
       end
     end
   end

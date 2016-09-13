@@ -8,10 +8,14 @@ context "Writer writes a message to an address" do
 
     address, queue = Controls::Address.pair
 
-    writer.(message, address)
+    return_value = writer.(message, address)
 
     test "Message is written to address" do
       assert queue.deq == message
+    end
+
+    test "Nothing is returned" do
+      assert return_value == nil
     end
   end
 
