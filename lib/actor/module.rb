@@ -5,6 +5,8 @@ module Actor
         extend Build
         extend HandleMacro
         extend Start
+
+        include Observers
       end
     end
 
@@ -25,10 +27,14 @@ module Actor
       return if method.nil?
 
       if method.arity == 0
-        method.()
+        return_value = method.()
       else
-        method.(message)
+        return_value = method.(message)
       end
+
+      notify_observers message
+
+      return_value
     end
 
     def handle_stop
