@@ -8,12 +8,12 @@ module Actor
     attr_writer :router_address
 
     handle :start do
-      Continue.new
+      :continue
     end
 
     handle :continue do |message|
       if actor_threads.empty?
-        Messages::Stop.new
+        :stop
       else
         message
       end
@@ -31,7 +31,7 @@ module Actor
     handle :actor_crashed do |message|
       self.error ||= message.error
 
-      Shutdown.new
+      :shutdown
     end
 
     handle :shutdown do
@@ -40,7 +40,7 @@ module Actor
       writer.(stop, broadcast_address)
       writer.(stop, router_address)
 
-      Continue.new
+      :continue
     end
 
     def actor_threads
@@ -71,7 +71,5 @@ module Actor
     end
 
     ActorCrashed = Struct.new :error
-    Continue = Class.new
-    Shutdown = Class.new
   end
 end

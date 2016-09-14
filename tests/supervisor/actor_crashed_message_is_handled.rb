@@ -12,6 +12,6 @@ context "Actor crashed message is handled by supervisor" do
   end
 
   test "Shutdown message is returned" do
-    assert return_value.instance_of? Supervisor::Shutdown
+    assert return_value == :shutdown
   end
 end

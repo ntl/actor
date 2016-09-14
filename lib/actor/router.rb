@@ -12,17 +12,10 @@ module Actor
     end
 
     handle :start do
-      Continue.new
+      :continue
     end
 
-    handle :add_route do |message|
-      reader = message.reader
-      output_address = message.output_address
-
-      add reader, output_address
-    end
-
-    handle :continue do |message|
+    handle :continue do
       routed_messages = false
 
       routes.each do |input_reader, outputs|
@@ -41,7 +34,14 @@ module Actor
         kernel.sleep Duration.millisecond
       end
 
-      message
+      :continue
+    end
+
+    handle :add_route do |message|
+      reader = message.reader
+      output_address = message.output_address
+
+      add reader, output_address
     end
 
     handle :remove_route do |message|
@@ -68,7 +68,6 @@ module Actor
     end
 
     AddRoute = Struct.new :reader, :output_address
-    Continue = Class.new
     RemoveRoute = Struct.new :reader, :output_address
 
     module Assertions

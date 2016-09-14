@@ -1,14 +1,12 @@
 require_relative '../test_init'
 
 context "Continue message is handled by router" do
-  continue = Router::Continue.new
-
   context "No input streams contain new messages" do
     router = Router.new
-    return_value = router.handle continue
+    return_value = router.handle :continue
 
     test "Continue message is returned" do
-      assert return_value == continue
+      assert return_value == :continue
     end
 
     test "Thread is put to sleep for one millisecond" do
@@ -29,7 +27,7 @@ context "Continue message is handled by router" do
     router = Router.new
     router.add input_reader, output_address
 
-    return_value = router.handle continue
+    return_value = router.handle :continue
 
     test "Message is written to output address" do
       assert router.writer do
@@ -40,7 +38,7 @@ context "Continue message is handled by router" do
     end
 
     test "Continue message is returned" do
-      assert return_value == continue
+      assert return_value == :continue
     end
 
     test "Thread is not put to sleep" do
