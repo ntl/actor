@@ -13,6 +13,6 @@ module Actor
   class Address
     NoneClass = Class.new Address
 
-    None = NoneClass.build Stream::Null
+    None = NoneClass.new Stream::Null, 'no-stream'
   end
 end
