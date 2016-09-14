@@ -8,8 +8,11 @@ module Actor
           instance = new *positional_arguments, **keyword_arguments, &block
         end
 
+        instance.address = address
         instance.reader = Messaging::Read.build address
         instance.writer = Messaging::Write.new
+
+        instance.configure
 
         instance
       end

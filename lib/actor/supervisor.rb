@@ -27,6 +27,9 @@ module Actor
     end
 
     handle :start do
+      thread_group.add Thread.current
+      thread_group.enclose
+
       assembly.(self) if assembly
 
       :continue
@@ -71,13 +74,9 @@ module Actor
     end
 
     def configure
-      thread_group = ThreadGroup.new
-      thread_group.add Thread.current
-      thread_group.enclose
-
       self.broadcast_address = Address.build
       self.router_address = Router.start
-      self.thread_group = thread_group
+      self.thread_group = ThreadGroup.new
     end
 
     def broadcast_address

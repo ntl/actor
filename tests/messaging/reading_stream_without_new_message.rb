@@ -30,4 +30,8 @@ context "Reader reads a stream without any new messages" do
       assert message_read == message
     end
   end
+
+  test "No messages are available" do
+    refute reader.messages_available?
+  end
 end

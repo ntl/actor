@@ -16,7 +16,7 @@ context "Router is started" do
     Messaging::Write.(Messages::Stop.new, router_address)
 
     test "Thread eventually exits gracefully" do
-      return_value = thread.join Duration.millisecond
+      return_value = thread.join
 
       assert return_value == thread
       assert thread.status == false

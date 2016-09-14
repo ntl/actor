@@ -28,10 +28,7 @@ module Actor
       actor_started = Messages::ActorStarted.new address
       writer.(actor_started, supervisor_address)
 
-      actor.address = address
-
       thread = thread_class.new do
-        actor.configure
         actor.start
       end
 

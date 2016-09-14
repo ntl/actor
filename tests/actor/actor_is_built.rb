@@ -14,6 +14,10 @@ context "Actor is built" do
     test "Writer is built" do
       assert actor.writer.instance_of? Messaging::Write
     end
+
+    test "Address is assigned" do
+      assert actor.address == address
+    end
   end
 
   context "Actor implementation specifies configure method" do

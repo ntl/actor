@@ -16,4 +16,8 @@ context "Thread is spawned when actor is started" do
   test "Run loop is executed by thread" do
     assert actor.stopped?
   end
+
+  test "Thread is assigned a name corresponding to class of actor" do
+    assert thread.name == "Actor::Controls::Actor::Stops"
+  end
 end

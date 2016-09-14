@@ -12,6 +12,10 @@ module Actor
           message
         end
 
+        def messages_available?
+          messages.any?
+        end
+
         def add_message message
           messages << message
         end

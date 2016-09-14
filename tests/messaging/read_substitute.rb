@@ -19,6 +19,10 @@ context "Inert substitute for read operation" do
         end
       end
     end
+
+    test "Messages available predicate returns false" do
+      refute substitute_reader.messages_available?
+    end
   end
 
   context "Messages have been added" do
@@ -43,5 +47,12 @@ context "Inert substitute for read operation" do
         assert message_read == message
       end
     end
+
+    test "Messages available predicate returns true" do
+      substitute_reader.add_message message
+
+      assert substitute_reader.messages_available?
+    end
+
   end
 end

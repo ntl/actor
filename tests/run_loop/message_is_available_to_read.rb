@@ -33,7 +33,7 @@ context "Message is available to read prior to run loop iteration" do
       end
     end
 
-    context "Handler returns a message" do
+    context "Handler returns a message handled by actor" do
       actor = Controls::Actor::Continues.new
       actor.reader.add_message message
       actor.continuations << :continuation_message

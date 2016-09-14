@@ -32,6 +32,9 @@ module Actor
             Message.example
           end
         end
+
+        handle Message::Example do
+        end
       end
 
       class Stops

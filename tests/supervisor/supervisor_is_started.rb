@@ -13,7 +13,7 @@ context "Supervisor is started" do
 
   test "Thread group is configured" do
     assert supervisor.thread_group do
-      instance_of? ThreadGroup and list.include? thread
+      instance_of? ThreadGroup
     end
   end
 
