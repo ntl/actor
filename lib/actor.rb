@@ -28,5 +28,6 @@ require 'actor/start'
 
 require 'actor/actor'
 
+require 'actor/future'
 require 'actor/router'
 require 'actor/supervisor'

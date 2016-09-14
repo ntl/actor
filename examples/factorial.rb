@@ -3,40 +3,31 @@ require_relative '../init'
 class Factorial
   include Actor
 
+  attr_reader :number, :reply_address
+
   def initialize number, reply_address
     @number, @reply_address = number, reply_address
   end
 
   handle :start do
-    if @number == 1
-      value = 1
+    if number == 1
+      result = 1
     else
-      prev_number = @number - 1
-      prev_result_reply_address = Actor::Address.build
+      previous_factorial = Actor::Future.build do |address|
+        Factorial.start number - 1, address
+      end
 
-      Factorial.start prev_number, prev_result_reply_address
-
-      prev_result = Messaging::Read.(prev_result_reply_address, wait: true)
-
-      value = prev_result.value * @number
+      result = previous_factorial.get(wait: true) * number
     end
 
-    result = Result.new value
-
-    writer.(result, @reply_address)
+    writer.(result, reply_address)
 
     :stop
   end
-
-  Result = Struct.new :value do
-    include Actor::Messaging::Message
-  end
 end
 
-reply_address = Actor::Address.build
+result = Actor::Future.get wait: true do |address|
+  Factorial.start 42, address
+end
 
-Factorial.start 42, reply_address
-
-result = Actor::Messaging::Read.(reply_address, wait: true)
-
-puts "fac(42) = #{result.value}"
+puts "fac(42) = #{result}"

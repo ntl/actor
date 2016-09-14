@@ -1,12 +1,11 @@
 require_relative '../test_init'
 
 context "Reader reads a stream without any new messages" do
-  address = Controls::Address.example
-
-  read = Messaging::Read.build address
+  address, queue = Controls::Address.pair
+  reader = Messaging::Read.new queue, address.stream
 
   context "Wait is not specified (default)" do
-    message_read = read.()
+    message_read = reader.()
 
     test "Nothing is returned" do
       assert message_read == nil
@@ -17,11 +16,13 @@ context "Reader reads a stream without any new messages" do
     message_read = nil
 
     thread = Thread.new do
-      message_read = read.(wait: true)
+      message_read = reader.(wait: true)
     end
 
+    Thread.pass until queue.num_waiting > 0
+
     message = Controls::Message.example
-    Messaging::Write.(message, address)
+    queue.enq message
 
     thread.join
 
