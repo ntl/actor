@@ -5,8 +5,6 @@ module Actor
         extend Build
         extend HandleMacro
         extend Start
-
-        prepend StopHandler
       end
     end
 
@@ -30,6 +28,10 @@ module Actor
       else
         method.(message)
       end
+    end
+
+    def handle_stop
+      raise StopIteration
     end
 
     def handle? message
@@ -66,16 +68,6 @@ module Actor
 
     def writer
       @writer ||= Messaging::Write::Substitute.new
-    end
-
-    module StopHandler
-      def handle message, *;
-        return_value = super
-
-        raise StopIteration if message.instance_of? Messages::Stop
-
-        return_value
-      end
     end
   end
 end
