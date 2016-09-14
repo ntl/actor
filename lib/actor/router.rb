@@ -11,12 +11,6 @@ module Actor
       end
     end
 
-    def self.build
-      instance = new
-      instance.kernel = Kernel
-      instance
-    end
-
     handle :start do
       Continue.new
     end
@@ -63,6 +57,10 @@ module Actor
 
     def remove reader, output_address
       routes[reader].delete output_address
+    end
+
+    def configure
+      self.kernel = Kernel
     end
 
     def kernel

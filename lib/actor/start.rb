@@ -4,14 +4,20 @@ module Actor
     attr_writer :thread
     attr_writer :writer
 
-    def self.build
+    def self.build supervisor_address: nil
       instance = new
+      instance.supervisor_address = supervisor_address
       instance.thread = Thread
       Messaging::Write.configure instance
       instance
     end
 
-    def call actor, address, include: nil
+    def self.call actor, address, supervisor_address: nil
+      instance = build supervisor_address: supervisor_address
+      instance.(actor, address)
+    end
+
+    def call actor, address
       address ||= Address.build
 
       start = Messages::Start.new

@@ -4,7 +4,7 @@ context "Actor started message is handled by a supervisor" do
   actor_started = Controls::Message::ActorStarted.example
 
   actor_address = actor_started.actor_address
-  broadcast_address = Controls::Address::Supervisor.example
+  broadcast_address = Controls::Address::Supervisor::Broadcast.example
   router_address = Controls::Address::Router.example
 
   supervisor = Supervisor.new

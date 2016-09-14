@@ -17,12 +17,6 @@ module Actor
       message
     end
 
-    handle :actor_crashed do |message|
-      self.error ||= message.error
-
-      Messages::Stop.new
-    end
-
     handle :actor_started do |message|
       reader = Messaging::Read.build broadcast_address
       output_address = message.actor_address
@@ -30,6 +24,21 @@ module Actor
       add_route = Router::AddRoute.new reader, output_address
 
       writer.(add_route, router_address)
+    end
+
+    handle :actor_crashed do |message|
+      self.error ||= message.error
+
+      Shutdown.new
+    end
+
+    handle :shutdown do
+      stop = Messages::Stop.new
+
+      writer.(stop, broadcast_address)
+      writer.(stop, router_address)
+
+      Continue.new
     end
 
     def actor_threads
@@ -52,5 +61,6 @@ module Actor
 
     ActorCrashed = Struct.new :error
     Continue = Class.new
+    Shutdown = Class.new
   end
 end

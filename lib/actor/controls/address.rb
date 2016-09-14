@@ -28,13 +28,19 @@ module Actor
 
       module Supervisor
         def self.example
-          Address.example 1
+            Address.example 1
+        end
+
+        module Broadcast
+          def self.example
+            Address.example 2
+          end
         end
       end
 
       module Router
         def self.example
-          Address.example 2
+          Address.example 3
         end
       end
     end

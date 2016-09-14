@@ -19,10 +19,14 @@ require 'actor/messaging/write/substitute'
 
 require 'actor/messages'
 
-require 'actor/handle_macro'
+require 'actor/module/build'
+require 'actor/module/handle_macro'
+require 'actor/module/start'
+require 'actor/module'
+
+require 'actor/start'
+
 require 'actor/actor'
 
 require 'actor/router'
 require 'actor/supervisor'
-
-require 'actor/start'

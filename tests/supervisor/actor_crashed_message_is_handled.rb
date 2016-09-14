@@ -11,7 +11,7 @@ context "Actor crashed message is handled by supervisor" do
     assert supervisor.error == error
   end
 
-  test "Stop message is returned" do
-    assert return_value.instance_of? Messages::Stop
+  test "Shutdown message is returned" do
+    assert return_value.instance_of? Supervisor::Shutdown
   end
 end
