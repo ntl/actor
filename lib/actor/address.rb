@@ -11,12 +11,8 @@ module Actor
   end
 
   class Address
-    module Substitute
-      def self.build
-        stream = Stream::Null
+    NoneClass = Class.new Address
 
-        Address.build stream
-      end
-    end
+    None = NoneClass.build Stream::Null
   end
 end

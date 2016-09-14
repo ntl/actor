@@ -12,9 +12,11 @@ module Actor
     end
 
     handle :continue do |message|
-      raise StopIteration if actor_threads.empty?
-
-      message
+      if actor_threads.empty?
+        Messages::Stop.new
+      else
+        message
+      end
     end
 
     handle :actor_started do |message|
@@ -47,12 +49,21 @@ module Actor
       list
     end
 
+    def configure
+      thread_group = ThreadGroup.new
+      thread_group.add Thread.current
+
+      self.broadcast_address = Address.build
+      self.router_address = Router.start
+      self.thread_group = thread_group
+    end
+
     def broadcast_address
-      @broadcast_address ||= Address::Substitute.build
+      @broadcast_address ||= Address::None
     end
 
     def router_address
-      @router_address ||= Address::Substitute.build
+      @router_address ||= Address::None
     end
 
     def thread_group

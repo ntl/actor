@@ -6,10 +6,10 @@ context "Continue message is handled by a supervisor" do
   context "No actor threads are currently running" do
     supervisor = Supervisor.new
 
-    test "Stop iteration exception is raised to break out of run loop" do
-      assert proc { supervisor.handle continue } do
-        raises_error? StopIteration
-      end
+    return_value = supervisor.handle continue
+
+    test "Stop message is returned" do
+      assert return_value.instance_of? Messages::Stop
     end
   end
 

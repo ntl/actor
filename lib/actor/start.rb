@@ -32,7 +32,7 @@ module Actor
     end
 
     def supervisor_address
-      @supervisor_address ||= Address::Substitute.build
+      @supervisor_address ||= Address::None
     end
 
     def thread
