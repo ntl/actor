@@ -8,6 +8,7 @@ module Actor
       end
     end
 
+    attr_writer :address
     attr_writer :reader
     attr_writer :writer
 
@@ -52,15 +53,22 @@ module Actor
 
       continuation_message = handle message
 
-      if continuation_message.is_a? Messaging::Message
+      if handle? continuation_message
         continuations << continuation_message
       end
     end
 
     def run_loop
-      loop do self.next end
+      loop do
+        self.next
+        Thread.pass
+      end
     end
     alias_method :start, :run_loop
+
+    def address
+      @address ||= Address::None
+    end
 
     def reader
       @reader ||= Messaging::Read::Substitute.new

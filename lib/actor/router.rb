@@ -16,19 +16,7 @@ module Actor
     end
 
     handle :continue do
-      routed_messages = false
-
-      routes.each do |input_reader, outputs|
-        msg = input_reader.(wait: false)
-
-        next unless msg
-
-        routed_messages = true
-
-        outputs.each do |output|
-          writer.(msg, output)
-        end
-      end
+      routed_messages = route_messages
 
       unless routed_messages
         kernel.sleep Duration.millisecond
@@ -51,12 +39,39 @@ module Actor
       remove reader, output_address
     end
 
+    handle :stop do
+      if routes.any? { |reader, _| reader.messages_available? }
+        route_messages
+        :stop
+      else
+        super()
+      end
+    end
+
     def add reader, output_address
       routes[reader] << output_address
     end
 
     def remove reader, output_address
       routes[reader].delete output_address
+    end
+
+    def route_messages
+      routed_messages = false
+
+      routes.each do |input_reader, outputs|
+        msg = input_reader.(wait: false)
+
+        next unless msg
+
+        routed_messages = true
+
+        outputs.each do |output|
+          writer.(msg, output)
+        end
+      end
+
+      routed_messages
     end
 
     def configure

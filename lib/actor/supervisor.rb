@@ -2,20 +2,41 @@ module Actor
   class Supervisor
     include Actor
 
+    attr_reader :assembly
     attr_writer :broadcast_address
     attr_accessor :error
     attr_writer :thread_group
     attr_writer :router_address
 
+    def initialize &assembly
+      @assembly = assembly
+    end
+
+    def self.run &block
+      self.address, thread = start include: %i(thread), &block
+
+      thread.join
+    end
+
+    def self.address
+      @address ||= Address::None
+    end
+
+    def self.address= address
+      @address = address
+    end
+
     handle :start do
+      assembly.(self) if assembly
+
       :continue
     end
 
-    handle :continue do |message|
+    handle :continue do
       if actor_threads.empty?
         :stop
       else
-        message
+        :continue
       end
     end
 
@@ -52,6 +73,7 @@ module Actor
     def configure
       thread_group = ThreadGroup.new
       thread_group.add Thread.current
+      thread_group.enclose
 
       self.broadcast_address = Address.build
       self.router_address = Router.start

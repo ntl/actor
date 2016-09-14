@@ -45,6 +45,10 @@ module Actor
           end
         end
       end
+
+      def messages_available?
+        not queue.empty?
+      end
     end
   end
 end

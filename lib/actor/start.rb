@@ -1,13 +1,15 @@
 module Actor
   class Start
     attr_writer :supervisor_address
-    attr_writer :thread
+    attr_writer :thread_class
     attr_writer :writer
 
     def self.build supervisor_address: nil
+      supervisor_address ||= Supervisor.address
+
       instance = new
       instance.supervisor_address = supervisor_address
-      instance.thread = Thread
+      instance.thread_class = Thread
       Messaging::Write.configure instance
       instance
     end
@@ -26,17 +28,24 @@ module Actor
       actor_started = Messages::ActorStarted.new address
       writer.(actor_started, supervisor_address)
 
-      self.thread.new do
+      actor.address = address
+
+      thread = thread_class.new do
+        actor.configure
         actor.start
       end
+
+      thread.name = actor.class.name
+
+      thread
     end
 
     def supervisor_address
       @supervisor_address ||= Address::None
     end
 
-    def thread
-      @thread ||= Substitutes::Thread
+    def thread_class
+      @thread_class ||= Substitutes::Thread
     end
 
     def writer

@@ -11,8 +11,6 @@ module Actor
         instance.reader = Messaging::Read.build address
         instance.writer = Messaging::Write.new
 
-        instance.configure
-
         instance
       end
     end
