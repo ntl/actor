@@ -12,11 +12,11 @@ class Factorial
       value = 1
     else
       prev_number = @number - 1
-      prev_reply_address = Actor::Address.build
+      prev_result_reply_address = Actor::Address.build
 
-      Factorial.start prev_number, prev_reply_address
+      Factorial.start prev_number, prev_result_reply_address
 
-      prev_result = Messaging::Read.(prev_reply_address, wait: true)
+      prev_result = Messaging::Read.(prev_result_reply_address, wait: true)
 
       value = prev_result.value * @number
     end
@@ -25,7 +25,7 @@ class Factorial
 
     writer.(result, @reply_address)
 
-    Messages::Stop.new
+    :stop
   end
 
   Result = Struct.new :value do
@@ -35,8 +35,8 @@ end
 
 reply_address = Actor::Address.build
 
-Factorial.start 10, reply_address
+Factorial.start 42, reply_address
 
 result = Actor::Messaging::Read.(reply_address, wait: true)
 
-puts "fac(10) = #{result.value}"
+puts "fac(42) = #{result.value}"
