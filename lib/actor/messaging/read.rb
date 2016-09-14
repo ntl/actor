@@ -19,6 +19,11 @@ module Actor
         instance
       end
 
+      def self.call address, wait: nil
+        instance = build address
+        instance.(wait: wait)
+      end
+
       def self.configure receiver, address, attr_name: nil
         attr_name ||= :reader
 
