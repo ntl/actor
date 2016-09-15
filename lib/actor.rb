@@ -19,11 +19,9 @@ require 'actor/messaging/write/substitute'
 
 require 'actor/messages'
 
-require 'actor/module/build'
-require 'actor/module/handle_macro'
-require 'actor/module/observers'
-require 'actor/module/start'
-require 'actor/module'
+require 'actor/build'
+require 'actor/handle_macro'
+require 'actor/observers'
 
 require 'actor/start'
 

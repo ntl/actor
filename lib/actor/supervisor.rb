@@ -12,18 +12,17 @@ module Actor
       @assembly = assembly
     end
 
-    def self.run &block
-      self.address, thread = start include: %i(thread), &block
+    class << self
+      attr_accessor :address
 
-      thread.join
-    end
+      def run &assembly
+        self.address = Address.build
 
-    def self.address
-      @address ||= Address::None
-    end
+        instance = build address, &assembly
 
-    def self.address= address
-      @address = address
+        thread = Start.(instance, address)
+        thread.join
+      end
     end
 
     handle :start do

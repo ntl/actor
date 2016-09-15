@@ -6,8 +6,10 @@ context "Supervisor is run" do
       actors_remaining = 10
 
       Supervisor.run do |supervisor|
-        supervisor.observe :actor_started do
-          actors_remaining -= 1
+        supervisor.observe :actor_started do |msg|
+          unless msg.actor_address == supervisor.address
+            actors_remaining -= 1
+          end
         end
 
         actors_remaining.times do
