@@ -1,0 +1,139 @@
+Actor
+=====
+
+Implementation of actor pattern for ruby designed for simplicity and frugality.
+
+NOTE: Documentation is incomplete.
+
+== Basic Usage
+
+=== Installation
+
+To install `actor` via rubygems.org, you will have to refer to the gem as `ntl-actor` when running `gem install` or adding the gem to Bundler.
+
+[source,sh]
+----
+gem install ntl-actor
+----
+
+Bundler:
+
+[source,ruby]
+----
+gem 'ntl-actor', require: 'actor'
+----
+
+If you add `https://repo.fury.io/ntl/` to your list of gem sources, you can install the library by its proper name:
+
+[source,sh]
+----
+gem install actor
+----
+
+Bundler:
+
+[source,ruby]
+----
+gem 'actor'
+----
+
+=== Defining an Actor
+
+[source,ruby]
+----
+class Factorial
+  include Actor
+
+  attr_reader :number, :reply_address
+
+  def initialize number, reply_address
+    @number, @reply_address = number, reply_address
+  end
+
+  handle :start do
+    if number == 1
+      result = 1
+    else
+      previous_factorial = Actor::Future.build do |address|
+        Factorial.start number - 1, address
+      end
+
+      result = previous_factorial.get(wait: true) * number
+    end
+
+    writer.(result, reply_address)
+
+    :stop
+  end
+end
+----
+
+=== Starting an Actor
+
+[source,ruby]
+----
+result = Actor::Future.get wait: true do |address|
+  Factorial.start 42, address
+end
+
+puts "fac(42) = #{result}"
+----
+
+=== Handling Custom Messages
+
+You can send _any_ ruby object to the actor with `Actor::Messaging::Write`; though mutable objects aren't recommended, as messages will be read by other threads. Handlers can be defined for those messages through the `handle` class macro on the Actor class. The class of the message is generally passed to `handle`, but an underscore cased symbol can be used as well. For example:
+
+[source,ruby]
+----
+class SomeActor
+  include Actor
+
+  # ...
+
+  handle :some_message do |message|
+    # do something
+  end
+
+  handle OtherMessage do |message|
+    # do something else
+  end
+end
+
+# Start an actor and send a custom message to it
+address = Actor.start
+
+Actor::Messaging::Write.(SomeMessage.new, address)
+Actor::Messaging::Write.(OtherMessage.new, address)
+----
+
+Also, every Actor comes equipped with a `writer` dependency which is just an instance of `Actor::Messaging::Write`. When any actor is instantiated directly through its `initialize` method, the writer is an inert substitute. When the actor is constructed through the `.start` class method, the writer will actually deliver messages to other actors.
+
+=== Errors
+
+When an actor raises an error, its thread immediately stops, but the rest of the ruby program remains unaffected. If you call `#join` on the thread object returned by `.start`, the error will be re-raised. The actor will not restart itself or deliver an exception notification. It should go without saying that errors are undesirable and Actor makes no effort to make them easier to work with. "_Don't_ let it crash" is the idea.
+
+=== Supervisor
+
+In production, actors are best run within the context of a supervisor that keeps track of all actors, watches out for crashed actors, and gracefully shuts down actors when it's time to stop the show. See `examples/interactive.rb` for an example. Here is a snippet extracted from that file:
+
+[source,ruby]
+----
+Actor::Supervisor.run do |supervisor|
+  InteractiveExample::Prompt.start
+
+  Signal.trap 'INT' do
+    puts "\n\n** Received SIGINT; shutting down supervisor **\n\n"
+    Actor::Messaging::Write.(:shutdown, supervisor.address)
+  end
+end
+----
+
+=== Version Scheme
+
+Actor follows a version scheme with three numbers separated by dots, similar to SemVer, but the numbers have a slightly different meaning. The first number indicates the major product version, or epoch. The second number is increased for breaking changes, otherwise the third number is increased.
+
+=== License
+
+Actor is licensed under the link:doc/MIT-License.txt[MIT license]
+
+Copyright © Nathan Ladd
