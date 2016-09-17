@@ -8,16 +8,17 @@ echo
 echo "Running tests"
 echo "= = ="
 
-STRESS_ITERATIONS=1000 bin/bench
+export STRESS_ITERATIONS=${STRESS_ITERATIONS:-1000}
+bin/bench
 
 echo
 echo "Tagging release"
 echo "= = ="
-git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION"
-git push github "v$GEM_VERSION"
+git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION" &&
+  git push github "v$GEM_VERSION"
 
 echo
-echo "Building version for ntl.fury.io"
+echo "Building version for fury.io/ntl"
 echo "= = ="
 gem build --norc gemspec
 
@@ -28,7 +29,7 @@ echo "Building version for rubygems.org"
 echo "= = ="
 GEM_NAME_PREFIX=ntl gem build --norc gemspec
 
-gem push ntl-actor-$GEM_VERSION.gem
+gem push ntl-actor-$GEM_VERSION.gem || true
 
 echo
 echo "Cleaning up"
