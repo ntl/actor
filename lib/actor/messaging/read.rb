@@ -9,10 +9,10 @@ module Actor
         @stream = stream
       end
 
-      def self.build address
-        stream = address.stream
+      def self.build address, queue=nil
+        queue ||= Queue.new
 
-        queue = Queue.new
+        stream = address.stream
         stream.add_queue queue
 
         instance = new queue, stream
