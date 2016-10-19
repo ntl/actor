@@ -119,7 +119,7 @@ In production, actors are best run within the context of a supervisor that keeps
 [source,ruby]
 ----
 Actor::Supervisor.run do |supervisor|
-  InteractiveExample::Prompt.start
+  InteractiveExample::Prompt.start supervisor_address: supervisor.address
 
   Signal.trap 'INT' do
     puts "\n\n** Received SIGINT; shutting down supervisor **\n\n"
