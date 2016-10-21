@@ -115,16 +115,9 @@ module Actor
         end
 
         if keyword_arguments.empty?
-          instance = constructor.(
-            *positional_arguments,
-            &block
-          )
+          instance = constructor.(*positional_arguments, &block)
         else
-          instance = constructor.(
-            *positional_arguments,
-            **keyword_arguments,
-            &block
-          )
+          instance = constructor.(*positional_arguments, **keyword_arguments, &block)
         end
 
         instance.address = address

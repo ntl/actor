@@ -18,9 +18,30 @@ module Actor
       def run &assembly
         self.address = Address.build
 
-        _, thread = start address: address, include: %i(thread), &assembly
+        _, thread = start include: %i(thread), &assembly
 
         thread.join
+      end
+
+      def build &assembly
+        instance = new &assembly
+        instance.configure
+        instance
+      end
+
+      def start include: nil, &assembly
+        instance = build &assembly
+
+        start = Messages::Start.new
+        instance.writer.(start, address)
+
+        thread = Thread.new do
+          instance.start
+        end
+
+        thread.name = "Supervisor"
+
+        Destructure.(address, include, { :thread => thread, :actor => instance })
       end
     end
 
@@ -35,6 +56,8 @@ module Actor
 
     handle :continue do
       if actor_threads.empty?
+        raise error if error
+
         :stop
       else
         :continue
@@ -75,6 +98,7 @@ module Actor
       self.broadcast_address = Address.build
       self.router_address = Router.start
       self.thread_group = ThreadGroup.new
+      self.address = self.class.address
     end
 
     def broadcast_address

@@ -110,7 +110,7 @@ Also, every Actor comes equipped with a `writer` dependency which is just an ins
 
 === Errors
 
-When an actor raises an error, its thread immediately stops, but the rest of the ruby program remains unaffected. If you call `#join` on the thread object returned by `.start`, the error will be re-raised. The actor will not restart itself or deliver an exception notification. It should go without saying that errors are undesirable and Actor makes no effort to make them easier to work with. "_Don't_ let it crash" is the idea.
+When an actor raises an error, its thread immediately stops, but the rest of the ruby program remains unaffected. If you call `#join` on the thread object returned by `.start`, the error will be re-raised. The actor will not restart itself or deliver an exception notification. When using a supervisor (see below), any errors raised by actors will be re-raised by the supervisor. It should go without saying that errors are undesirable and Actor makes no effort to make them easier to work with. "_Don't_ let it crash" is the idea.
 
 === Supervisor
 
