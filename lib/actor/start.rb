@@ -29,7 +29,12 @@ module Actor
       writer.(actor_started, supervisor_address)
 
       thread = thread_class.new do
-        actor.start
+        begin
+          actor.start
+        rescue => error
+          actor_crashed = Messages::ActorCrashed.new error
+          writer.(actor_crashed, supervisor_address)
+        end
       end
 
       thread.name = actor.class.name

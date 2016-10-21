@@ -26,6 +26,14 @@ module Actor
           Messages::ActorStarted.new actor_address
         end
       end
+
+      module ActorCrashed
+        def self.example error=nil
+          error ||= Error.example
+
+          Messages::ActorCrashed.new error
+        end
+      end
     end
   end
 end

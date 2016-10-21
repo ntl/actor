@@ -18,9 +18,8 @@ module Actor
       def run &assembly
         self.address = Address.build
 
-        instance = build address, &assembly
+        _, thread = start address: address, include: %i(thread), &assembly
 
-        thread = Start.(instance, address)
         thread.join
       end
     end
@@ -89,7 +88,5 @@ module Actor
     def thread_group
       @thread_group ||= Substitutes::ThreadGroup.new
     end
-
-    ActorCrashed = Struct.new :error
   end
 end

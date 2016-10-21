@@ -8,6 +8,10 @@ module Actor
       include Messaging::Message
     end
 
+    ActorCrashed = Struct.new :error do
+      include Messaging::Message
+    end
+
     class Stop
       include Messaging::Message
     end

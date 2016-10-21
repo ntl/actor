@@ -12,11 +12,12 @@ module Actor
   module Module
     def self.included cls
       cls.class_exec do
-        extend Build
         extend HandleMacro
         extend Start
 
         include Observers
+
+        prepend Configure
       end
     end
 
@@ -94,11 +95,41 @@ module Actor
       @writer ||= Messaging::Write::Substitute.new
     end
 
+    module Configure
+      def configure
+        super
+
+        self.reader = Messaging::Read.build address
+        self.writer = Messaging::Write.new
+      end
+    end
+
     module Start
       def start *positional_arguments, address: nil, supervisor_address: nil, include: nil, **keyword_arguments, &block
         address ||= Address.build
 
-        instance = build address, *positional_arguments, **keyword_arguments, &block
+        if respond_to? :build
+          constructor = method :build
+        else
+          constructor = method :new
+        end
+
+        if keyword_arguments.empty?
+          instance = constructor.(
+            *positional_arguments,
+            &block
+          )
+        else
+          instance = constructor.(
+            *positional_arguments,
+            **keyword_arguments,
+            &block
+          )
+        end
+
+        instance.address = address
+
+        instance.configure
 
         thread = Actor::Start.(
           instance,

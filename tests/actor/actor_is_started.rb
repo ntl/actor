@@ -1,10 +1,9 @@
 require_relative '../test_init'
 
-context "Actor is built" do
-  address = Controls::Address.example
-
+context "Actor is started" do
   context do
-    actor = Controls::Actor::Example.build address
+    address = Controls::Address.example
+    _, actor = Controls::Actor::Example.start address: address, include: %i(actor)
 
     test "Reader is built for specified address" do
       assert actor.reader.instance_of? Messaging::Read
@@ -33,7 +32,7 @@ context "Actor is built" do
       end
     end
 
-    actor = cls.build address
+    _, actor = cls.start include: %i(actor)
 
     test "Configure method is executed" do
       assert actor.configured?
@@ -54,7 +53,9 @@ context "Actor is built" do
         end
       end
 
-      actor = cls.build address, 'req', 'opt', key: 'key', keyreq: 'keyreq' do 'block' end
+      _, actor = cls.start 'req', 'opt', key: 'key', keyreq: 'keyreq', include: %i(actor) do
+        'block'
+      end
 
       test "Arguments are forwarded to the initialize method" do
         assert actor.arguments_passed_to_initialize?
@@ -74,7 +75,9 @@ context "Actor is built" do
         end
       end
 
-      actor = cls.build address, 'req', 'opt' do 'block' end
+      _, actor = cls.start 'req', 'opt', include: %i(actor) do
+        'block'
+      end
 
       test "Arguments are forwarded to the initialize method" do
         assert actor.arguments_passed_to_initialize?

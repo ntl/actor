@@ -1,14 +1,15 @@
 require_relative '../test_init'
 
 context "Supervisor is notified when actor is started" do
-  actor = Controls::Actor::Stops.new
+  actor = Controls::Actor::Stops.example
   address = Controls::Address::Actor.example
   supervisor_address = Controls::Address::Supervisor.example
 
   start = Start.new
   start.supervisor_address = supervisor_address
 
-  start.(actor, address)
+  thread = start.(actor, address)
+  thread.join
 
   test "Actor started message is sent to supervisor" do
     control_message = Controls::Message::ActorStarted.example

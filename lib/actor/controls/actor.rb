@@ -40,6 +40,12 @@ module Actor
       class Stops
         include ::Actor
 
+        def self.example
+          instance = new
+          instance.reader.add_message Messages::Start.new
+          instance
+        end
+
         handle :start do
           @stopped = true
 
@@ -48,6 +54,24 @@ module Actor
 
         def stopped?
           @stopped ? true : false
+        end
+      end
+
+      class Crashes
+        include ::Actor
+
+        def self.example
+          instance = new
+          instance.reader.add_message Messages::Start.new
+          instance
+        end
+
+        handle :start do
+          raise error
+        end
+
+        def error
+          @error ||= Error.example
         end
       end
 
