@@ -1,0 +1,15 @@
+Actor Messaging
+===============
+
+*Incomplete*
+
+Requirements:
+
+1. Performance comparable to Queue for single subscriber
+2. Pub/sub (many addresses attached to channel)
+3. JRuby/rbx support
+
+Hopefuls:
+
+1. Zero polling
+2. Can write messages from inside signal trap

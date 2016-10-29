@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eu
+
+rm -rf gems
+
+gem install --conservative --no-post-install-message --norc --no-document --install-dir ./gems/rubygems test_bench benchmark-ips
+
+mkdir -p gems/lib
+mkdir -p gems/lib/benchmark
+
+for entry in gems/rubygems/gems/test_bench*/lib/*; do
+  ln -sf ../../$entry gems/lib
+done
+
+for entry in gems/rubygems/gems/benchmark-ips*/lib/benchmark/*; do
+  ln -sf ../../../$entry gems/lib/benchmark
+done
