@@ -4,15 +4,12 @@ set -eu
 
 rm -rf gems
 
-gem install --conservative --no-post-install-message --norc --no-document --install-dir ./gems/rubygems test_bench benchmark-ips
+export GEM_HOME=./gems/rubygems
+
+gem install --conservative --no-post-install-message --norc --no-document --install-dir ./gems/rubygems test_bench
 
 mkdir -p gems/lib
-mkdir -p gems/lib/benchmark
 
-for entry in gems/rubygems/gems/test_bench*/lib/*; do
+for entry in gems/rubygems/gems/*/lib/*; do
   ln -sf ../../$entry gems/lib
-done
-
-for entry in gems/rubygems/gems/benchmark-ips*/lib/benchmark/*; do
-  ln -sf ../../../$entry gems/lib/benchmark
 done

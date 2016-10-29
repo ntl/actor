@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if ruby --version | grep -q jruby; then
+  export RUBY="ruby --disable-gems --dev"
+else
+  export RUBY="ruby --disable-gems --enable-frozen-string-literal --disable-did_you_mean --disable-rubyopt"
+fi
+
+eval $RUBY test/bench.rb "$@"
