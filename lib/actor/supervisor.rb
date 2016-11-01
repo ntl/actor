@@ -60,6 +60,8 @@ module Actor
 
         :stop
       else
+        sleep Duration.millisecond
+
         :continue
       end
     end
