@@ -62,12 +62,14 @@ module Fixtures
 
       t1 = Time.now
 
-      iterations = thread_iterations.values.reduce &:+
-
       elapsed_time = t1 - t0
 
+      iterations = thread_iterations.values.reduce &:+
+      ips = Rational(iterations, elapsed_time)
+      ips /= thread_count
+
       comment "ElapsedTime: #{(elapsed_time * 1000).round 2}ms, Iterations: #{iterations}, ThreadCount: #{thread_count}"
-      comment "Iterations per second: #{(iterations / elapsed_time).round 2}"
+      comment "Iterations per second (per thread): #{ips.to_f.round 2}"
 
       test.(iterations, thread_iterations)
     end
