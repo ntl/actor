@@ -22,6 +22,10 @@ module Actor
             end
           end
 
+          def size
+            Float::INFINITY
+          end
+
           module Assertions
             def gc_count? count
               gc_count == count
