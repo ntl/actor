@@ -1,9 +1,9 @@
 require_relative '../scripts_init'
 
 context "Publisher, Registering and Unregistering Addresses" do
-  publisher = Publisher.new
+  publisher = Messaging::Publisher.new
 
-  address = Address.build
+  address = Messaging::Address.build
 
   context "Address is registered with publisher" do
     publisher.register address

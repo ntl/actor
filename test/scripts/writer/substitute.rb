@@ -1,11 +1,11 @@
 require_relative '../scripts_init'
 
 context "Writer Substitute" do
-  address = Address.build
+  address = Messaging::Address.build
 
   context "Written predicate" do
     context "No message has been written" do
-      substitute = Writer::Substitute.new
+      substitute = Messaging::Writer::Substitute.new
 
       test "Predicate returns false even if no constraints are specified" do
         refute substitute do
@@ -16,7 +16,7 @@ context "Writer Substitute" do
 
     context "Message has been written" do
       context "Message constraint" do
-        substitute = Writer::Substitute.new
+        substitute = Messaging::Writer::Substitute.new
         substitute.write :some_message, address
 
         test "Predicate returns true if specified message matches written message" do
@@ -33,7 +33,7 @@ context "Writer Substitute" do
       end
 
       context "Address constraint" do
-        substitute = Writer::Substitute.new
+        substitute = Messaging::Writer::Substitute.new
         substitute.write :some_message, address
 
         test "Predicate returns true if specified address matches address of write operation" do
@@ -43,7 +43,7 @@ context "Writer Substitute" do
         end
 
         test "Predicate returns false if specified address does not match address of write operation" do
-          other_address = Address.build
+          other_address = Messaging::Address.build
 
           refute substitute do
             written? address: other_address
@@ -53,7 +53,7 @@ context "Writer Substitute" do
 
       context "Wait constraint" do
         context "Write operation was allowed to block" do
-          substitute = Writer::Substitute.new
+          substitute = Messaging::Writer::Substitute.new
           substitute.write :some_message, address
 
           test "Predicate returns true if specified wait value is true" do
@@ -70,7 +70,7 @@ context "Writer Substitute" do
         end
 
         context "Write operation was not allowed to block" do
-          substitute = Writer::Substitute.new
+          substitute = Messaging::Writer::Substitute.new
           substitute.write :some_message, address, wait: false
 
           test "Predicate returns true if specified wait value is false" do

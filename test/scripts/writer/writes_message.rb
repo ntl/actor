@@ -1,9 +1,9 @@
 require_relative '../scripts_init'
 
 context "Writer, Writes Message" do
-  address = Address.build
+  address = Messaging::Address.build
 
-  writer = Writer.new
+  writer = Messaging::Writer.new
   writer.write :some_message, address
 
   test "Message is written to queue of specified address" do

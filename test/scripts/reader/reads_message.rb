@@ -4,7 +4,7 @@ context "Reader, Reads Message" do
   queue = Queue.new
   queue.enq :some_message
 
-  reader = Reader.new queue
+  reader = Messaging::Reader.new queue
 
   message = reader.read
 

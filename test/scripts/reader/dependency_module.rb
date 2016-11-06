@@ -3,7 +3,7 @@ require_relative '../scripts_init'
 context "Reader, Dependency Module" do
   context "Class includes dependency module" do
     cls = Class.new do
-      include Reader::Dependency
+      include Messaging::Reader::Dependency
     end
 
     context "Object is instantiated" do
@@ -11,13 +11,13 @@ context "Reader, Dependency Module" do
 
       test "Reader attribute getter returns substitute" do
         assert object.reader do
-          instance_of? Reader::Substitute
+          instance_of? Messaging::Reader::Substitute
         end
       end
 
       context "Reader attribute is specified" do
-        address = Address.build
-        reader = Reader.build address
+        address = Messaging::Address.build
+        reader = Messaging::Reader.build address
 
         object.reader = reader
 

@@ -1,9 +1,9 @@
 require_relative '../scripts_init'
 
 context "Writer, Writes Message to a Full Queue" do
-  address = Address.build max_queue_size: 1
+  address = Messaging::Address.build max_queue_size: 1
 
-  writer = Writer.new
+  writer = Messaging::Writer.new
   writer.write :insignificant_message, address
 
   context "Wait is not specified" do
@@ -27,7 +27,7 @@ context "Writer, Writes Message to a Full Queue" do
   context "Wait is disabled" do
     test "WouldBlockError is raised" do
       assert proc { writer.write :some_message, address, wait: false } do
-        raises_error? Writer::WouldBlockError
+        raises_error? Messaging::Writer::WouldBlockError
       end
     end
   end

@@ -1,10 +1,10 @@
 require_relative '../scripts_init'
 
 context "Publisher Substitute" do
-  address = Address.build
+  address = Messaging::Address.build
 
   context "Address registration" do
-    substitute = Publisher::Substitute.new
+    substitute = Messaging::Publisher::Substitute.new
 
     context "No address has been registered" do
       test "Registered predicate without argument returns false" do
@@ -29,7 +29,7 @@ context "Publisher Substitute" do
     end
 
     test "Registered predicate returns false if argument does not match address" do
-      other_address = Address.build
+      other_address = Messaging::Address.build
 
       refute substitute do
         registered? other_address
@@ -38,7 +38,7 @@ context "Publisher Substitute" do
   end
 
   context "Address unregistration" do
-    substitute = Publisher::Substitute.new
+    substitute = Messaging::Publisher::Substitute.new
 
     context "No address has been registered" do
       test "Unregistered predicate without argument returns false" do
@@ -63,7 +63,7 @@ context "Publisher Substitute" do
     end
 
     test "Registered predicate returns false if argument does not match address" do
-      other_address = Address.build
+      other_address = Messaging::Address.build
 
       refute substitute do
         unregistered? other_address
@@ -72,7 +72,7 @@ context "Publisher Substitute" do
   end
 
   context "Publishing messages (wait is not specified)" do
-    substitute = Publisher::Substitute.new
+    substitute = Messaging::Publisher::Substitute.new
 
     context "No message has been published" do
       test "Published predicate without argument returns false" do
@@ -116,7 +116,7 @@ context "Publisher Substitute" do
   end
 
   context "Publishing messages (wait is disabled)" do
-    substitute = Publisher::Substitute.new
+    substitute = Messaging::Publisher::Substitute.new
 
     substitute.publish :some_message, wait: false
 

@@ -1,12 +1,12 @@
 require_relative '../scripts_init'
 
 context "Publisher, Publishes Message" do
-  address = Address.build
+  address = Messaging::Address.build
 
   context "Multiple addresses are registered" do
-    other_address = Address.build
+    other_address = Messaging::Address.build
 
-    publisher = Publisher.new
+    publisher = Messaging::Publisher.new
     publisher.register address
     publisher.register other_address
     publisher.publish :some_message
@@ -23,7 +23,7 @@ context "Publisher, Publishes Message" do
   end
 
   context "Wait is not specified" do
-    publisher = Publisher.new
+    publisher = Messaging::Publisher.new
     publisher.register address
     publisher.publish :some_message
 
@@ -35,7 +35,7 @@ context "Publisher, Publishes Message" do
   end
 
   context "Wait is disabled" do
-    publisher = Publisher.new
+    publisher = Messaging::Publisher.new
     publisher.register address
     publisher.publish :some_message, wait: false
 

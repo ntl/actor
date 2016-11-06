@@ -3,7 +3,7 @@ require_relative '../scripts_init'
 context "Reader, Reads Message from an Empty Queue" do
   queue = Queue.new
 
-  reader = Reader.new queue
+  reader = Messaging::Reader.new queue
 
   context "Wait is not specified" do
     write_thread = Thread.new do

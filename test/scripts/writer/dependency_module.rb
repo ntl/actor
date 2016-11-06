@@ -2,7 +2,7 @@ require_relative '../scripts_init'
 
 context "Writer, Dependency Module" do
   cls = Class.new do
-    include Writer::Dependency
+    include Messaging::Writer::Dependency
   end
 
   context "Object is instantiated" do
@@ -10,12 +10,12 @@ context "Writer, Dependency Module" do
 
     test "Writer attribute getter returns substitute" do
       assert object.writer do
-        instance_of? Writer::Substitute
+        instance_of? Messaging::Writer::Substitute
       end
     end
 
     context "Writer attribute is specified" do
-      writer = Writer.new
+      writer = Messaging::Writer.new
 
       object.writer = writer
 

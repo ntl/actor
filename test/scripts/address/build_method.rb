@@ -1,7 +1,7 @@
 require_relative '../scripts_init'
 
 context "Address, Build Method" do
-  address = Address.build
+  address = Messaging::Address.build
 
   test "ID is configured with a UUIDv4" do
     assert address.id do |uuid|

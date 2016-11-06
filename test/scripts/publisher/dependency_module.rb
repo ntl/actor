@@ -2,7 +2,7 @@ require_relative '../scripts_init'
 
 context "Publisher, Dependency Module" do
   cls = Class.new do
-    include Publisher::Dependency
+    include Messaging::Publisher::Dependency
   end
 
   context "Object is instantiated" do
@@ -10,12 +10,12 @@ context "Publisher, Dependency Module" do
 
     test "Publisher attribute getter returns substitute" do
       assert object.publisher do
-        instance_of? Publisher::Substitute
+        instance_of? Messaging::Publisher::Substitute
       end
     end
 
     context "Publisher attribute is specified" do
-      publisher = Publisher.build
+      publisher = Messaging::Publisher.build
 
       object.publisher = publisher
 
