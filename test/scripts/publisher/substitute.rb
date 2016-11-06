@@ -1,10 +1,10 @@
 require_relative '../scripts_init'
 
-context "Writer Substitute" do
+context "Publisher Substitute" do
   address = Address.build
 
   context "Address registration" do
-    substitute = Writer::Substitute.new
+    substitute = Publisher::Substitute.new
 
     context "No address has been registered" do
       test "Registered predicate without argument returns false" do
@@ -38,7 +38,7 @@ context "Writer Substitute" do
   end
 
   context "Address unregistration" do
-    substitute = Writer::Substitute.new
+    substitute = Publisher::Substitute.new
 
     context "No address has been registered" do
       test "Unregistered predicate without argument returns false" do
@@ -71,70 +71,70 @@ context "Writer Substitute" do
     end
   end
 
-  context "Writing messages (wait is not specified)" do
-    substitute = Writer::Substitute.new
+  context "Publishing messages (wait is not specified)" do
+    substitute = Publisher::Substitute.new
 
-    context "No message has been written" do
-      test "Written predicate without argument returns false" do
+    context "No message has been published" do
+      test "Published predicate without argument returns false" do
         refute substitute do
-          written?
+          published?
         end
       end
     end
 
-    substitute.write :some_message
+    substitute.publish :some_message
 
-    test "Written predicate without argument returns true" do
+    test "Published predicate without argument returns true" do
       assert substitute do
-        written?
+        published?
       end
     end
 
-    test "Written predicate returns true if argument matches written message" do
+    test "Published predicate returns true if argument matches published message" do
       assert substitute do
-        written? :some_message
+        published? :some_message
       end
     end
 
-    test "Written predicate returns false if argument does not match written message" do
+    test "Published predicate returns false if argument does not match published message" do
       refute substitute do
-        written? :other_message
+        published? :other_message
       end
     end
 
-    test "Written predicate returns true if message argument matches and write was expected to allow blocking" do
+    test "Published predicate returns true if message argument matches and operation was expected to allow blocking" do
       assert substitute do
-        written? :some_message, wait: true
+        published? :some_message, wait: true
       end
     end
 
-    test "Written predicate returns false if message argument matches and write was expected to avoid blocking" do
+    test "Published predicate returns false if message argument matches and operation was expected to avoid blocking" do
       refute substitute do
-        written? :some_message, wait: false
+        published? :some_message, wait: false
       end
     end
   end
 
-  context "Writing messages (wait is disabled)" do
-    substitute = Writer::Substitute.new
+  context "Publishing messages (wait is disabled)" do
+    substitute = Publisher::Substitute.new
 
-    substitute.write :some_message, wait: false
+    substitute.publish :some_message, wait: false
 
-    test "Written predicate returns true if argument matches written message" do
+    test "Published predicate returns true if argument matches published message" do
       assert substitute do
-        written? :some_message
+        published? :some_message
       end
     end
 
-    test "Written predicate returns true if message argument matches and write was expected to avoid blocking" do
+    test "Published predicate returns true if message argument matches and operation was expected to avoid blocking" do
       assert substitute do
-        written? :some_message, wait: false
+        published? :some_message, wait: false
       end
     end
 
-    test "Written predicate returns false if message argument matches and write was expected to allow blocking" do
+    test "Published predicate returns false if message argument matches and operation was expected to allow blocking" do
       assert substitute do
-        written? :some_message, wait: false
+        published? :some_message, wait: false
       end
     end
   end

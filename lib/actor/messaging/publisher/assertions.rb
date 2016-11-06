@@ -1,6 +1,6 @@
 module Actor
   module Messaging
-    class Writer
+    class Publisher
       module Assertions
         def registered? address
           @queues.include? address.queue

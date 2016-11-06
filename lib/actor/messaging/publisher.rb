@@ -1,6 +1,6 @@
 module Actor
   module Messaging
-    class Writer
+    class Publisher
       def initialize
         @queues = Set.new
       end
@@ -23,7 +23,7 @@ module Actor
         @queues.delete address.queue
       end
 
-      def write message, wait: nil
+      def publish message, wait: nil
         non_block = wait == false
 
         @queues.each do |queue|

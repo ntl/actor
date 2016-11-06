@@ -1,11 +1,11 @@
 module Actor
   module Messaging
-    class Writer
+    class Publisher
       class Substitute
         def initialize
           @registered_addresses = Set.new
           @unregistered_addresses = Set.new
-          @writes = []
+          @records = []
         end
 
         def register address
@@ -16,12 +16,12 @@ module Actor
           @unregistered_addresses << address
         end
 
-        def write message, wait: nil
+        def publish message, wait: nil
           wait = true if wait.nil?
 
           record = Record.new message, wait
 
-          @writes << record
+          @records << record
         end
 
         Record = Struct.new :message, :wait
@@ -43,7 +43,7 @@ module Actor
             end
           end
 
-          def written? message=nil, wait: nil
+          def published? message=nil, wait: nil
             if message.nil?
               check = proc { true }
             elsif wait.nil?
@@ -54,7 +54,7 @@ module Actor
               }
             end
 
-            @writes.any? &check
+            @records.any? &check
           end
         end
 

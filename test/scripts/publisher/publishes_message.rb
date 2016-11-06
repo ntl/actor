@@ -1,12 +1,12 @@
 require_relative '../scripts_init'
 
-context "Writer, Writes Message" do
+context "Publisher, Publishes Message" do
   address1 = Address.build
   address2 = Address.build
 
-  writer = Writer.build address1, address2
+  publisher = Publisher.build address1, address2
 
-  writer.write :some_message
+  publisher.publish :some_message
 
   test "Message is written to queue of each address" do
     assert address1.queue do
