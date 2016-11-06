@@ -1,10 +1,10 @@
 require_relative '../scripts_init'
 
-context "Publisher, Publishes Message to a Full Queue" do
+context "Writer, Writes Message to a Full Queue" do
   address = Address.build max_queue_size: 1
 
-  publisher = Publisher.build address
-  publisher.publish :some_message
+  writer = Writer.new
+  writer.write :insignificant_message, address
 
   context "Wait is not specified" do
     blocked = false
@@ -16,16 +16,18 @@ context "Publisher, Publishes Message to a Full Queue" do
     end
 
     test "Thread is blocked until another thread writes to queue" do
-      publisher.publish :some_message
+      writer.write :some_message, address
 
       assert blocked
     end
+
+    read_thread.join
   end
 
   context "Wait is disabled" do
     test "WouldBlockError is raised" do
-      assert proc { publisher.publish :some_message, wait: false } do
-        raises_error? Publisher::WouldBlockError
+      assert proc { writer.write :some_message, address, wait: false } do
+        raises_error? Writer::WouldBlockError
       end
     end
   end

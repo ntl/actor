@@ -10,6 +10,10 @@ require 'actor/messaging/reader/assertions'
 require 'actor/messaging/reader/dependency'
 require 'actor/messaging/reader/substitute'
 
+require 'actor/messaging/writer'
+require 'actor/messaging/writer/dependency'
+require 'actor/messaging/writer/substitute'
+
 require 'actor/messaging/publisher'
 require 'actor/messaging/publisher/assertions'
 require 'actor/messaging/publisher/dependency'
