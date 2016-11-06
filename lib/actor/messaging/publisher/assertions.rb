@@ -3,7 +3,7 @@ module Actor
     class Publisher
       module Assertions
         def registered? address
-          @queues.include? address.queue
+          @addresses.include? address
         end
       end
     end

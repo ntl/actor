@@ -44,17 +44,14 @@ module Actor
           end
 
           def published? message=nil, wait: nil
-            if message.nil?
-              check = proc { true }
-            elsif wait.nil?
-              check = proc { |record| record.message == message }
-            else
-              check = proc { |record|
-                record.message == message && record.wait == wait
-              }
+            @records.each do |record|
+              next unless message.nil? or record.message == message
+              next unless wait.nil? or record.wait == wait
+
+              return true
             end
 
-            @records.any? &check
+            false
           end
         end
 

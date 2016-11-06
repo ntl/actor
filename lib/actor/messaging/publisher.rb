@@ -1,8 +1,10 @@
 module Actor
   module Messaging
     class Publisher
+      include Writer::Dependency
+
       def initialize
-        @queues = Set.new
+        @addresses = Set.new
       end
 
       def self.build *addresses
@@ -12,29 +14,24 @@ module Actor
           instance.register address
         end
 
+        instance.writer = Writer.new
+
         instance
       end
 
       def register address
-        @queues << address.queue
+        @addresses << address
       end
 
       def unregister address
-        @queues.delete address.queue
+        @addresses.delete address
       end
 
       def publish message, wait: nil
-        non_block = wait == false
-
-        @queues.each do |queue|
-          queue.enq message, non_block
+        @addresses.each do |address|
+          writer.write message, address, wait: wait
         end
-
-      rescue ThreadError
-        raise WouldBlockError
       end
-
-      WouldBlockError = Class.new StandardError
     end
   end
 end
