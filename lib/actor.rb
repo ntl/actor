@@ -18,3 +18,8 @@ require 'actor/messaging/publisher'
 require 'actor/messaging/publisher/assertions'
 require 'actor/messaging/publisher/dependency'
 require 'actor/messaging/publisher/substitute'
+
+require 'actor/module'
+require 'actor/module/handle_macro'
+
+require 'actor/actor'
