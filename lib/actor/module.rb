@@ -6,6 +6,10 @@ module Actor
       end
     end
 
+    include Messaging::Address::Dependency
+    include Messaging::Reader::Dependency
+    include Messaging::Writer::Dependency
+
     def handle message
       handler_method_name = HandleMacro::MethodName.get message
 
@@ -17,6 +21,18 @@ module Actor
         handler_method.()
       else
         handler_method.(message)
+      end
+    end
+
+    def start &supplemental_action
+      loop do
+        message = reader.read
+
+        next_message = handle message
+
+        writer.write next_message, address
+
+        break
       end
     end
   end
