@@ -30,7 +30,7 @@ module Actor
     handle Messages::ActorCrashed do |message|
       self.error ||= message.error
 
-      Messages::Shutdown.new
+      Messages::Shutdown.message_name
     end
 
     def thread_group

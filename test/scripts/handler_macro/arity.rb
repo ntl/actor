@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Module, Handle Method Arity" do
-  cls = Fixtures::Controls::Actor.define do
+  actor = Fixtures::Controls::Actor.define_singleton do
     handle :arity_0 do
       :arity_0
     end
@@ -21,8 +21,6 @@ context "Actor Module, Handle Method Arity" do
       rest
     end
   end
-
-  actor = cls.new
 
   context "Handler method accepts no arguments" do
     return_value = actor.handle :arity_0

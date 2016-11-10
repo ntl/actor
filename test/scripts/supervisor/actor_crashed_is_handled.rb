@@ -12,7 +12,7 @@ context "Supervisor Handles Actor Crashed Message" do
     end
 
     test "Supervisor sends itself the shutdown message" do
-      shutdown = Fixtures::Controls::Message::Shutdown.example
+      shutdown = Messages::Shutdown.message_name
 
       assert supervisor.writer do
         written? shutdown, address: supervisor.address

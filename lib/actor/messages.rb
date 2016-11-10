@@ -12,12 +12,8 @@ module Actor
       include Messaging::Message
     end
 
-    Shutdown = Class.new do
+    module Shutdown
       include Messaging::Message
-
-      def == other_message
-        other_message.instance_of? Shutdown
-      end
     end
   end
 end

@@ -8,6 +8,7 @@ require 'actor/messaging/address/none'
 require 'actor/messaging/address/queue'
 
 require 'actor/messaging/message'
+require 'actor/messaging/message/name'
 
 require 'actor/messaging/reader'
 require 'actor/messaging/reader/assertions'

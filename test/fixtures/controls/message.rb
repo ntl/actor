@@ -53,6 +53,7 @@ module Fixtures
 
       module Shutdown
         def self.example
+          ::Actor::Messages::Shutdown.new
         end
       end
     end
