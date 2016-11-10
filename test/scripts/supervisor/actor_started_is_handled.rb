@@ -11,4 +11,8 @@ context "Supervisor Handles Actor Started Message" do
       registered_actor? actor
     end
   end
+
+  test "Actor count is increased" do
+    assert supervisor.actor_count == 1
+  end
 end

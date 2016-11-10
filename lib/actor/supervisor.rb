@@ -3,9 +3,14 @@ module Actor
     include Module
     include Messaging::Publisher::Dependency
 
+    attr_accessor :actor_count
     attr_accessor :assembly_block
     attr_accessor :error
     attr_writer :thread_group
+
+    def initialize
+      @actor_count = 0
+    end
 
     def self.build &assembly_block
       instance = new
@@ -21,10 +26,18 @@ module Actor
 
     handle Messages::ActorStarted do |message|
       publisher.register message.address
+
+      self.actor_count += 1
     end
 
     handle Messages::ActorStopped do |message|
       publisher.unregister message.address
+
+      self.actor_count -= 1
+
+      if actor_count.zero?
+        Messages::Shutdown.message_name
+      end
     end
 
     handle Messages::ActorCrashed do |message|
