@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Handles a Stop Message" do
-  stop_message = Messages::Stop.message_name
+  stop_message = Messages::Stop
 
   actor = Fixtures::Controls::Actor.example
 

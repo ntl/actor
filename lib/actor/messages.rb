@@ -13,11 +13,11 @@ module Actor
     end
 
     module Stop
-      include Messaging::Message
+      extend Messaging::Message
     end
 
     module Shutdown
-      include Messaging::Message
+      extend Messaging::Message
     end
   end
 end

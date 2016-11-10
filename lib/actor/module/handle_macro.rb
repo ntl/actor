@@ -13,7 +13,7 @@ module Actor
           when Symbol then
             :"handle_#{message_pattern}"
 
-          when Class
+          when ::Module
             get message_pattern.name
 
           when String

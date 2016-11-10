@@ -9,6 +9,10 @@ module Fixtures
         include ::Actor::Messaging::Message
       end
 
+      module ModuleMessage
+        extend ::Actor::Messaging::Message
+      end
+
       module ActorCrashed
         def self.example
           error = Error.example

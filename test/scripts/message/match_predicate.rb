@@ -10,6 +10,16 @@ context "Message Match Predicate" do
     end
   end
 
+  context "Specified object is a module that includes Message" do
+    message = Module.new do
+      extend Messaging::Message
+    end
+
+    test "Predicate returns true" do
+      assert Messaging::Message === message
+    end
+  end
+
   context "Specified object is a symbol" do
     test "Predicate returns true" do
       assert Messaging::Message === :some_message

@@ -36,14 +36,14 @@ module Actor
       self.actor_count -= 1
 
       if actor_count.zero?
-        Messages::Shutdown.message_name
+        Messages::Shutdown
       end
     end
 
     handle Messages::ActorCrashed do |message|
       self.error ||= message.error
 
-      Messages::Shutdown.message_name
+      Messages::Shutdown
     end
 
     def thread_group

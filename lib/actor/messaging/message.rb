@@ -16,7 +16,13 @@ module Actor
       end
 
       def message_name
-        Name.get self.class.name
+        if instance_of? ::Module
+          message_const = name
+        else
+          message_const = self.class.name
+        end
+
+        Name.get message_const
       end
 
       module MessageName

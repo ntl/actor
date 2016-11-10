@@ -88,4 +88,23 @@ context "Writer Substitute" do
       end
     end
   end
+
+  context "Module that includes Message is written" do
+    message = Fixtures::Controls::Message::ModuleMessage
+    substitute = Messaging::Writer::Substitute.new
+
+    substitute.write message, address
+
+    test "Predicate returns true if module is specified" do
+      assert substitute do
+        written? message
+      end
+    end
+
+    test "Predicate returns true if message name is specified" do
+      assert substitute do
+        written? :module_message
+      end
+    end
+  end
 end

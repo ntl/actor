@@ -6,6 +6,10 @@ module Actor
 
         queue = address.queue
 
+        if message.instance_of? ::Module
+          message = message.message_name
+        end
+
         begin
           queue.enq message, non_block
         rescue ThreadError
