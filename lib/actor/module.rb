@@ -30,7 +30,9 @@ module Actor
 
         next_message = handle message
 
-        writer.write next_message, address
+        if Messaging::Message === next_message
+          writer.write next_message, address
+        end
 
         break
       end

@@ -5,7 +5,9 @@ module Fixtures
         SomeMessage.new
       end
 
-      SomeMessage = Class.new
+      class SomeMessage
+        include ::Actor::Messaging::Message
+      end
     end
   end
 end
