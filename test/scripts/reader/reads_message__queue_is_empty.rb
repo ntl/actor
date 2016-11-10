@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Reader, Reads Message from an Empty Queue" do
   queue = Queue.new

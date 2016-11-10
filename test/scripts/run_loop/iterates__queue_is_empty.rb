@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Run Loop Iterates when Queue is Empty" do
   actor = Fixtures::Controls::Actor::Example.new

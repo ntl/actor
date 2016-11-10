@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Message Match Predicate" do
   context "Specified object includes message module" do

@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Actor Builder Configures Dependencies" do
   actor_cls = Fixtures::Controls::Actor.define

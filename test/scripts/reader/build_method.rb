@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Reader, Build Method" do
   address = Messaging::Address.build

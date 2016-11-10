@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Actor Defines a Build Class Method" do
   actor_cls = Struct.new :arg do

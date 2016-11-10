@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Actor Module, Handle Method Arity" do
   cls = Class.new do

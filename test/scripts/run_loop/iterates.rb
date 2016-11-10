@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Run Loop Iterates" do
   message = Fixtures::Controls::Message.example

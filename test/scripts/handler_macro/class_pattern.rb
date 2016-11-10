@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Actor Module, Handle Macro (Messages are Matched by Class)" do
   cls = Class.new do

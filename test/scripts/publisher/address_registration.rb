@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Publisher, Registering and Unregistering Addresses" do
   publisher = Messaging::Publisher.new

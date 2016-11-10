@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Publisher, Dependency Module" do
   cls = Class.new do

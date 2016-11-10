@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Address, None Singleton" do
   none = Messaging::Address::None.build

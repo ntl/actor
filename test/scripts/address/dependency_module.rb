@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Address, Dependency Module" do
   context "Class includes dependency module" do

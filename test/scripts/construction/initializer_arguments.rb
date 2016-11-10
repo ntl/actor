@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Actor Builder Passes Specified Arguments to Constructor" do
   context "Initializer includes only positional arguments" do

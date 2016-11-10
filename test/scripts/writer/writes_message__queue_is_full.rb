@@ -1,4 +1,4 @@
-require_relative '../scripts_init'
+require_relative '../../test_init'
 
 context "Writer, Writes Message to a Full Queue" do
   address = Messaging::Address.build max_queue_size: 1
