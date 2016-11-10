@@ -1,9 +1,7 @@
 require_relative '../scripts_init'
 
 context "Actor Defines Specialized Configure Method" do
-  actor_cls = Class.new do
-    include Actor
-
+  actor_cls = Fixtures::Controls::Actor.define do
     attr_accessor :configure_method_invoked
 
     def configure

@@ -1,21 +1,15 @@
 require_relative '../scripts_init'
 
 context "Run Loop Handles a Message, Handler Does Not Return a Message" do
-  address = Messaging::Address.build
   message = Fixtures::Controls::Message.example
 
-  actor_cls = Class.new do
-    include Actor
-
+  actor = Fixtures::Controls::Actor.define_singleton do
     handle message do
       Object.new
     end
   end
 
-  actor = actor_cls.new
-  actor.extend Actor::Controls
   actor.next_message = message
-  actor.address = address
 
   actor.run_loop do
     break

@@ -5,7 +5,6 @@ context "Run Loop Handles a Message, Handler Returns New Message" do
   message = Fixtures::Controls::Message.example
 
   actor = Fixtures::Controls::Actor::Example.new
-  actor.extend Actor::Controls
   actor.next_message = message
   actor.address = address
 
