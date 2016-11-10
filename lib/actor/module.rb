@@ -35,6 +35,10 @@ module Actor
       return_value
     end
 
+    def handle_stop
+      raise StopIteration
+    end
+
     def run_loop &supplemental_action
       loop do
         message = reader.read

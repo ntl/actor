@@ -12,6 +12,10 @@ module Actor
       include Messaging::Message
     end
 
+    module Stop
+      include Messaging::Message
+    end
+
     module Shutdown
       include Messaging::Message
     end

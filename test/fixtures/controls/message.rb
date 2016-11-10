@@ -50,12 +50,6 @@ module Fixtures
           return actor_stopped, actor
         end
       end
-
-      module Shutdown
-        def self.example
-          ::Actor::Messages::Shutdown.new
-        end
-      end
     end
   end
 end
