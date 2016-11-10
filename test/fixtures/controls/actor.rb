@@ -1,6 +1,12 @@
 module Fixtures
   module Controls
     module Actor
+      def self.example address=nil
+        actor = Example.new
+        actor.address = address if address
+        actor
+      end
+
       def self.define &block
         Class.new do
           include ::Actor

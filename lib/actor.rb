@@ -23,12 +23,16 @@ require 'actor/messaging/publisher/assertions'
 require 'actor/messaging/publisher/dependency'
 require 'actor/messaging/publisher/substitute'
 
-require 'actor/build'
+require 'actor/messages'
 
 require 'actor/module'
 require 'actor/module/handle_macro'
 
 require 'actor/assertions'
+require 'actor/build'
 require 'actor/controls'
+
+require 'actor/supervisor'
+require 'actor/supervisor/assertions'
 
 require 'actor/actor'
