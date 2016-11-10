@@ -7,7 +7,7 @@ context "Reader Substitute" do
     context "Reading messages (wait is not specified)" do
       test "WouldBlockError is raised" do
         assert proc { substitute.read } do
-          raises_error? Messaging::Reader::Substitute::WouldBlockError
+          raises_error? Messaging::Queue::Substitute::WouldBlockError
         end
       end
     end

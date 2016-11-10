@@ -5,7 +5,7 @@ module Actor
         attr_writer :reader
 
         def reader
-          @reader ||= Substitute.new
+          @reader ||= Substitute.build
         end
       end
     end

@@ -1,22 +1,32 @@
 module Actor
   module Messaging
     class Reader
-      class Substitute
-        attr_accessor :message
+      class Substitute < Reader
+        def initialize
+          @queue = Queue::Substitute.build
+        end
+
+        def self.build
+          instance = new
+          instance.extend Controls
+          instance
+        end
 
         def read wait: nil
           wait = true if wait.nil?
 
-          if message.nil? and wait
-            raise WouldBlockError
-          end
-
-          message
+          @queue.deq !wait
         end
 
-        WouldBlockError = Class.new StandardError
+        def message= message
+          @queue.read_message = message
+        end
 
-        singleton_class.send :alias_method, :build, :new # subst-attr compat
+        module Controls
+          def message= message
+            @queue.read_message = message
+          end
+        end
       end
     end
   end

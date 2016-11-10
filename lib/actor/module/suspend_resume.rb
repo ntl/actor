@@ -18,7 +18,7 @@ module Actor
       end
 
       def suspend_queue
-        @suspend_queue ||= Messaging::Queue::Substitute.new
+        @suspend_queue ||= Messaging::Queue::Substitute.build
       end
       private :suspend_queue
 

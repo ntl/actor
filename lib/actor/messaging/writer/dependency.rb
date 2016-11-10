@@ -5,7 +5,7 @@ module Actor
         attr_writer :writer
 
         def writer
-          @writer ||= Substitute.new
+          @writer ||= Substitute.build
         end
       end
     end

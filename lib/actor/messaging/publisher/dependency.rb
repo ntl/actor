@@ -5,7 +5,7 @@ module Actor
         attr_writer :publisher
 
         def publisher
-          @publisher ||= Substitute.new
+          @publisher ||= Substitute.build
         end
       end
     end

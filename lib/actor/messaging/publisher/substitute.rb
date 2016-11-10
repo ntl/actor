@@ -8,6 +8,8 @@ module Actor
           @records = []
         end
 
+        singleton_class.send :alias_method, :build, :new
+
         def register address
           @registered_addresses << address
         end
@@ -54,8 +56,6 @@ module Actor
             false
           end
         end
-
-        singleton_class.send :alias_method, :build, :new # subst-attr compat
       end
     end
   end
