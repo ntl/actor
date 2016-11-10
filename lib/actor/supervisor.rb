@@ -46,6 +46,10 @@ module Actor
       Messages::Shutdown
     end
 
+    handle Messages::Shutdown do
+      publisher.publish Messages::Stop
+    end
+
     def thread_group
       @thread_group ||= ThreadGroup::Default
     end
