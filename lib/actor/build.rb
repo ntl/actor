@@ -23,10 +23,14 @@ module Actor
       end
 
       if block
-        method.(*arguments, &block)
+        actor = method.(*arguments, &block)
       else
-        method.(*arguments)
+        actor = method.(*arguments)
       end
+
+      actor.configure
+
+      actor
     end
   end
 end

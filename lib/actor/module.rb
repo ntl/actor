@@ -3,12 +3,17 @@ module Actor
     def self.included cls
       cls.class_exec do
         extend HandleMacro
+
+        prepend Configure
       end
     end
 
     include Messaging::Address::Dependency
     include Messaging::Reader::Dependency
     include Messaging::Writer::Dependency
+
+    def configure
+    end
 
     def handle message
       handler_method_name = HandleMacro::MethodName.get message
@@ -35,6 +40,16 @@ module Actor
         end
 
         break
+      end
+    end
+
+    module Configure
+      def configure
+        self.address = Messaging::Address.build
+        self.reader = Messaging::Reader.build address
+        self.writer = Messaging::Writer.new
+
+        super
       end
     end
   end

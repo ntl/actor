@@ -28,6 +28,7 @@ require 'actor/build'
 require 'actor/module'
 require 'actor/module/handle_macro'
 
+require 'actor/assertions'
 require 'actor/controls'
 
 require 'actor/actor'
