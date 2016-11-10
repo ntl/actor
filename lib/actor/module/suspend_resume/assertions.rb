@@ -19,9 +19,11 @@ module Actor
         module Extended
           def extended actor
             actor.instance_exec do
-              assertions_module = suspend_queue.class::Assertions
+              if suspend_queue.instance_of? Messaging::Queue::Substitute
+                assertions_module = suspend_queue.class::Assertions
 
-              suspend_queue.extend assertions_module
+                suspend_queue.extend assertions_module
+              end
             end
           end
         end
