@@ -26,8 +26,11 @@ require 'actor/messaging/publisher/substitute'
 
 require 'actor/messages'
 
-require 'actor/module'
-require 'actor/module/handle_macro'
+require 'actor/module/dependencies'
+require 'actor/module/handler'
+require 'actor/module/handler/method_name'
+require 'actor/module/handler/macro'
+require 'actor/module/run_loop'
 
 require 'actor/assertions'
 require 'actor/build'

@@ -1,12 +1,6 @@
 module Actor
   module Module
-    module HandleMacro
-      def handle message_pattern, &handler
-        method_name = MethodName.get message_pattern
-
-        define_method method_name, &handler
-      end
-
+    module Handler
       module MethodName
         def self.get message_pattern
           case message_pattern

@@ -1,6 +1,9 @@
 module Actor
   class Supervisor
-    include Module
+    include Module::Dependencies
+    include Module::Handler
+    include Module::RunLoop
+
     include Messaging::Publisher::Dependency
 
     attr_accessor :actor_count

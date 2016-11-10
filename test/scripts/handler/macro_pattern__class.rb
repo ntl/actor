@@ -1,9 +1,7 @@
 require_relative '../../test_init'
 
-context "Actor Module, Handle Macro (Messages are Matched by Class)" do
-  cls = Class.new do
-    include Actor
-
+context "Actor Module, Handle Macro Pattern (Message is Matched by Class)" do
+  cls = Fixtures::Controls::Actor.define do 
     attr_accessor :handler_actuated
 
     handle Fixtures::Controls::Message::SomeMessage do
