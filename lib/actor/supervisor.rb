@@ -1,8 +1,26 @@
 module Actor
   class Supervisor
     include Module
-
     include Messaging::Publisher::Dependency
+
+    attr_accessor :assembly_block
+    attr_writer :thread_group
+
+    def thread_group
+      @thread_group ||= ThreadGroup::Default
+    end
+
+    def self.build &assembly_block
+      instance = new
+      instance.assembly_block = assembly_block if assembly_block
+      instance
+    end
+
+    def configure
+      self.thread_group = Thread.current.group
+
+      assembly_block.(address) if assembly_block
+    end
 
     handle Messages::ActorStarted do |message|
       publisher.register message.address
