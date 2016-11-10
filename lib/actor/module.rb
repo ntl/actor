@@ -23,23 +23,25 @@ module Actor
       handler_method = method handler_method_name
 
       if handler_method.arity == 0
-        handler_method.()
+        return_value = handler_method.()
       else
-        handler_method.(message)
+        return_value = handler_method.(message)
       end
+
+      if Messaging::Message === return_value
+        writer.write return_value, address
+      end
+
+      return_value
     end
 
     def run_loop &supplemental_action
       loop do
         message = reader.read
 
-        next_message = handle message
+        handle message
 
-        if Messaging::Message === next_message
-          writer.write next_message, address
-        end
-
-        break
+        supplemental_action.() if supplemental_action
       end
     end
 

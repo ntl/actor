@@ -1,9 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Module, Handle Method Arity" do
-  cls = Class.new do
-    include Actor
-
+  cls = Fixtures::Controls::Actor.define do
     handle :arity_0 do
       :arity_0
     end

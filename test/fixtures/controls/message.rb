@@ -9,6 +9,14 @@ module Fixtures
         include ::Actor::Messaging::Message
       end
 
+      module ActorCrashed
+        def self.example
+          error = Error.example
+
+          ::Actor::Messages::ActorCrashed.new error
+        end
+      end
+
       module ActorStarted
         def self.example address=nil
           address ||= Address.example
@@ -40,6 +48,11 @@ module Fixtures
           actor = Actor.example address
 
           return actor_stopped, actor
+        end
+      end
+
+      module Shutdown
+        def self.example
         end
       end
     end

@@ -4,11 +4,8 @@ module Actor
     include Messaging::Publisher::Dependency
 
     attr_accessor :assembly_block
+    attr_accessor :error
     attr_writer :thread_group
-
-    def thread_group
-      @thread_group ||= ThreadGroup::Default
-    end
 
     def self.build &assembly_block
       instance = new
@@ -28,6 +25,16 @@ module Actor
 
     handle Messages::ActorStopped do |message|
       publisher.unregister message.address
+    end
+
+    handle Messages::ActorCrashed do |message|
+      self.error ||= message.error
+
+      Messages::Shutdown.new
+    end
+
+    def thread_group
+      @thread_group ||= ThreadGroup::Default
     end
   end
 end
