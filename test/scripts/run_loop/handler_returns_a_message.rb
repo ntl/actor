@@ -9,7 +9,7 @@ context "Run Loop Handles a Message, Handler Returns New Message" do
   actor.next_message = message
   actor.address = address
 
-  actor.start do
+  actor.run_loop do
     break
   end
 

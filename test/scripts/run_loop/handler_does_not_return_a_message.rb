@@ -17,7 +17,7 @@ context "Run Loop Handles a Message, Handler Does Not Return a Message" do
   actor.next_message = message
   actor.address = address
 
-  actor.start do
+  actor.run_loop do
     break
   end
 

@@ -24,7 +24,7 @@ module Actor
       end
     end
 
-    def start &supplemental_action
+    def run_loop &supplemental_action
       loop do
         message = reader.read
 

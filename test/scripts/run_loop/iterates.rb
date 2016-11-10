@@ -6,7 +6,7 @@ context "Run Loop Iterates" do
   actor = Fixtures::Controls::Actor::Example.new
   actor.reader.message = message
 
-  actor.start do
+  actor.run_loop do
     break
   end
 
