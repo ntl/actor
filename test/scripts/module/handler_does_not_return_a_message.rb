@@ -1,6 +1,6 @@
 require_relative '../../test_init'
 
-context "Run Loop Handles a Message, Handler Does Not Return a Message" do
+context "Actor Handles a Message, Handler Does Not Return a Message" do
   message = Fixtures::Controls::Message.example
 
   actor = Fixtures::Controls::Actor.define_singleton do
@@ -9,11 +9,7 @@ context "Run Loop Handles a Message, Handler Does Not Return a Message" do
     end
   end
 
-  actor.next_message = message
-
-  actor.run_loop do
-    break
-  end
+  actor.handle message
 
   test "Nothing is written" do
     refute actor.writer do
