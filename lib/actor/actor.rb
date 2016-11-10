@@ -10,6 +10,7 @@ module Actor
       include Module::Dependencies
       include Module::Handler
       include Module::RunLoop
+      include Module::SuspendResume
     end
   end
 end

@@ -25,7 +25,7 @@ context "Address, Build Method" do
     end
 
     assert address.queue do
-      max == address.class::Queue::Defaults.maximum_size
+      max == Messaging::Queue::Defaults.maximum_size
     end
   end
 end

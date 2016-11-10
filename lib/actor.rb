@@ -1,11 +1,14 @@
 require 'securerandom'
 require 'set'
 
+require 'actor/messaging/queue'
+require 'actor/messaging/queue/substitute'
+require 'actor/messaging/queue/substitute'
+
 require 'actor/messaging/address'
 require 'actor/messaging/address/controls'
 require 'actor/messaging/address/dependency'
 require 'actor/messaging/address/none'
-require 'actor/messaging/address/queue'
 
 require 'actor/messaging/message'
 require 'actor/messaging/message/name'
@@ -27,12 +30,15 @@ require 'actor/messaging/publisher/substitute'
 require 'actor/messages'
 
 require 'actor/module/dependencies'
+require 'actor/module/dependencies/assertions'
 require 'actor/module/handler'
 require 'actor/module/handler/method_name'
 require 'actor/module/handler/macro'
+require 'actor/module/include_assertions'
 require 'actor/module/run_loop'
+require 'actor/module/suspend_resume'
+require 'actor/module/suspend_resume/assertions'
 
-require 'actor/assertions'
 require 'actor/build'
 require 'actor/controls'
 

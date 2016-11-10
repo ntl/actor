@@ -12,11 +12,19 @@ module Actor
       include Messaging::Message
     end
 
-    module Stop
+    module Suspend
+      extend Messaging::Message
+    end
+
+    module Resume
       extend Messaging::Message
     end
 
     module Shutdown
+      extend Messaging::Message
+    end
+
+    module Stop
       extend Messaging::Message
     end
   end

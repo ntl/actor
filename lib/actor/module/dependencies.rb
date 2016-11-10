@@ -8,6 +8,8 @@ module Actor
           include Messaging::Writer::Dependency
 
           prepend Configure
+
+          IncludeAssertions.(Assertions, self)
         end
       end
 
