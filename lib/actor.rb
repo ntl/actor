@@ -43,6 +43,9 @@ require 'actor/build'
 require 'actor/controls'
 
 require 'actor/supervisor'
+require 'actor/supervisor/address/get'
+require 'actor/supervisor/address/put'
+require 'actor/supervisor/address/registry'
 require 'actor/supervisor/assertions'
 
 require 'actor/actor'

@@ -53,6 +53,14 @@ module Actor
       publisher.publish Messages::Stop
     end
 
+    handle Messages::Suspend do |message|
+      publisher.publish message
+    end
+
+    handle Messages::Resume do |message|
+      publisher.publish message
+    end
+
     def thread_group
       @thread_group ||= ThreadGroup::Default
     end

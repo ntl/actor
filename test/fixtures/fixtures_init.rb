@@ -5,4 +5,5 @@ require_relative './controls/address'
 require_relative './controls/error'
 require_relative './controls/message'
 
+require_relative './execute_within_thread'
 require_relative './timeout'
