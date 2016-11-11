@@ -4,8 +4,10 @@ context "Get Address of Supervisor" do
   context "No supervisor address is registered" do
     address = Supervisor::Address::Get.()
 
-    test "Nothing is returned" do
-      assert address == nil
+    test "Null address is returned" do
+      assert address do
+        instance_of? Messaging::Address::None
+      end
     end
   end
 
@@ -23,8 +25,10 @@ context "Get Address of Supervisor" do
         Supervisor::Address::Get.()
       end
 
-      test "Nothing is returned" do
-        assert address == nil
+      test "Null address is returned" do
+        assert address do
+          instance_of? Messaging::Address::None
+        end
       end
     end
 

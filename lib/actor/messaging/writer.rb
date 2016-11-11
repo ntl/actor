@@ -18,6 +18,11 @@ module Actor
       end
 
       WouldBlockError = Class.new StandardError
+
+      def self.call *arguments
+        instance = new
+        instance.write *arguments
+      end
     end
   end
 end

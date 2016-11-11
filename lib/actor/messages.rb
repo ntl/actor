@@ -1,5 +1,9 @@
 module Actor
   module Messages
+    module Start
+      extend Messaging::Message
+    end
+
     ActorStarted = Struct.new :address do
       include Messaging::Message
     end

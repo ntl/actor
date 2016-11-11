@@ -43,6 +43,18 @@ module Fixtures
           end
         end
       end
+
+      CrashesImmediately = define do
+        handle :start do
+          raise Controls::Error.example
+        end
+      end
+
+      StopsImmediately = define do
+        handle :start do
+          :stop
+        end
+      end
     end
   end
 end

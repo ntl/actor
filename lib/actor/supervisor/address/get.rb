@@ -5,7 +5,9 @@ module Actor
         def self.call thread_group=nil
           thread_group ||= Thread.current.group
 
-          Registry[thread_group]
+          Registry.fetch thread_group do
+            Messaging::Address::None.instance
+          end
         end
       end
     end

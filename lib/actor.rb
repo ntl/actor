@@ -41,6 +41,7 @@ require 'actor/module/suspend_resume/assertions'
 
 require 'actor/build'
 require 'actor/controls'
+require 'actor/start'
 
 require 'actor/supervisor'
 require 'actor/supervisor/address/get'
