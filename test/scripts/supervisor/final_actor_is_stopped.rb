@@ -8,9 +8,9 @@ context "Supervisor Handles Final Actor Stopped Message" do
 
   supervisor.handle actor_stopped
 
-  test "Supervisor sends itself the shutdown message" do
+  test "Supervisor sends itself the stop message" do
     assert supervisor.writer do
-      written? Messages::Shutdown, address: supervisor.address
+      written? Messages::Stop, address: supervisor.address
     end
   end
 end

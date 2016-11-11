@@ -39,7 +39,7 @@ module Actor
       self.actor_count -= 1
 
       if actor_count.zero?
-        Messages::Shutdown
+        Messages::Stop
       end
     end
 
