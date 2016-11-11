@@ -13,4 +13,10 @@ context "Supervisor is Constructed Within a Non-Default Thread Group" do
   test "Thread group is set to that of thread in which supervisor is built" do
     assert supervisor.thread_group == thread_group
   end
+
+  test "Supervisor address is registered with thread group" do
+    supervisor_address = Supervisor::Address::Get.(thread_group)
+
+    assert supervisor_address == supervisor.address
+  end
 end

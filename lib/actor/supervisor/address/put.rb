@@ -3,9 +3,9 @@ module Actor
     module Address
       module Put
         def self.call address
-          group = Thread.current.group
+          thread_group = Thread.current.group
 
-          Registry[group] = address
+          Registry[thread_group] = address
         end
       end
     end

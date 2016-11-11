@@ -24,6 +24,8 @@ module Actor
     def configure
       self.thread_group = Thread.current.group
 
+      Address::Put.(address)
+
       assembly_block.(address) if assembly_block
     end
 
