@@ -3,8 +3,7 @@ module Actor
     module Queue
       class Substitute
         def initialize
-          @enqueue_records = []
-          @read_message = nil
+          @records = ::Queue.new
         end
 
         def self.build
@@ -16,10 +15,12 @@ module Actor
         def deq non_block=nil
           non_block ||= false
 
-          if value = @read_message
-            @read_message = nil
-            return value
+          begin
+            record = @records.deq true
+          rescue ThreadError
           end
+
+          return record.message if record
 
           if non_block
             nil
@@ -28,12 +29,16 @@ module Actor
           end
         end
 
+        def empty?
+          @records.empty?
+        end
+
         def enq message, non_block=nil
           non_block ||= false
 
           record = Record.new message, non_block
 
-          @enqueue_records << record
+          @records.enq record
 
           record
         end
@@ -43,12 +48,16 @@ module Actor
         WouldBlockError = Class.new StandardError
 
         module Controls
-          attr_writer :read_message
+          def add message
+            enq message
+          end
         end
 
         module Assertions
           def enqueued? message=nil, wait: nil
-            @enqueue_records.each do |record|
+            until @records.empty?
+              record = @records.deq
+
               next unless message.nil? or record.message == message
               next unless wait.nil? or record.non_block == !wait
 
@@ -56,10 +65,6 @@ module Actor
             end
 
             false
-          end
-
-          def read_message?
-            not @read_message.nil?
           end
         end
       end

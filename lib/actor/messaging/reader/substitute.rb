@@ -18,13 +18,9 @@ module Actor
           @queue.deq !wait
         end
 
-        def message= message
-          @queue.read_message = message
-        end
-
         module Controls
-          def message= message
-            @queue.read_message = message
+          def add message
+            @queue.add message
           end
         end
       end

@@ -23,7 +23,7 @@ context "Queue Substitute, Dequeuing" do
 
   context "Read message is supplied to substitute" do
     substitute = Messaging::Queue::Substitute.build
-    substitute.read_message = :some_message
+    substitute.add :some_message
 
     context "Dequeue operation is performed" do
       message = substitute.deq
@@ -32,9 +32,9 @@ context "Queue Substitute, Dequeuing" do
         assert message == :some_message
       end
 
-      test "Read message is reset" do
-        refute substitute do
-          read_message?
+      test "Internal queue is drained" do
+        assert substitute do
+          empty?
         end
       end
     end

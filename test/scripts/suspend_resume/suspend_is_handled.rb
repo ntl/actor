@@ -12,7 +12,7 @@ context "Actor Handles Suspend Message" do
   end
 
   context "Subsequent message is handled" do
-    message = Fixtures::Controls::Message
+    message = Fixtures::Controls::Message.example
 
     actor.handle message
 
