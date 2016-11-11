@@ -3,6 +3,16 @@ module Actor
     module Message
       def self.included cls
         cls.class_exec do
+          extend Matcher
+          extend MessageName
+
+          include MessageName
+        end
+      end
+
+      def self.extended receiver
+        receiver.instance_exec do
+          extend Matcher
           extend MessageName
         end
       end
@@ -15,14 +25,12 @@ module Actor
         end
       end
 
-      def message_name
-        if instance_of? ::Module
-          message_const = name
-        else
-          message_const = self.class.name
-        end
+      module Matcher
+        def === other
+          other_message_name = Name.get other
 
-        Name.get message_const
+          message_name == other_message_name
+        end
       end
 
       module MessageName

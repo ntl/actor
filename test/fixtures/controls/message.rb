@@ -9,6 +9,10 @@ module Fixtures
         include ::Actor::Messaging::Message
       end
 
+      class OtherMessage
+        include ::Actor::Messaging::Message
+      end
+
       module ModuleMessage
         extend ::Actor::Messaging::Message
       end
