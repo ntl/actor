@@ -8,7 +8,7 @@ module Actor
           end
         end
 
-        def message_deferred? message, wait: nil
+        def message_deferred? message=nil, wait: nil
           suspend_queue.enqueued? message, wait: wait
         end
 

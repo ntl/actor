@@ -17,6 +17,16 @@ module Actor
         @suspended = true
       end
 
+      def handle_resume
+        @suspended = false
+
+        until suspend_queue.empty?
+          deferred_message = suspend_queue.deq
+
+          writer.write deferred_message, address
+        end
+      end
+
       def suspend_queue
         @suspend_queue ||= Messaging::Queue::Substitute.build
       end
@@ -38,13 +48,27 @@ module Actor
         end
       end
 
+      module Controls
+        def suspend!
+          @suspended = true
+        end
+
+        def defer_message *messages
+          messages.each do |message|
+            suspend_queue.enq message
+          end
+        end
+      end
+
       module Handle
         def handle message
+          @suspended = false if Messages::Resume === message
+
           if @suspended
             suspend_queue.enq message, true
+          else
+            super
           end
-
-          super
         end
       end
     end

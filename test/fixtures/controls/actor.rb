@@ -11,6 +11,7 @@ module Fixtures
         Class.new do
           include ::Actor
           include ::Actor::Controls
+          include ::Actor::Module::SuspendResume::Controls
 
           class_exec &block if block
         end
@@ -24,10 +25,7 @@ module Fixtures
         actor
       end
 
-      class Example
-        include ::Actor
-        include ::Actor::Controls
-
+      Example = define do
         def initialize
           @handled_messages = []
         end
@@ -36,7 +34,9 @@ module Fixtures
           @handled_messages << msg
           msg
         end
+      end
 
+      class Example
         module Assertions
           def handled? msg
             @handled_messages.include? msg
