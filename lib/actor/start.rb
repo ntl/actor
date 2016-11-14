@@ -22,8 +22,6 @@ module Actor
       writer.write Messages::Start, address
 
       thread = Thread.new do
-        sleep
-
         actor_started
 
         begin
@@ -33,10 +31,6 @@ module Actor
           actor_crashed error
         end
       end
-
-      Thread.pass until thread.stop?
-
-      thread.wakeup
 
       return actor, thread
     end
