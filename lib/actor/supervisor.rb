@@ -23,19 +23,23 @@ module Actor
     end
 
     def self.start &assembly_block
-      thread_group = Thread.current.group
+      thread = Thread.new do
+        thread_group = Thread.current.group
 
-      prior_thread_count = thread_group.list.count
+        prior_thread_count = thread_group.list.count
 
-      instance = build &assembly_block
+        instance = build &assembly_block
 
-      thread_count = thread_group.list.count
+        thread_count = thread_group.list.count
 
-      unless thread_count > prior_thread_count
-        raise NoActorsStarted, "Assembly block must start at least one actor"
+        unless thread_count > prior_thread_count
+          raise NoActorsStarted, "Assembly block must start at least one actor"
+        end
+
+        instance.run_loop
       end
 
-      instance.run_loop
+      thread.join
     end
 
     def configure
@@ -44,6 +48,8 @@ module Actor
       Address::Put.(address)
 
       assembly_block.(self)
+
+      self.publisher = Messaging::Publisher.build
     end
 
     handle Messages::ActorStarted do |message|
@@ -65,6 +71,8 @@ module Actor
     handle Messages::ActorCrashed do |message|
       self.error ||= message.error
 
+      self.actor_count -= 1
+
       Messages::Shutdown
     end
 
@@ -78,6 +86,12 @@ module Actor
 
     handle Messages::Resume do |message|
       publisher.publish message
+    end
+
+    handle Messages::Stop do |stop|
+      raise error if error
+
+      super stop
     end
 
     def assembly_block

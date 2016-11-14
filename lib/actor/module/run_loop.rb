@@ -11,7 +11,7 @@ module Actor
         end
       end
 
-      def handle_stop
+      def handle_stop(_=nil)
         raise StopIteration
       end
     end

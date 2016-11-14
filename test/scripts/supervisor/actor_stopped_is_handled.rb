@@ -12,7 +12,7 @@ context "Supervisor Handles Actor Stopped Message" do
     end
   end
 
-  test "Actor count is increased" do
+  test "Actor count is decreased" do
     assert supervisor.actor_count == -1
   end
 end

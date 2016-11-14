@@ -16,6 +16,10 @@ context "Supervisor Handles Actor Crashed Message" do
         written? Messages::Shutdown, address: supervisor.address
       end
     end
+
+    test "Actor count is decreased" do
+      assert supervisor.actor_count == -1
+    end
   end
 
   context "Error is already set" do

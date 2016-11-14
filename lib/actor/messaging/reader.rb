@@ -1,6 +1,8 @@
 module Actor
   module Messaging
     class Reader
+      attr_reader :queue
+
       def initialize queue
         @queue = queue
       end
@@ -20,7 +22,7 @@ module Actor
       def read wait: nil
         non_block = wait == false
 
-        @queue.deq non_block
+        queue.deq non_block
 
       rescue ThreadError
         return nil
