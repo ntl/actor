@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Handles a Message, Handler Returns New Message" do
-  address = Messaging::Address.build
+  address = Fixtures::Controls::Address.example
   message = Fixtures::Controls::Message.example
 
   actor = Fixtures::Controls::Actor.define_singleton do

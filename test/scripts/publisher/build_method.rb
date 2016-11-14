@@ -1,8 +1,8 @@
 require_relative '../../test_init'
 
 context "Publisher, Build Method" do
-  address1 = Messaging::Address.build
-  address2 = Messaging::Address.build
+  address1 = Fixtures::Controls::Address.example
+  address2 = Fixtures::Controls::Address::Other.example
 
   publisher = Messaging::Publisher.build address1, address2
 

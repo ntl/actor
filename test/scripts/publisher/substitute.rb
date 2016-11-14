@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Publisher Substitute" do
-  address = Messaging::Address.build
+  address = Fixtures::Controls::Address.example
 
   context "Address registration" do
     substitute = Messaging::Publisher::Substitute.new
@@ -29,7 +29,7 @@ context "Publisher Substitute" do
     end
 
     test "Registered predicate returns false if argument does not match address" do
-      other_address = Messaging::Address.build
+      other_address = Fixtures::Controls::Address::Other.example
 
       refute substitute do
         registered? other_address
@@ -63,7 +63,7 @@ context "Publisher Substitute" do
     end
 
     test "Registered predicate returns false if argument does not match address" do
-      other_address = Messaging::Address.build
+      other_address = Fixtures::Controls::Address::Other.example
 
       refute substitute do
         unregistered? other_address

@@ -1,10 +1,10 @@
 require_relative '../../test_init'
 
 context "Publisher, Publishes Message" do
-  address = Messaging::Address.build
+  address = Fixtures::Controls::Address.example
 
   context "Multiple addresses are registered" do
-    other_address = Messaging::Address.build
+    other_address = Fixtures::Controls::Address::Other.example
 
     publisher = Messaging::Publisher.new
     publisher.register address

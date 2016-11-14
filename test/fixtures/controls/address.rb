@@ -26,6 +26,14 @@ module Fixtures
           Address.example id
         end
       end
+
+      module Other
+        def self.example
+          id = ID.get 3
+
+          Address.example id
+        end
+      end
     end
   end
 end

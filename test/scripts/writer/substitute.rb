@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Writer Substitute" do
-  address = Messaging::Address.build
+  address = Fixtures::Controls::Address.example
 
   context "Written predicate" do
     context "No message has been written" do
@@ -43,7 +43,7 @@ context "Writer Substitute" do
         end
 
         test "Predicate returns false if specified address does not match address of write operation" do
-          other_address = Messaging::Address.build
+          other_address = Fixtures::Controls::Address.example
 
           refute substitute do
             written? address: other_address
