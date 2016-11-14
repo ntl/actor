@@ -46,8 +46,8 @@ module Actor
     end
 
     def actor_stopped
-      actor_started = Messages::ActorStopped.new address
-      writer.write actor_started, supervisor_address
+      actor_stopped = Messages::ActorStopped.new address
+      writer.write actor_stopped, supervisor_address
     end
 
     def address
