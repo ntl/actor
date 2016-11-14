@@ -28,7 +28,7 @@ module Fixtures
 
       Thread.pass until thread.stop?
 
-      @thread_group.add thread
+      thread_group.add thread
 
       thread.wakeup
       thread.join

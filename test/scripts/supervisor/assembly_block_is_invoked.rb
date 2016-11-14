@@ -13,7 +13,7 @@ context "Supervisor Invokes Assembly Block" do
     assert assembly_block_invoked
   end
 
-  test "Address of supervisor is passed to block" do
-    assert block_argument == supervisor.address
+  test "Supervisor is passed to block" do
+    assert block_argument == supervisor
   end
 end

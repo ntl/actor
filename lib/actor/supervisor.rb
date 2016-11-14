@@ -7,7 +7,7 @@ module Actor
     include Messaging::Publisher::Dependency
 
     attr_accessor :actor_count
-    attr_accessor :assembly_block
+    attr_writer :assembly_block
     attr_accessor :error
     attr_writer :thread_group
 
@@ -17,8 +17,25 @@ module Actor
 
     def self.build &assembly_block
       instance = new
-      instance.assembly_block = assembly_block if assembly_block
+      instance.assembly_block = assembly_block
+      instance.configure
       instance
+    end
+
+    def self.start &assembly_block
+      thread_group = Thread.current.group
+
+      prior_thread_count = thread_group.list.count
+
+      instance = build &assembly_block
+
+      thread_count = thread_group.list.count
+
+      unless thread_count > prior_thread_count
+        raise NoActorsStarted, "Assembly block must start at least one actor"
+      end
+
+      instance.run_loop
     end
 
     def configure
@@ -26,7 +43,7 @@ module Actor
 
       Address::Put.(address)
 
-      assembly_block.(address) if assembly_block
+      assembly_block.(self)
     end
 
     handle Messages::ActorStarted do |message|
@@ -63,8 +80,14 @@ module Actor
       publisher.publish message
     end
 
+    def assembly_block
+      @assembly_block ||= proc { }
+    end
+
     def thread_group
       @thread_group ||= ThreadGroup::Default
     end
+
+    NoActorsStarted = Class.new StandardError
   end
 end
