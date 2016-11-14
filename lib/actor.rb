@@ -36,6 +36,7 @@ require 'actor/module/handler/method_name'
 require 'actor/module/handler/macro'
 require 'actor/module/include_assertions'
 require 'actor/module/run_loop'
+require 'actor/module/start'
 require 'actor/module/suspend_resume'
 require 'actor/module/suspend_resume/assertions'
 

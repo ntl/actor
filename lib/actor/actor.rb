@@ -7,6 +7,7 @@ module Actor
     return if cls.eql? Object
 
     cls.class_exec do
+      extend Module::Start
       include Module::Dependencies
       include Module::Handler
       include Module::RunLoop

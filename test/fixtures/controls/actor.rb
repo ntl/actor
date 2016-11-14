@@ -25,7 +25,9 @@ module Fixtures
         actor
       end
 
-      Example = define do
+      Example = self.define
+
+      class Example
         def initialize
           @handled_messages = []
         end
@@ -34,13 +36,23 @@ module Fixtures
           @handled_messages << msg
           msg
         end
-      end
 
-      class Example
         module Assertions
           def handled? msg
             @handled_messages.include? msg
           end
+        end
+      end
+
+      RequestResponse = define
+
+      class RequestResponse
+        handle :some_request do |msg|
+          writer.write :some_response, msg.reply_address
+        end
+
+        SomeRequest = Struct.new :reply_address do
+          include Messaging::Message
         end
       end
 

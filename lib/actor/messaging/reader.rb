@@ -11,6 +11,12 @@ module Actor
         new queue
       end
 
+      def self.call address, wait: nil
+        instance = build address
+
+        instance.read wait: wait
+      end
+
       def read wait: nil
         non_block = wait == false
 
