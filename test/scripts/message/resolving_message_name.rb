@@ -1,6 +1,6 @@
 require_relative '../../test_init'
 
-context "Message Module, Get Message Name" do
+context "Message Module, Message Name is Resolved From Message" do
   context "Symbol is specified" do
     message_name = Messaging::Message::Name.get :SOME_SYMBOL
 

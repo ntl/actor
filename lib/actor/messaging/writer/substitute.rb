@@ -6,8 +6,6 @@ module Actor
           @records = []
         end
 
-        singleton_class.send :alias_method, :build, :new
-
         def write message, address, wait: nil
           wait = true if wait.nil?
 
@@ -39,6 +37,8 @@ module Actor
             false
           end
         end
+
+        singleton_class.send :alias_method, :build, :new # subst-attr compat
       end
     end
   end

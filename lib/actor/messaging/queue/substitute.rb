@@ -3,70 +3,50 @@ module Actor
     module Queue
       class Substitute
         def initialize
-          @records = ::Queue.new
+          @enqueued_records = []
         end
 
         def self.build
           instance = new
-          instance.extend Controls
           instance
         end
 
         def deq non_block=nil
-          non_block ||= false
-
-          begin
-            record = @records.deq true
-          rescue ThreadError
-          end
-
-          return record.message if record
-
           if non_block
-            nil
+            raise ThreadError
           else
             raise WouldBlockError
           end
         end
 
         def empty?
-          @records.empty?
+          true
         end
 
         def enq message, non_block=nil
-          non_block ||= false
+          non_block = false if non_block.nil?
 
           record = Record.new message, non_block
-
-          @records.enq record
-
+          @enqueued_records << record
           record
         end
 
-        Record = Struct.new :message, :non_block
-
         WouldBlockError = Class.new StandardError
 
-        module Controls
-          def add message
-            enq message
-          end
-        end
+        Record = Struct.new :message, :non_block
 
         module Assertions
           def enqueued? message=nil, wait: nil
-            until @records.empty?
-              record = @records.deq
-
+            @enqueued_records.any? do |record|
               next unless message.nil? or record.message == message
               next unless wait.nil? or record.non_block == !wait
 
-              return true
+              true
             end
-
-            false
           end
         end
+
+        singleton_class.send :alias_method, :build, :new # subst-attr compat
       end
     end
   end

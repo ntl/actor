@@ -2,25 +2,27 @@ module Actor
   module Messaging
     class Reader
       class Substitute < Reader
-        def initialize
-          @queue = Queue::Substitute.build
-        end
+        attr_writer :next_message
 
         def self.build
-          instance = new
+          queue = Queue::Substitute.new
+
+          instance = new queue
           instance.extend Controls
           instance
         end
 
         def read wait: nil
-          wait = true if wait.nil?
-
-          @queue.deq !wait
+          if @next_message.nil?
+            super
+          else
+            @next_message
+          end
         end
 
         module Controls
           def add message
-            @queue.add message
+            @next_message = message
           end
         end
       end

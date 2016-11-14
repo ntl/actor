@@ -20,6 +20,7 @@ context "Suspended Actor Handles Resume Message" do
     msg3 = Fixtures::Controls::Message.example
 
     actor = Fixtures::Controls::Actor.example
+    actor.suspend_queue = Messaging::Queue.get
     actor.suspend!
     actor.defer_message msg1, msg2, msg3
 
