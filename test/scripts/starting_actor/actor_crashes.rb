@@ -8,7 +8,7 @@ context "Actor Lifecycle, Actor Crashes" do
   actor, thread = Fixtures::ExecuteWithinThread.(thread_group) do
     Supervisor::Address::Put.(supervisor_address)
 
-    Start.(Fixtures::Controls::Actor::CrashesImmediately)
+    Start.(Controls::Actor::CrashesImmediately)
   end
 
   thread.join
@@ -24,7 +24,7 @@ context "Actor Lifecycle, Actor Crashes" do
   end
 
   test "Actor crashed is written to supervisor address" do
-    error = Fixtures::Controls::Error.example
+    error = Controls::Error.example
 
     actor_crashed = Messages::ActorCrashed.new error
 

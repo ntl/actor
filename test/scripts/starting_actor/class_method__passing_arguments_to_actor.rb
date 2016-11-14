@@ -2,7 +2,7 @@ require_relative '../../test_init'
 
 context "Actor is Started Via Class Method, Passing Arguments to Actor" do
   context "Initializer includes only positional or block arguments" do
-    actor_cls = Fixtures::Controls::Actor.define do
+    actor_cls = Controls::Actor.define do
       attr_reader :positional, :block
 
       def initialize positional, &block
@@ -29,7 +29,7 @@ context "Actor is Started Via Class Method, Passing Arguments to Actor" do
   end
 
   context "Initializer includes keyword arguments" do
-    actor_cls = Fixtures::Controls::Actor.define do
+    actor_cls = Controls::Actor.define do
       attr_reader :positional, :keyword
 
       def initialize positional, keyword: nil

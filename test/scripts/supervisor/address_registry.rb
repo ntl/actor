@@ -12,7 +12,7 @@ context "Get Address of Supervisor" do
   end
 
   context "Supervisor address is registered for a thread group" do
-    registered_address = Fixtures::Controls::Address.example
+    registered_address = Controls::Address.example
 
     thread_group = ThreadGroup.new
 

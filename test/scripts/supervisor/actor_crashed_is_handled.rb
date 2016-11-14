@@ -1,14 +1,14 @@
 require_relative '../../test_init'
 
 context "Supervisor Handles Actor Crashed Message" do
-  actor_crashed = Fixtures::Controls::Message::ActorCrashed.example
+  actor_crashed = Controls::Message::ActorCrashed.example
 
   context do
     supervisor = Supervisor.new
     supervisor.handle actor_crashed
 
     test "Error is set" do
-      assert supervisor.error == Fixtures::Controls::Error.example
+      assert supervisor.error == Controls::Error.example
     end
 
     test "Supervisor sends itself the shutdown message" do

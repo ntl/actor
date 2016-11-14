@@ -8,7 +8,7 @@ context "Actor Lifecycle" do
   actor, thread = Fixtures::ExecuteWithinThread.(thread_group) do
     Supervisor::Address::Put.(supervisor_address)
 
-    Start.(Fixtures::Controls::Actor::StopsImmediately)
+    Start.(Controls::Actor::StopsImmediately)
   end
 
   thread.join

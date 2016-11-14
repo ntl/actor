@@ -2,7 +2,7 @@ require_relative '../../test_init'
 
 context "Actor Builder Passes Specified Arguments to Constructor" do
   context "Initializer includes only positional arguments" do
-    actor_cls = Fixtures::Controls::Actor.define do
+    actor_cls = Controls::Actor.define do
       attr_reader :req, :opt
 
       def initialize req, opt=:default_opt
@@ -36,7 +36,7 @@ context "Actor Builder Passes Specified Arguments to Constructor" do
   end
 
   context "Initializer includes only keyword arguments" do
-    actor_cls = Fixtures::Controls::Actor.define do
+    actor_cls = Controls::Actor.define do
       attr_reader :keyreq, :key
 
       def initialize keyreq:, key: :default_key
@@ -70,7 +70,7 @@ context "Actor Builder Passes Specified Arguments to Constructor" do
   end
 
   context "Initializer includes block argument" do
-    actor_cls = Fixtures::Controls::Actor.define do
+    actor_cls = Controls::Actor.define do
       attr_reader :block
 
       def initialize &block
@@ -99,7 +99,7 @@ context "Actor Builder Passes Specified Arguments to Constructor" do
   end
 
   context "Initializer includes mix of all argument types" do
-    actor_cls = Fixtures::Controls::Actor.define do
+    actor_cls = Controls::Actor.define do
       attr_reader :req, :opt, :keyreq, :key, :block
 
       def initialize req, opt=:default_opt, keyreq:, key: :default_key, &block

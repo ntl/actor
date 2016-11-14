@@ -1,9 +1,9 @@
 require_relative '../../test_init'
 
 context "Run Loop Iterates" do
-  message = Fixtures::Controls::Message.example
+  message = Controls::Message.example
 
-  actor = Fixtures::Controls::Actor::Example.new
+  actor = Controls::Actor::Example.new
   actor.next_message = message
 
   actor.run_loop do

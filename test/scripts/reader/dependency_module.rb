@@ -16,7 +16,7 @@ context "Reader, Dependency Module" do
       end
 
       context "Reader attribute is specified" do
-        address = Fixtures::Controls::Address.example
+        address = Controls::Address.example
         reader = Messaging::Reader.build address
 
         object.reader = reader

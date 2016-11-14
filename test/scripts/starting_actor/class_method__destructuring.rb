@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor is Started Via Class Method, Destructuring" do
-  actor_class = Fixtures::Controls::Actor::StopsImmediately
+  actor_class = Controls::Actor::StopsImmediately
 
   context "Actor instance is specified to be returned" do
     _, actor = actor_class.start include: :actor

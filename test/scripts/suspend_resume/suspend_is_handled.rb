@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Handles Suspend Message" do
-  actor = Fixtures::Controls::Actor.example
+  actor = Controls::Actor.example
   actor.suspend_queue = Messaging::Queue.get
 
   actor.handle Messages::Suspend
@@ -13,7 +13,7 @@ context "Actor Handles Suspend Message" do
   end
 
   context "Subsequent message is handled" do
-    message = Fixtures::Controls::Message.example
+    message = Controls::Message.example
 
     actor.handle message
 

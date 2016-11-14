@@ -2,7 +2,7 @@ require_relative '../../test_init'
 
 context "Suspended Actor Handles Resume Message" do
   context do
-    actor = Fixtures::Controls::Actor.example
+    actor = Controls::Actor.example
     actor.suspend!
 
     actor.handle Messages::Resume
@@ -15,11 +15,11 @@ context "Suspended Actor Handles Resume Message" do
   end
 
   context "Messages have been deferred while actor was suspended" do
-    msg1 = Fixtures::Controls::Message.example
-    msg2 = Fixtures::Controls::Message.example
-    msg3 = Fixtures::Controls::Message.example
+    msg1 = Controls::Message.example
+    msg2 = Controls::Message.example
+    msg3 = Controls::Message.example
 
-    actor = Fixtures::Controls::Actor.example
+    actor = Controls::Actor.example
     actor.suspend_queue = Messaging::Queue.get
     actor.suspend!
     actor.defer_message msg1, msg2, msg3
@@ -40,9 +40,9 @@ context "Suspended Actor Handles Resume Message" do
   end
 
   context "Subsequent message is handled" do
-    message = Fixtures::Controls::Message.example
+    message = Controls::Message.example
 
-    actor = Fixtures::Controls::Actor.example
+    actor = Controls::Actor.example
     actor.suspend!
 
     actor.handle Messages::Resume

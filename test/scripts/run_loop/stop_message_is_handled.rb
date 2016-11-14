@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Handles a Stop Message" do
-  actor = Fixtures::Controls::Actor.example
+  actor = Controls::Actor.example
 
   test "StopIteration error is raised" do
     assert proc { actor.handle_stop } do

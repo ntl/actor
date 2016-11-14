@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Supervisor Handles Actor Started Message" do
-  actor_started, actor = Fixtures::Controls::Message::ActorStarted.pair
+  actor_started, actor = Controls::Message::ActorStarted.pair
   supervisor = Supervisor.new
 
   supervisor.handle actor_started

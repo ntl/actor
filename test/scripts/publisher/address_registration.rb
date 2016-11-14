@@ -3,7 +3,7 @@ require_relative '../../test_init'
 context "Publisher, Registering and Unregistering Addresses" do
   publisher = Messaging::Publisher.new
 
-  address = Fixtures::Controls::Address.example
+  address = Controls::Address.example
 
   context "Address is registered with publisher" do
     publisher.register address

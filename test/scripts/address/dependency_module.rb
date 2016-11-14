@@ -16,7 +16,7 @@ context "Address, Dependency Module" do
       end
 
       context "Address attribute is specified" do
-        address = Fixtures::Controls::Address.example
+        address = Controls::Address.example
 
         object.address = address
 

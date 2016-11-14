@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Builder Configures Dependencies" do
-  actor_cls = Fixtures::Controls::Actor.define
+  actor_cls = Controls::Actor.define
 
   actor = Actor::Build.(actor_cls)
 

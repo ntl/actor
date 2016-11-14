@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Message, Message Name" do
-  message_class = Fixtures::Controls::Message::SomeMessage
+  message_class = Controls::Message::SomeMessage
 
   context "Class method is queried" do
     message_name = message_class.message_name

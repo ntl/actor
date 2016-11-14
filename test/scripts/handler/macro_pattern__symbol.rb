@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Module, Handle Macro Pattern (Message is Matched by Symbol)" do
-  cls = Fixtures::Controls::Actor.define do 
+  cls = Controls::Actor.define do 
     attr_accessor :handler_actuated
 
     handle :some_message do
@@ -10,7 +10,7 @@ context "Actor Module, Handle Macro Pattern (Message is Matched by Symbol)" do
   end
 
   context "Actor handles an instance whose class name matches symbol" do
-    message = Fixtures::Controls::Message::SomeMessage.new
+    message = Controls::Message::SomeMessage.new
 
     actor = cls.new
     actor.handle message

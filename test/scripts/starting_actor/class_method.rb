@@ -1,12 +1,12 @@
 require_relative '../../test_init'
 
 context "Actor is Started Via Class Method" do
-  message = Fixtures::Controls::Message.example
-  address = Fixtures::Controls::Actor::RequestResponse.start
+  message = Controls::Message.example
+  address = Controls::Actor::RequestResponse.start
 
   context "Actor is sent a message to which it responds" do
     reply_address = Messaging::Address.build
-    request = Fixtures::Controls::Actor::RequestResponse::SomeRequest.new reply_address
+    request = Controls::Actor::RequestResponse::SomeRequest.new reply_address
 
     Messaging::Writer.(request, address)
 

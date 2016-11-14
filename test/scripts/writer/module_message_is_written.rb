@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Writer, Writes Module Message" do
-  message = Fixtures::Controls::Message::ModuleMessage
+  message = Controls::Message::ModuleMessage
 
   address = Messaging::Address.build
 

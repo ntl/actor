@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Defines Specialized Configure Method" do
-  actor_cls = Fixtures::Controls::Actor.define do
+  actor_cls = Controls::Actor.define do
     attr_accessor :configure_method_invoked
 
     def configure

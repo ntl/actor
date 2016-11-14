@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Supervisor Handles Final Actor Stopped Message" do
-  actor_stopped, actor = Fixtures::Controls::Message::ActorStopped.pair
+  actor_stopped, actor = Controls::Message::ActorStopped.pair
   supervisor = Supervisor.new
 
   supervisor.actor_count = 1

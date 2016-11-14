@@ -1,9 +1,9 @@
 require_relative '../../test_init'
 
 context "StopIteration is Raised When Run Loop Iterates" do
-  message = Fixtures::Controls::Message.example
+  message = Controls::Message.example
 
-  actor = Fixtures::Controls::Actor.define_singleton do
+  actor = Controls::Actor.define_singleton do
     handle message do
       raise StopIteration
     end

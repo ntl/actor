@@ -1,9 +1,9 @@
 require_relative '../../test_init'
 
 context "Actor Handles a Message, Handler Does Not Return a Message" do
-  message = Fixtures::Controls::Message.example
+  message = Controls::Message.example
 
-  actor = Fixtures::Controls::Actor.define_singleton do
+  actor = Controls::Actor.define_singleton do
     handle message do
       Object.new
     end
