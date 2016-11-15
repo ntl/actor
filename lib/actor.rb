@@ -9,6 +9,7 @@ require 'actor/messaging/address'
 require 'actor/messaging/address/controls'
 require 'actor/messaging/address/dependency'
 require 'actor/messaging/address/none'
+require 'actor/messaging/address/substitute'
 
 require 'actor/messaging/message'
 require 'actor/messaging/message/name'

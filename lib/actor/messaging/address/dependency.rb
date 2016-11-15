@@ -5,7 +5,7 @@ module Actor
         attr_writer :address
 
         def address
-          @address ||= Address::None.instance
+          @address ||= Address::Substitute.build
         end
       end
     end
