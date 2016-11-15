@@ -3,6 +3,8 @@ module Actor
     class Publisher
       include Writer::Dependency
 
+      attr_reader :addresses
+
       def initialize
         @addresses = Set.new
       end
@@ -20,15 +22,15 @@ module Actor
       end
 
       def register address
-        @addresses << address
+        addresses << address
       end
 
       def unregister address
-        @addresses.delete address
+        addresses.delete address
       end
 
       def publish message, wait: nil
-        @addresses.each do |address|
+        addresses.each do |address|
           writer.write message, address, wait: wait
         end
       end
