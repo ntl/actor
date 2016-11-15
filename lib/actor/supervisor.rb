@@ -26,16 +26,7 @@ module Actor
       thread = Thread.new do
         thread_group = Thread.current.group
 
-        prior_thread_count = thread_group.list.count
-
         instance = build &assembly_block
-
-        thread_count = thread_group.list.count
-
-        unless thread_count > prior_thread_count
-          raise NoActorsStarted, "Assembly block must start at least one actor"
-        end
-
         instance.run_loop
       end
 
