@@ -73,7 +73,11 @@ module Actor
 
       self.actor_count -= 1
 
-      Messages::Shutdown
+      if actor_count.zero?
+        Messages::Stop
+      else
+        Messages::Shutdown
+      end
     end
 
     handle Messages::Shutdown do
