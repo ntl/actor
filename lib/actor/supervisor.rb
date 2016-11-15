@@ -30,7 +30,13 @@ module Actor
         instance.run_loop
       end
 
-      thread.join
+      loop do
+        ten_seconds = 10
+
+        result = thread.join ten_seconds
+
+        break unless result.nil?
+      end
     end
 
     def configure
