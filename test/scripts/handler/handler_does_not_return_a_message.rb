@@ -12,7 +12,7 @@ context "Actor Handles a Message, Handler Does Not Return a Message" do
   actor.handle message
 
   test "Nothing is written" do
-    refute actor.writer do
+    refute actor.write do
       written?
     end
   end

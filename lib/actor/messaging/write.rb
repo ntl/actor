@@ -1,7 +1,7 @@
 module Actor
   module Messaging
-    class Writer
-      def write message, address, wait: nil
+    class Write
+      def call message, address, wait: nil
         non_block = wait == false
 
         queue = address.queue
@@ -21,7 +21,7 @@ module Actor
 
       def self.call *arguments
         instance = new
-        instance.write *arguments
+        instance.(*arguments)
       end
     end
   end

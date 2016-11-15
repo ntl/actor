@@ -4,9 +4,9 @@ context "Reader, Reads Message" do
   queue = Queue.new
   queue.enq :some_message
 
-  reader = Messaging::Reader.new queue
+  read = Messaging::Read.new queue
 
-  message = reader.read
+  message = read.()
 
   test "Message is read from queue" do
     assert message == :some_message

@@ -4,10 +4,10 @@ context "Publisher, Build Method" do
   address1 = Controls::Address.example
   address2 = Controls::Address::Other.example
 
-  publisher = Messaging::Publisher.build address1, address2
+  publish = Messaging::Publish.build address1, address2
 
   test "Each specified address is registered with publisher" do
-    assert publisher do
+    assert publish do
       registered? address1 and registered? address2
     end
   end

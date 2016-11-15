@@ -2,25 +2,25 @@ require_relative '../../test_init'
 
 context "Publisher, Dependency Module" do
   cls = Class.new do
-    include Messaging::Publisher::Dependency
+    include Messaging::Publish::Dependency
   end
 
   context "Object is instantiated" do
     object = cls.new
 
     test "Publisher attribute getter returns substitute" do
-      assert object.publisher do
-        instance_of? Messaging::Publisher::Substitute
+      assert object.publish do
+        instance_of? Messaging::Publish::Substitute
       end
     end
 
     context "Publisher attribute is specified" do
-      publisher = Messaging::Publisher.build
+      publish = Messaging::Publish.build
 
-      object.publisher = publisher
+      object.publish = publish
 
       test "Publisher attribute is set to specified publisher" do
-        assert object.publisher == publisher
+        assert object.publish == publish
       end
     end
   end

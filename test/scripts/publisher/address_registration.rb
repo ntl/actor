@@ -1,25 +1,25 @@
 require_relative '../../test_init'
 
 context "Publisher, Registering and Unregistering Addresses" do
-  publisher = Messaging::Publisher.new
+  publish = Messaging::Publish.new
 
   address = Controls::Address.example
 
   context "Address is registered with publisher" do
-    publisher.register address
+    publish.register address
 
     test "Publisher has registered address" do
-      assert publisher do
+      assert publish do
         registered? address
       end
     end
   end
 
   context "Address is unregistered from publisher" do
-    publisher.unregister address
+    publish.unregister address
 
     test "Publisher has no longer registered address" do
-      refute publisher do
+      refute publish do
         registered? address
       end
     end

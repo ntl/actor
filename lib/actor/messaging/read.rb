@@ -1,6 +1,6 @@
 module Actor
   module Messaging
-    class Reader
+    class Read
       attr_reader :queue
 
       def initialize queue
@@ -16,10 +16,10 @@ module Actor
       def self.call address, wait: nil
         instance = build address
 
-        instance.read wait: wait
+        instance.(wait: wait)
       end
 
-      def read wait: nil
+      def call wait: nil
         non_block = wait == false
 
         queue.deq non_block

@@ -11,11 +11,11 @@ module Actor
         end
 
         def reader_configured?
-          reader.instance_of? Messaging::Reader
+          read.instance_of? Messaging::Read
         end
 
         def writer_configured?
-          writer.instance_of? Messaging::Writer
+          write.instance_of? Messaging::Write
         end
       end
     end

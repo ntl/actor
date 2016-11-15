@@ -6,7 +6,7 @@ context "Supervisor Handles Suspend Message" do
   supervisor.handle Messages::Suspend
 
   test "Suspend is published to all actors" do
-    assert supervisor.publisher do
+    assert supervisor.publish do
       published? Messages::Suspend
     end
   end

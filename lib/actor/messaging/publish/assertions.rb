@@ -1,9 +1,9 @@
 module Actor
   module Messaging
-    class Publisher
+    class Publish
       module Assertions
         def registered? address
-          @addresses.include? address
+          addresses.include? address
         end
       end
     end

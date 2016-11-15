@@ -3,7 +3,7 @@ require_relative '../../test_init'
 context "Reader, Reads Message from an Empty Queue" do
   queue = Queue.new
 
-  reader = Messaging::Reader.new queue
+  read = Messaging::Read.new queue
 
   context "Wait is not specified" do
     write_thread = Thread.new do
@@ -12,7 +12,7 @@ context "Reader, Reads Message from an Empty Queue" do
     end
 
     test "Thread is blocked until another thread writes to queue" do
-      message = reader.read
+      message = read.()
 
       assert message == :some_message
     end
@@ -20,7 +20,7 @@ context "Reader, Reads Message from an Empty Queue" do
 
   context "Wait is disabled" do
     test "Nothing is returned" do
-      message = reader.read wait: false
+      message = read.(wait: false)
 
       assert message.nil?
     end

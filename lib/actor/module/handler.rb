@@ -21,7 +21,7 @@ module Actor
         end
 
         if Messaging::Message === return_value
-          writer.write return_value, address
+          write.(return_value, address)
         end
 
         return_value

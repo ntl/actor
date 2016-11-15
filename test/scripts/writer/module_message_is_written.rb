@@ -5,8 +5,8 @@ context "Writer, Writes Module Message" do
 
   address = Messaging::Address.build
 
-  writer = Messaging::Writer.new
-  writer.write message, address
+  write = Messaging::Write.new
+  write.(message, address)
 
   test "Message name is written" do
     assert address.queue do

@@ -4,7 +4,7 @@ context "Publisher Substitute" do
   address = Controls::Address.example
 
   context "Address registration" do
-    substitute = Messaging::Publisher::Substitute.new
+    substitute = Messaging::Publish::Substitute.new
 
     context "No address has been registered" do
       test "Registered predicate without argument returns false" do
@@ -38,7 +38,7 @@ context "Publisher Substitute" do
   end
 
   context "Address unregistration" do
-    substitute = Messaging::Publisher::Substitute.new
+    substitute = Messaging::Publish::Substitute.new
 
     context "No address has been registered" do
       test "Unregistered predicate without argument returns false" do
@@ -72,7 +72,7 @@ context "Publisher Substitute" do
   end
 
   context "Publishing messages (wait is not specified)" do
-    substitute = Messaging::Publisher::Substitute.new
+    substitute = Messaging::Publish::Substitute.new
 
     context "No message has been published" do
       test "Published predicate without argument returns false" do
@@ -82,7 +82,7 @@ context "Publisher Substitute" do
       end
     end
 
-    substitute.publish :some_message
+    substitute.(:some_message)
 
     test "Published predicate without argument returns true" do
       assert substitute do
@@ -116,9 +116,9 @@ context "Publisher Substitute" do
   end
 
   context "Publishing messages (wait is disabled)" do
-    substitute = Messaging::Publisher::Substitute.new
+    substitute = Messaging::Publish::Substitute.new
 
-    substitute.publish :some_message, wait: false
+    substitute.(:some_message, wait: false)
 
     test "Published predicate returns true if argument matches published message" do
       assert substitute do

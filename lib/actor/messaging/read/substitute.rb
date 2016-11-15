@@ -1,8 +1,8 @@
 module Actor
   module Messaging
-    class Reader
-      class Substitute < Reader
-        attr_writer :next_message
+    class Read
+      class Substitute < Read
+        attr_accessor :next_message
 
         def self.build
           queue = Queue::Substitute.new
@@ -12,17 +12,17 @@ module Actor
           instance
         end
 
-        def read wait: nil
-          if @next_message.nil?
+        def call wait: nil
+          if next_message.nil?
             super
           else
-            @next_message
+            next_message
           end
         end
 
         module Controls
           def add message
-            @next_message = message
+            self.next_message = message
           end
         end
       end

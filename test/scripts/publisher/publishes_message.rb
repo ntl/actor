@@ -6,41 +6,41 @@ context "Publisher, Publishes Message" do
   context "Multiple addresses are registered" do
     other_address = Controls::Address::Other.example
 
-    publisher = Messaging::Publisher.new
-    publisher.register address
-    publisher.register other_address
-    publisher.publish :some_message
+    publish = Messaging::Publish.new
+    publish.register address
+    publish.register other_address
+    publish.(:some_message)
 
     test "Message is written each registered address and is allowed to block" do
-      assert publisher.writer do
+      assert publish.write do
         written? :some_message, address: address
       end
 
-      assert publisher.writer do
+      assert publish.write do
         written? :some_message, address: other_address
       end
     end
   end
 
   context "Wait is not specified" do
-    publisher = Messaging::Publisher.new
-    publisher.register address
-    publisher.publish :some_message
+    publish = Messaging::Publish.new
+    publish.register address
+    publish.(:some_message)
 
     test "Write operation is allowed to block" do
-      assert publisher.writer do
+      assert publish.write do
         written? wait: true
       end
     end
   end
 
   context "Wait is disabled" do
-    publisher = Messaging::Publisher.new
-    publisher.register address
-    publisher.publish :some_message, wait: false
+    publish = Messaging::Publish.new
+    publish.register address
+    publish.(:some_message, wait: false)
 
     test "Write operation is not allowed to block" do
-      assert publisher.writer do
+      assert publish.write do
         written? wait: false
       end
     end

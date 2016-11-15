@@ -3,7 +3,7 @@ module Actor
     module RunLoop
       def run_loop &supplemental_action
         loop do
-          message = reader.read
+          message = read.()
 
           handle message
 

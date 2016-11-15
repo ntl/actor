@@ -47,7 +47,7 @@ module Controls
 
     class RequestResponse
       handle :some_request do |msg|
-        writer.write :some_response, msg.reply_address
+        write.(:some_response, msg.reply_address)
       end
 
       SomeRequest = Struct.new :reply_address do

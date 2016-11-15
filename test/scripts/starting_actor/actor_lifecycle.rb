@@ -13,12 +13,12 @@ context "Actor Lifecycle" do
 
   thread.join
 
-  reader = Messaging::Reader.build supervisor_address
+  read = Messaging::Read.build supervisor_address
 
   test "Actor started is written to supervisor address" do
     actor_stopped = Messages::ActorStarted.new actor.address
 
-    assert reader do
+    assert read do
       next_message? actor_stopped
     end
   end
@@ -26,7 +26,7 @@ context "Actor Lifecycle" do
   test "Actor stopped is written to supervisor address" do
     actor_stopped = Messages::ActorStopped.new actor.address
 
-    assert reader do
+    assert read do
       next_message? actor_stopped
     end
   end

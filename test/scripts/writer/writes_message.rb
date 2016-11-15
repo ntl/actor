@@ -3,8 +3,8 @@ require_relative '../../test_init'
 context "Writer, Writes Message" do
   address = Messaging::Address.build
 
-  writer = Messaging::Writer.new
-  writer.write :some_message, address
+  write = Messaging::Write.new
+  write.(:some_message, address)
 
   test "Message is written to queue of specified address" do
     assert address.queue do

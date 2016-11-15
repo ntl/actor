@@ -20,7 +20,7 @@ class Factorial < Struct.new :number, :reply_address
   def reply value
     result = Result.new value, number
 
-    writer.write result, reply_address
+    write.(result, reply_address)
 
     :stop
   end
@@ -36,6 +36,6 @@ Actor::Supervisor.start do
   Factorial.start 42, result_address
 end
 
-result = Actor::Messaging::Reader.(result_address)
+result = Actor::Messaging::Read.(result_address)
 
 puts "fac(42) = #{result.value}"

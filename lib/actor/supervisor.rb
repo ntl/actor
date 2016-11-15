@@ -4,7 +4,7 @@ module Actor
     include Module::Handler
     include Module::RunLoop
 
-    include Messaging::Publisher::Dependency
+    include Messaging::Publish::Dependency
 
     attr_accessor :actor_count
     attr_writer :assembly_block
@@ -49,17 +49,17 @@ module Actor
 
       assembly_block.(self)
 
-      self.publisher = Messaging::Publisher.build
+      self.publish = Messaging::Publish.build
     end
 
     handle Messages::ActorStarted do |message|
-      publisher.register message.address
+      publish.register message.address
 
       self.actor_count += 1
     end
 
     handle Messages::ActorStopped do |message|
-      publisher.unregister message.address
+      publish.unregister message.address
 
       self.actor_count -= 1
 
@@ -77,15 +77,15 @@ module Actor
     end
 
     handle Messages::Shutdown do
-      publisher.publish Messages::Stop
+      publish.(Messages::Stop)
     end
 
     handle Messages::Suspend do |message|
-      publisher.publish message
+      publish.(message)
     end
 
     handle Messages::Resume do |message|
-      publisher.publish message
+      publish.(message)
     end
 
     handle Messages::Stop do |stop|

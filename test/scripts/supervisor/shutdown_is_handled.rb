@@ -6,7 +6,7 @@ context "Supervisor Handles Shutdown Message" do
   supervisor.handle Messages::Shutdown
 
   test "Stop is published to all actors" do
-    assert supervisor.publisher do
+    assert supervisor.publish do
       published? Messages::Stop
     end
   end

@@ -9,7 +9,7 @@ module InteractiveExample
 
       output = Result.new string.upcase
 
-      writer.write output, convert.reply_address
+      write.(output, convert.reply_address)
     end
 
     Convert = Struct.new :string, :reply_address do
@@ -49,7 +49,7 @@ module InteractiveExample
 
       convert = Upcase::Convert.new input, address
 
-      writer.write convert, upcase_address
+      write.(convert, upcase_address)
     end
 
     handle :result do |result|

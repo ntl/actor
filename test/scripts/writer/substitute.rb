@@ -5,7 +5,7 @@ context "Writer Substitute" do
 
   context "Written predicate" do
     context "No message has been written" do
-      substitute = Messaging::Writer::Substitute.new
+      substitute = Messaging::Write::Substitute.new
 
       test "Predicate returns false even if no constraints are specified" do
         refute substitute do
@@ -16,8 +16,8 @@ context "Writer Substitute" do
 
     context "Message has been written" do
       context "Message constraint" do
-        substitute = Messaging::Writer::Substitute.new
-        substitute.write :some_message, address
+        substitute = Messaging::Write::Substitute.new
+        substitute.(:some_message, address)
 
         test "Predicate returns true if specified message matches written message" do
           assert substitute do
@@ -33,8 +33,8 @@ context "Writer Substitute" do
       end
 
       context "Address constraint" do
-        substitute = Messaging::Writer::Substitute.new
-        substitute.write :some_message, address
+        substitute = Messaging::Write::Substitute.new
+        substitute.(:some_message, address)
 
         test "Predicate returns true if specified address matches address of write operation" do
           assert substitute do
@@ -53,8 +53,8 @@ context "Writer Substitute" do
 
       context "Wait constraint" do
         context "Write operation was allowed to block" do
-          substitute = Messaging::Writer::Substitute.new
-          substitute.write :some_message, address
+          substitute = Messaging::Write::Substitute.new
+          substitute.(:some_message, address)
 
           test "Predicate returns true if specified wait value is true" do
             assert substitute do
@@ -70,8 +70,8 @@ context "Writer Substitute" do
         end
 
         context "Write operation was not allowed to block" do
-          substitute = Messaging::Writer::Substitute.new
-          substitute.write :some_message, address, wait: false
+          substitute = Messaging::Write::Substitute.new
+          substitute.(:some_message, address, wait: false)
 
           test "Predicate returns true if specified wait value is false" do
             assert substitute do
@@ -91,9 +91,9 @@ context "Writer Substitute" do
 
   context "Module that includes Message is written" do
     message = Controls::Message::ModuleMessage
-    substitute = Messaging::Writer::Substitute.new
+    substitute = Messaging::Write::Substitute.new
 
-    substitute.write message, address
+    substitute.(message, address)
 
     test "Predicate returns true if module is specified" do
       assert substitute do

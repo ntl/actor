@@ -3,17 +3,17 @@ module Actor
     module Assertions
       def self.extended supervisor
         supervisor.instance_exec do
-          assertions_module = publisher.class::Assertions
-          publisher.extend assertions_module
+          assertions_module = publish.class::Assertions
+          publish.extend assertions_module
         end
       end
 
       def registered_actor? actor
-        publisher.registered? actor.address
+        publish.registered? actor.address
       end
 
       def unregistered_actor? actor
-        publisher.unregistered? actor.address
+        publish.unregistered? actor.address
       end
     end
   end

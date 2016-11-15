@@ -6,7 +6,7 @@ context "Supervisor Handles Resume Message" do
   supervisor.handle Messages::Resume
 
   test "Suspend is published to all actors" do
-    assert supervisor.publisher do
+    assert supervisor.publish do
       published? Messages::Resume
     end
   end

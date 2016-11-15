@@ -24,7 +24,7 @@ module Actor
         until suspend_queue.empty?
           deferred_message = suspend_queue.deq
 
-          writer.write deferred_message, address
+          write.(deferred_message, address)
         end
       end
 

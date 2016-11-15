@@ -1,6 +1,6 @@
 module Actor
   class Start
-    include Messaging::Writer::Dependency
+    include Messaging::Write::Dependency
 
     attr_reader :actor
     attr_accessor :supervisor_address
@@ -13,13 +13,13 @@ module Actor
       actor = Build.(actor_class, *arguments, &block)
 
       instance = new actor
-      instance.writer = Messaging::Writer.new
+      instance.write = Messaging::Write.new
       instance.supervisor_address = Supervisor::Address::Get.()
       instance.()
     end
 
     def call
-      writer.write Messages::Start, address
+      write.(Messages::Start, address)
 
       thread = Thread.new do
         actor_started
@@ -37,17 +37,17 @@ module Actor
 
     def actor_crashed error
       actor_crashed = Messages::ActorCrashed.new error
-      writer.write actor_crashed, supervisor_address
+      write.(actor_crashed, supervisor_address)
     end
 
     def actor_started
       actor_started = Messages::ActorStarted.new address
-      writer.write actor_started, supervisor_address
+      write.(actor_started, supervisor_address)
     end
 
     def actor_stopped
       actor_stopped = Messages::ActorStopped.new address
-      writer.write actor_stopped, supervisor_address
+      write.(actor_stopped, supervisor_address)
     end
 
     def address

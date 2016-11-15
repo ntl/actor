@@ -12,7 +12,7 @@ context "Actor Builder Configures Dependencies" do
   test "Reader is configured with address assigned to actor" do
     assert actor, &:reader_configured?
 
-    assert actor.reader do
+    assert actor.read do
       address? actor.address
     end
   end

@@ -9,7 +9,7 @@ context "Supervisor Handles Final Actor Stopped Message" do
   supervisor.handle actor_stopped
 
   test "Supervisor sends itself the stop message" do
-    assert supervisor.writer do
+    assert supervisor.write do
       written? Messages::Stop, address: supervisor.address
     end
   end

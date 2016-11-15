@@ -1,6 +1,6 @@
 module Actor
   module Messaging
-    class Reader
+    class Read
       module Assertions
         def address? address
           queue? address.queue
@@ -17,7 +17,7 @@ module Actor
         end
 
         def queue? queue
-          @queue == queue
+          self.queue == queue
         end
       end
     end

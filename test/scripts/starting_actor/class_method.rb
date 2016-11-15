@@ -8,14 +8,14 @@ context "Actor is Started Via Class Method" do
     reply_address = Messaging::Address.build
     request = Controls::Actor::RequestResponse::SomeRequest.new reply_address
 
-    Messaging::Writer.(request, address)
+    Messaging::Write.(request, address)
 
     Fixtures::Timeout.("Actor eventually replies back") do
-      reply = Messaging::Reader.(reply_address)
+      reply = Messaging::Read.(reply_address)
 
       assert reply == :some_response
     end
   end
 
-  Messaging::Writer.(Messages::Stop, address)
+  Messaging::Write.(Messages::Stop, address)
 end
