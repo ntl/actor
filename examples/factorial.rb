@@ -1,7 +1,13 @@
 require_relative '../init'
 
-class Factorial < Struct.new :number, :reply_address
+class Factorial
   include Actor
+
+  attr_reader :number, :reply_address
+
+  def initialize number, reply_address
+    @number, @reply_address = number, reply_address
+  end
 
   handle :start do
     if number == 1
@@ -32,9 +38,7 @@ end
 
 result_address = Actor::Messaging::Address.build
 
-Actor::Supervisor.start do
-  Factorial.start 42, result_address
-end
+Factorial.start 42, result_address
 
 result = Actor::Messaging::Read.(result_address)
 
