@@ -3,7 +3,7 @@ module Controls
     def self.example id=nil
       id ||= ID.get 1
 
-      queue = ::Actor::Messaging::Address::None::Queue.new
+      queue = ::Actor::Messaging::Queue::Substitute.new
 
       ::Actor::Messaging::Address.new id, queue
     end
