@@ -15,7 +15,7 @@ context "Actor Lifecycle" do
 
   read = Messaging::Read.build supervisor_address
 
-  test "Actor started is written to supervisor address" do
+  test "Actor started is sent to supervisor address" do
     actor_stopped = Messages::ActorStarted.new actor.address
 
     assert read do
@@ -23,7 +23,7 @@ context "Actor Lifecycle" do
     end
   end
 
-  test "Actor stopped is written to supervisor address" do
+  test "Actor stopped is sent to supervisor address" do
     actor_stopped = Messages::ActorStopped.new actor.address
 
     assert read do

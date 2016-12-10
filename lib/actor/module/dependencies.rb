@@ -5,7 +5,7 @@ module Actor
         receiver.class_exec do
           include Messaging::Address::Dependency
           include Messaging::Read::Dependency
-          include Messaging::Write::Dependency
+          include Messaging::Send::Dependency
 
           prepend Configure
 
@@ -20,7 +20,7 @@ module Actor
         def configure
           self.address = Messaging::Address.build
           self.read = Messaging::Read.build address
-          self.write = Messaging::Write.new
+          self.send = Messaging::Send.new
 
           super
         end

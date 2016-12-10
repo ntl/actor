@@ -19,9 +19,9 @@ require 'actor/messaging/read/assertions'
 require 'actor/messaging/read/dependency'
 require 'actor/messaging/read/substitute'
 
-require 'actor/messaging/write'
-require 'actor/messaging/write/dependency'
-require 'actor/messaging/write/substitute'
+require 'actor/messaging/send'
+require 'actor/messaging/send/dependency'
+require 'actor/messaging/send/substitute'
 
 require 'actor/messaging/publish'
 require 'actor/messaging/publish/assertions'

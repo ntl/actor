@@ -27,8 +27,8 @@ context "Suspended Actor Handles Resume Message" do
     actor.handle Messages::Resume
 
     test "Actor sends itself all deferred messages" do
-      assert actor.write do
-        written? msg1 and written? msg2 and written? msg3
+      assert actor.send do
+        sent? msg1 and sent? msg2 and sent? msg3
       end
     end
 

@@ -14,9 +14,9 @@ context "Actor Handles a Message, Handler Returns New Message" do
 
   actor.handle message
 
-  test "Message is written to address of actor" do
-    assert actor.write do
-      written? message, address: address
+  test "Message is sent to address of actor" do
+    assert actor.send do
+      sent? message, address: address
     end
   end
 end

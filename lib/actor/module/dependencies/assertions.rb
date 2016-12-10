@@ -3,7 +3,7 @@ module Actor
     module Dependencies
       module Assertions
         def dependencies_configured?
-          address_configured? and reader_configured? and writer_configured?
+          address_configured? and reader_configured? and send_configured?
         end
 
         def address_configured?
@@ -14,8 +14,8 @@ module Actor
           read.instance_of? Messaging::Read
         end
 
-        def writer_configured?
-          write.instance_of? Messaging::Write
+        def send_configured?
+          send.instance_of? Messaging::Send
         end
       end
     end

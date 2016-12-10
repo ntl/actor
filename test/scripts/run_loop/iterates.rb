@@ -10,7 +10,7 @@ context "Run Loop Iterates" do
     break
   end
 
-  test "Actor handles next message written to queue" do
+  test "Actor handles next message sent to queue" do
     assert actor do
       handled? message
     end

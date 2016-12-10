@@ -11,9 +11,9 @@ context "Actor Handles a Message, Handler Does Not Return a Message" do
 
   actor.handle message
 
-  test "Nothing is written" do
-    refute actor.write do
-      written?
+  test "Nothing is sent" do
+    refute actor.send do
+      sent?
     end
   end
 end

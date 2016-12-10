@@ -1,10 +1,10 @@
 require_relative '../../test_init'
 
-context "Writer, Writes Message to a Full Queue" do
+context "Send, Sends Message But Queue Is Full" do
   address = Messaging::Address.build max_queue_size: 1
 
-  write = Messaging::Write.new
-  write.(:insignificant_message, address)
+  send = Messaging::Send.new
+  send.(:insignificant_message, address)
 
   context "Wait is not specified" do
     blocked = false
@@ -15,8 +15,8 @@ context "Writer, Writes Message to a Full Queue" do
       address.queue.deq
     end
 
-    test "Thread is blocked until another thread writes to queue" do
-      write.(:some_message, address)
+    test "Thread is blocked until another thread sends a message to queue" do
+      send.(:some_message, address)
 
       assert blocked
     end
@@ -26,8 +26,8 @@ context "Writer, Writes Message to a Full Queue" do
 
   context "Wait is disabled" do
     test "WouldBlockError is raised" do
-      assert proc { write.(:some_message, address, wait: false) } do
-        raises_error? Messaging::Write::WouldBlockError
+      assert proc { send.(:some_message, address, wait: false) } do
+        raises_error? Messaging::Send::WouldBlockError
       end
     end
   end

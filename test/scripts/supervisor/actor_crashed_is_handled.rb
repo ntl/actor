@@ -12,8 +12,8 @@ context "Supervisor Handles Actor Crashed Message" do
     end
 
     test "Supervisor sends itself the shutdown message" do
-      assert supervisor.write do
-        written? Messages::Shutdown, address: supervisor.address
+      assert supervisor.send do
+        sent? Messages::Shutdown, address: supervisor.address
       end
     end
 

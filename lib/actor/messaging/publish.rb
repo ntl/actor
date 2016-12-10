@@ -1,7 +1,7 @@
 module Actor
   module Messaging
     class Publish
-      include Write::Dependency
+      include Send::Dependency
 
       attr_reader :addresses
 
@@ -16,7 +16,7 @@ module Actor
           instance.register address
         end
 
-        instance.write = Write.new
+        instance.send = Send.new
 
         instance
       end
@@ -31,7 +31,7 @@ module Actor
 
       def call message, wait: nil
         addresses.each do |address|
-          write.(message, address, wait: wait)
+          send.(message, address, wait: wait)
         end
       end
     end

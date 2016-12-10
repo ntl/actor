@@ -1,6 +1,6 @@
 module Actor
   module Messaging
-    class Write
+    class Send
       class Substitute
         attr_reader :records
 
@@ -27,7 +27,7 @@ module Actor
         end
 
         module Assertions
-          def written? message=nil, address: nil, wait: nil
+          def sent? message=nil, address: nil, wait: nil
             records.each do |record|
               next unless message.nil? or record.message? message
               next unless address.nil? or record.address == address

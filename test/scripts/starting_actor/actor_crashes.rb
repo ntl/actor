@@ -15,7 +15,7 @@ context "Actor Lifecycle, Actor Crashes" do
 
   read = Messaging::Read.build supervisor_address
 
-  test "Actor started is written to supervisor address" do
+  test "Actor started is sent to supervisor address" do
     actor_stopped = Messages::ActorStarted.new actor.address
 
     assert read do
@@ -23,7 +23,7 @@ context "Actor Lifecycle, Actor Crashes" do
     end
   end
 
-  test "Actor crashed is written to supervisor address" do
+  test "Actor crashed is sent to supervisor address" do
     error = Controls::Error.example
 
     actor_crashed = Messages::ActorCrashed.new error

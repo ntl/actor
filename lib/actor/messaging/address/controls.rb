@@ -2,7 +2,7 @@ module Actor
   module Messaging
     class Address
       module Controls
-        def write message
+        def send message
           queue.enq message
         end
       end

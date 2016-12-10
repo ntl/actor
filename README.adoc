@@ -67,7 +67,7 @@ class Factorial
   def reply value
     result = Result.new value, number
 
-    write.(result, reply_address)
+    send.(result, reply_address)
 
     :stop
   end
@@ -93,7 +93,7 @@ puts "fac(42) = #{result.value}"
 
 === Handling Custom Messages
 
-You can send _any_ ruby object that includes `Actor::Messaging::Message` to the actor with `Actor::Messaging::Write`; though mutable objects aren't recommended, as messages will be read by other threads. Handlers can be defined for those messages through the `handle` class macro on the Actor class. The class of the message is generally passed to `handle`, but an underscore cased symbol can be used as well. For example:
+You can send _any_ ruby object that includes `Actor::Messaging::Message` to the actor with `Actor::Messaging::Send`; though mutable objects aren't recommended, as messages will be read by other threads. Handlers can be defined for those messages through the `handle` class macro on the Actor class. The class of the message is generally passed to `handle`, but an underscore cased symbol can be used as well. For example:
 
 [source,ruby]
 ----
@@ -114,11 +114,11 @@ end
 # Start an actor and send a custom message to it
 address = Actor.start
 
-Actor::Messaging::Write.(SomeMessage.new, address)
-Actor::Messaging::Write.(OtherMessage.new, address)
+Actor::Messaging::Send.(SomeMessage.new, address)
+Actor::Messaging::Send.(OtherMessage.new, address)
 ----
 
-Also, every Actor comes equipped with a `write` dependency which is just an instance of `Actor::Messaging::Write`. When any actor is instantiated directly through its `initialize` method, the writer is an inert substitute. When the actor is constructed through the `.start` class method, the writer will actually deliver messages to other actors.
+Also, every Actor comes equipped with a `send` dependency which is just an instance of `Actor::Messaging::Send`. When any actor is instantiated directly through its `initialize` method, the send dependency is an inert substitute. When the actor is constructed through the `.start` class method, the send dependency will actually deliver messages to other actors.
 
 === Errors
 
@@ -135,7 +135,7 @@ Actor::Supervisor.start do |supervisor|
 
   Signal.trap 'INT' do
     puts "\n\n** Received SIGINT; shutting down supervisor **\n\n"
-    Actor::Messaging::Write.(:shutdown, supervisor.address)
+    Actor::Messaging::Send.(:shutdown, supervisor.address)
   end
 end
 ----

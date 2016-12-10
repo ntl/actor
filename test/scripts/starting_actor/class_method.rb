@@ -8,7 +8,7 @@ context "Actor is Started Via Class Method" do
     reply_address = Messaging::Address.build
     request = Controls::Actor::RequestResponse::SomeRequest.new reply_address
 
-    Messaging::Write.(request, address)
+    Messaging::Send.(request, address)
 
     Fixtures::Timeout.("Actor eventually replies back") do
       reply = Messaging::Read.(reply_address)
@@ -17,5 +17,5 @@ context "Actor is Started Via Class Method" do
     end
   end
 
-  Messaging::Write.(Messages::Stop, address)
+  Messaging::Send.(Messages::Stop, address)
 end

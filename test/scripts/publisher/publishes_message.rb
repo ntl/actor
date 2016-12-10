@@ -11,13 +11,13 @@ context "Publisher, Publishes Message" do
     publish.register other_address
     publish.(:some_message)
 
-    test "Message is written each registered address and is allowed to block" do
-      assert publish.write do
-        written? :some_message, address: address
+    test "Message is sent each registered address and is allowed to block" do
+      assert publish.send do
+        sent? :some_message, address: address
       end
 
-      assert publish.write do
-        written? :some_message, address: other_address
+      assert publish.send do
+        sent? :some_message, address: other_address
       end
     end
   end
@@ -27,9 +27,9 @@ context "Publisher, Publishes Message" do
     publish.register address
     publish.(:some_message)
 
-    test "Write operation is allowed to block" do
-      assert publish.write do
-        written? wait: true
+    test "Send operation is allowed to block" do
+      assert publish.send do
+        sent? wait: true
       end
     end
   end
@@ -39,9 +39,9 @@ context "Publisher, Publishes Message" do
     publish.register address
     publish.(:some_message, wait: false)
 
-    test "Write operation is not allowed to block" do
-      assert publish.write do
-        written? wait: false
+    test "Send operation is not allowed to block" do
+      assert publish.send do
+        sent? wait: false
       end
     end
   end

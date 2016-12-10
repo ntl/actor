@@ -17,7 +17,7 @@ context "Actor Builder Configures Dependencies" do
     end
   end
 
-  test "Writer is configured" do
-    assert actor, &:writer_configured?
+  test "Send is configured" do
+    assert actor, &:send_configured?
   end
 end

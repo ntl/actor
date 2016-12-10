@@ -1,6 +1,6 @@
 module Actor
   module Messaging
-    class Write
+    class Send
       def call message, address, wait: nil
         non_block = wait == false
 

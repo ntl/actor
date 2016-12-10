@@ -1,12 +1,12 @@
 require_relative '../../test_init'
 
-context "Writer, Writes Message" do
+context "Send, Sends Message" do
   address = Messaging::Address.build
 
-  write = Messaging::Write.new
-  write.(:some_message, address)
+  send = Messaging::Send.new
+  send.(:some_message, address)
 
-  test "Message is written to queue of specified address" do
+  test "Message is sent to queue of specified address" do
     assert address.queue do
       size == 1 and deq == :some_message
     end

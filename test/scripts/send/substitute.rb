@@ -1,87 +1,87 @@
 require_relative '../../test_init'
 
-context "Writer Substitute" do
+context "Send Substitute" do
   address = Controls::Address.example
 
-  context "Written predicate" do
-    context "No message has been written" do
-      substitute = Messaging::Write::Substitute.new
+  context "Sent predicate" do
+    context "No message has been sent" do
+      substitute = Messaging::Send::Substitute.new
 
       test "Predicate returns false even if no constraints are specified" do
         refute substitute do
-          written?
+          sent?
         end
       end
     end
 
-    context "Message has been written" do
+    context "Message has been sent" do
       context "Message constraint" do
-        substitute = Messaging::Write::Substitute.new
+        substitute = Messaging::Send::Substitute.new
         substitute.(:some_message, address)
 
-        test "Predicate returns true if specified message matches written message" do
+        test "Predicate returns true if specified message matches sent message" do
           assert substitute do
-            written? :some_message
+            sent? :some_message
           end
         end
 
-        test "Predicate returns fals if specified message does not match written message" do
+        test "Predicate returns fals if specified message does not match sent message" do
           refute substitute do
-            written? :other_message
+            sent? :other_message
           end
         end
       end
 
       context "Address constraint" do
-        substitute = Messaging::Write::Substitute.new
+        substitute = Messaging::Send::Substitute.new
         substitute.(:some_message, address)
 
-        test "Predicate returns true if specified address matches address of write operation" do
+        test "Predicate returns true if specified address matches address of send operation" do
           assert substitute do
-            written? address: address
+            sent? address: address
           end
         end
 
-        test "Predicate returns false if specified address does not match address of write operation" do
+        test "Predicate returns false if specified address does not match address of send operation" do
           other_address = Controls::Address.example
 
           refute substitute do
-            written? address: other_address
+            sent? address: other_address
           end
         end
       end
 
       context "Wait constraint" do
-        context "Write operation was allowed to block" do
-          substitute = Messaging::Write::Substitute.new
+        context "Send operation was allowed to block" do
+          substitute = Messaging::Send::Substitute.new
           substitute.(:some_message, address)
 
           test "Predicate returns true if specified wait value is true" do
             assert substitute do
-              written? wait: true
+              sent? wait: true
             end
           end
 
           test "Predicate returns false if specified wait value is false" do
             refute substitute do
-              written? wait: false
+              sent? wait: false
             end
           end
         end
 
-        context "Write operation was not allowed to block" do
-          substitute = Messaging::Write::Substitute.new
+        context "Send operation was not allowed to block" do
+          substitute = Messaging::Send::Substitute.new
           substitute.(:some_message, address, wait: false)
 
           test "Predicate returns true if specified wait value is false" do
             assert substitute do
-              written? wait: false
+              sent? wait: false
             end
           end
 
           test "Predicate returns false if specified wait value is true" do
             refute substitute do
-              written? wait: true
+              sent? wait: true
             end
           end
         end
@@ -89,21 +89,21 @@ context "Writer Substitute" do
     end
   end
 
-  context "Module that includes Message is written" do
+  context "Module that includes Message is sent" do
     message = Controls::Message::ModuleMessage
-    substitute = Messaging::Write::Substitute.new
+    substitute = Messaging::Send::Substitute.new
 
     substitute.(message, address)
 
     test "Predicate returns true if module is specified" do
       assert substitute do
-        written? message
+        sent? message
       end
     end
 
     test "Predicate returns true if message name is specified" do
       assert substitute do
-        written? :module_message
+        sent? :module_message
       end
     end
   end
