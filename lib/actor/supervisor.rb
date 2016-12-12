@@ -1,5 +1,7 @@
 module Actor
   class Supervisor
+    include Observable
+
     include Module::Dependencies
     include Module::Handler
     include Module::RunLoop
@@ -47,6 +49,15 @@ module Actor
       assembly_block.(self)
 
       self.publish = Messaging::Publish.build
+    end
+
+    def handle message
+      result = super
+
+      changed
+      notify_observers message
+
+      result
     end
 
     handle Messages::ActorStarted do |message|

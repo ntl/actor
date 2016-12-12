@@ -140,6 +140,27 @@ Actor::Supervisor.start do |supervisor|
 end
 ----
 
+The supervisor also publishes all messages it handles via the `observer` library that ships with ruby. An observer is defined by including `Actor::Supervisor::Observer` in a class. The `handle` macro is available to define handlers for any message sent to the supervisor. For instance, the following observer prints out a message whenever an actor is started:
+
+[source,ruby]
+----
+class SomeObserver
+  include Actor::Supervisor::Observer
+
+  handle Actor::Messages::ActorStarted do |msg|
+    puts "An actor was started: #{msg.address} is its address"
+  end
+end
+
+Actor::Supervisor.start do |supervisor|
+  some_observer = SomeObserver.new
+
+  supervisor.add_observer some_observer
+
+  # Etc.
+end
+----
+
 === Version Scheme
 
 Actor follows a version scheme with three numbers separated by dots, similar to SemVer, but the numbers have a slightly different meaning. The first number indicates the major product version, or epoch. The second number is increased for breaking changes, otherwise the third number is increased.

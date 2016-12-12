@@ -66,5 +66,21 @@ module Controls
         :stop
       end
     end
+
+    module ActorStarted
+      def self.example
+        address = Address.example
+
+        Actor::Messages::ActorStarted.new address
+      end
+    end
+
+    module ActorCrashed
+      def self.example
+        error = Error.example
+
+        Actor::Messages::ActorStarted.new error
+      end
+    end
   end
 end

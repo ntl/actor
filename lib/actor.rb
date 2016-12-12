@@ -1,3 +1,4 @@
+require 'observer'
 require 'securerandom'
 require 'set'
 
@@ -54,5 +55,6 @@ require 'actor/supervisor/address/get'
 require 'actor/supervisor/address/put'
 require 'actor/supervisor/address/registry'
 require 'actor/supervisor/assertions'
+require 'actor/supervisor/observer'
 
 require 'actor/actor'
