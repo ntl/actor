@@ -72,7 +72,7 @@ module Actor
       self.actor_count -= 1
 
       if actor_count.zero?
-        Messages::Stop
+        send.(Messages::Stop, address)
       end
     end
 
@@ -82,9 +82,9 @@ module Actor
       self.actor_count -= 1
 
       if actor_count.zero?
-        Messages::Stop
+        send.(Messages::Stop, address)
       else
-        Messages::Shutdown
+        send.(Messages::Shutdown, address)
       end
     end
 

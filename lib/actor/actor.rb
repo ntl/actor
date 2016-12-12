@@ -10,6 +10,7 @@ module Actor
       extend Module::Start
       include Module::Dependencies
       include Module::Handler
+      include Module::Handler::SendNextMessage
       include Module::RunLoop
       include Module::SuspendResume
     end

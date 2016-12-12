@@ -15,16 +15,10 @@ module Actor
         handler_method = method handler_method_name
 
         if handler_method.arity == 0
-          return_value = handler_method.()
+          handler_method.()
         else
-          return_value = handler_method.(message)
+          handler_method.(message)
         end
-
-        if Messaging::Message === return_value
-          send.(return_value, address)
-        end
-
-        return_value
       end
     end
   end
