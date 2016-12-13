@@ -9,7 +9,7 @@ module Actor
         end
 
         def call message, address, wait: nil
-          wait = true if wait.nil?
+          wait = false if wait.nil?
 
           record = Record.new message, address, wait
 

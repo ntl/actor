@@ -52,9 +52,28 @@ context "Send Substitute" do
       end
 
       context "Wait constraint" do
-        context "Send operation was allowed to block" do
+        [["Wait was not specified at callsite", nil], ["Wait was disabled at callsite", false]].each do |prose, wait|
+          context "Wait was not specified at callsite" do
+            substitute = Messaging::Send::Substitute.new
+            substitute.(:some_message, address, wait: wait)
+
+            test "Predicate returns true if specified wait value is false" do
+              assert substitute do
+                sent? wait: false
+              end
+            end
+
+            test "Predicate returns true if specified wait value is true" do
+              refute substitute do
+                sent? wait: true
+              end
+            end
+          end
+        end
+
+        context "Wait is enabled at callsite" do
           substitute = Messaging::Send::Substitute.new
-          substitute.(:some_message, address)
+          substitute.(:some_message, address, wait: true)
 
           test "Predicate returns true if specified wait value is true" do
             assert substitute do
@@ -65,23 +84,6 @@ context "Send Substitute" do
           test "Predicate returns false if specified wait value is false" do
             refute substitute do
               sent? wait: false
-            end
-          end
-        end
-
-        context "Send operation was not allowed to block" do
-          substitute = Messaging::Send::Substitute.new
-          substitute.(:some_message, address, wait: false)
-
-          test "Predicate returns true if specified wait value is false" do
-            assert substitute do
-              sent? wait: false
-            end
-          end
-
-          test "Predicate returns false if specified wait value is true" do
-            refute substitute do
-              sent? wait: true
             end
           end
         end

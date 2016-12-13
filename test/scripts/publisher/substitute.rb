@@ -71,10 +71,11 @@ context "Publisher Substitute" do
     end
   end
 
-  context "Publishing messages (wait is not specified)" do
-    substitute = Messaging::Publish::Substitute.new
-
+  
+  context "Publishing messages" do
     context "No message has been published" do
+      substitute = Messaging::Publish::Substitute.new
+
       test "Published predicate without argument returns false" do
         refute substitute do
           published?
@@ -82,59 +83,67 @@ context "Publisher Substitute" do
       end
     end
 
-    substitute.(:some_message)
+    context "Message has been published" do
+      context do
+        substitute = Messaging::Publish::Substitute.new
 
-    test "Published predicate without argument returns true" do
-      assert substitute do
-        published?
+        substitute.(:some_message)
+
+        test "Published predicate without argument returns true" do
+          assert substitute do
+            published?
+          end
+        end
+
+        test "Published predicate returns true if argument matches published message" do
+          assert substitute do
+            published? :some_message
+          end
+        end
+
+        test "Published predicate returns false if argument does not match published message" do
+          refute substitute do
+            published? :other_message
+          end
+        end
       end
-    end
 
-    test "Published predicate returns true if argument matches published message" do
-      assert substitute do
-        published? :some_message
+      [["Wait was not specified at callsite", nil], ["Wait was disabled at callsite", false]].each do |prose, wait|
+        context prose do
+          substitute = Messaging::Publish::Substitute.new
+
+          substitute.(:some_message, wait: wait)
+
+          test "Published predicate returns true if wait value is false" do
+            assert substitute do
+              published? :some_message, wait: false
+            end
+          end
+
+          test "Published predicate returns false if wait value is true" do
+            refute substitute do
+              published? :some_message, wait: true
+            end
+          end
+        end
       end
-    end
 
-    test "Published predicate returns false if argument does not match published message" do
-      refute substitute do
-        published? :other_message
-      end
-    end
+      context "Wait was enabled at callsite" do
+        substitute = Messaging::Publish::Substitute.new
 
-    test "Published predicate returns true if message argument matches and operation was expected to allow blocking" do
-      assert substitute do
-        published? :some_message, wait: true
-      end
-    end
+        substitute.(:some_message, wait: true)
 
-    test "Published predicate returns false if message argument matches and operation was expected to avoid blocking" do
-      refute substitute do
-        published? :some_message, wait: false
-      end
-    end
-  end
+        test "Published predicate returns true if wait value is true" do
+          assert substitute do
+            published? :some_message, wait: true
+          end
+        end
 
-  context "Publishing messages (wait is disabled)" do
-    substitute = Messaging::Publish::Substitute.new
-
-    substitute.(:some_message, wait: false)
-
-    test "Published predicate returns true if argument matches published message" do
-      assert substitute do
-        published? :some_message
-      end
-    end
-
-    test "Published predicate returns true if message argument matches and operation was expected to avoid blocking" do
-      assert substitute do
-        published? :some_message, wait: false
-      end
-    end
-
-    test "Published predicate returns false if message argument matches and operation was expected to allow blocking" do
-      assert substitute do
-        published? :some_message, wait: false
+        test "Published predicate returns false if wait value is false" do
+          refute substitute do
+            published? :some_message, wait: false
+          end
+        end
       end
     end
   end

@@ -21,7 +21,7 @@ module Actor
         end
 
         def call message, wait: nil
-          wait = true if wait.nil?
+          wait = false if wait.nil?
 
           record = Record.new message, wait
 

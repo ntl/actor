@@ -2,7 +2,7 @@ module Actor
   module Messaging
     class Send
       def call message, address, wait: nil
-        non_block = wait == false
+        non_block = !wait
 
         queue = address.queue
 
@@ -13,11 +13,11 @@ module Actor
         begin
           queue.enq message, non_block
         rescue ThreadError
-          raise WouldBlockError
+          raise QueueFullError
         end
       end
 
-      WouldBlockError = Class.new StandardError
+      QueueFullError = Class.new StandardError
 
       def self.call *arguments
         instance = new
