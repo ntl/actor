@@ -28,14 +28,17 @@ module Controls
       def self.example address=nil
         address ||= Address.example
 
-        ::Actor::Messages::ActorStarted.new address
+        actor = Actor.example address
+
+        ::Actor::Messages::ActorStarted.new address, actor
       end
 
       def self.pair
         address = Address.example
 
         actor_started = example address
-        actor = Actor.example address
+
+        actor = actor_started.actor
 
         return actor_started, actor
       end
@@ -45,14 +48,17 @@ module Controls
       def self.example address=nil
         address ||= Address.example
 
-        ::Actor::Messages::ActorStopped.new address
+        actor = Actor.example address
+
+        ::Actor::Messages::ActorStopped.new address, actor
       end
 
       def self.pair
         address = Address.example
 
         actor_stopped = example address
-        actor = Actor.example address
+
+        actor = actor_stopped.actor
 
         return actor_stopped, actor
       end

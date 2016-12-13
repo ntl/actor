@@ -4,15 +4,15 @@ module Actor
       extend Messaging::Message
     end
 
-    ActorStarted = Struct.new :address do
+    ActorStarted = Struct.new :address, :actor do
       include Messaging::Message
     end
 
-    ActorStopped = Struct.new :address do
+    ActorStopped = Struct.new :address, :actor do
       include Messaging::Message
     end
 
-    ActorCrashed = Struct.new :error do
+    ActorCrashed = Struct.new :error, :actor do
       include Messaging::Message
     end
 

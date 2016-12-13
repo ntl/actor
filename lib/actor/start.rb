@@ -36,17 +36,17 @@ module Actor
     end
 
     def actor_crashed error
-      actor_crashed = Messages::ActorCrashed.new error
+      actor_crashed = Messages::ActorCrashed.new error, actor
       send.(actor_crashed, supervisor_address)
     end
 
     def actor_started
-      actor_started = Messages::ActorStarted.new address
+      actor_started = Messages::ActorStarted.new address, actor
       send.(actor_started, supervisor_address)
     end
 
     def actor_stopped
-      actor_stopped = Messages::ActorStopped.new address
+      actor_stopped = Messages::ActorStopped.new address, actor
       send.(actor_stopped, supervisor_address)
     end
 
