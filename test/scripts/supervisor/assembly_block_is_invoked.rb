@@ -4,9 +4,9 @@ context "Supervisor Invokes Assembly Block" do
   assembly_block_invoked = false
   block_argument = nil
 
-  supervisor = Build.(Supervisor) do |address|
+  supervisor = Build.(Supervisor) do |supervisor|
     assembly_block_invoked = true
-    block_argument = address
+    block_argument = supervisor
   end
 
   test "Assembly block is invoked" do

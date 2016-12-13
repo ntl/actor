@@ -20,7 +20,6 @@ module Actor
     def self.build &assembly_block
       instance = new
       instance.assembly_block = assembly_block
-      instance.configure
       instance
     end
 
@@ -28,7 +27,7 @@ module Actor
       thread = Thread.new do
         thread_group = Thread.current.group
 
-        instance = build &assembly_block
+        instance = Build.(self, &assembly_block)
         instance.run_loop
       end
 
