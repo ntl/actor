@@ -26,7 +26,7 @@ class Factorial
   def reply value
     result = Result.new value, number
 
-    write.(result, reply_address)
+    send.(result, reply_address)
 
     :stop
   end

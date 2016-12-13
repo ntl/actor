@@ -53,17 +53,17 @@ end
 Actor::Supervisor.start do |supervisor|
   Signal.trap 'INT' do
     puts "INT trapped; suspending"
-    Actor::Messaging::Write.(:shutdown, supervisor.address)
+    Actor::Messaging::Send.(:shutdown, supervisor.address)
   end
 
   Signal.trap 'TSTP' do
     puts "TSTP trapped; suspending"
-    Actor::Messaging::Write.(:suspend, supervisor.address)
+    Actor::Messaging::Send.(:suspend, supervisor.address)
   end
 
   Signal.trap 'CONT' do
     puts "CONT trapped; resuming"
-    Actor::Messaging::Write.(:resume, supervisor.address)
+    Actor::Messaging::Send.(:resume, supervisor.address)
   end
 
   PrintPeriodically.start
