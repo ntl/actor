@@ -33,6 +33,7 @@ require 'actor/messages'
 
 require 'actor/module/dependencies'
 require 'actor/module/dependencies/assertions'
+require 'actor/module/digest'
 require 'actor/module/handler'
 require 'actor/module/handler/method_name'
 require 'actor/module/handler/macro'

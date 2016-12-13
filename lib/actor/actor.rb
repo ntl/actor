@@ -9,6 +9,7 @@ module Actor
     cls.class_exec do
       extend Module::Start
       include Module::Dependencies
+      include Module::Digest
       include Module::Handler
       include Module::Handler::SendNextMessage
       include Module::RunLoop
