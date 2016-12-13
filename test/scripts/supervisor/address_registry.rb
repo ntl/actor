@@ -2,6 +2,8 @@ require_relative '../../test_init'
 
 context "Get Address of Supervisor" do
   context "No supervisor address is registered" do
+    Supervisor::Address::Put.(nil)
+
     address = Supervisor::Address::Get.()
 
     test "Null address is returned" do

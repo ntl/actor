@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Supervisor Observers" do
-  supervisor = Supervisor.build
+  supervisor = Supervisor.new
   observer = Controls::SupervisorObserver.build supervisor
 
   context "Actor started message is sent to supervisor" do
