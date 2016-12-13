@@ -1,5 +1,5 @@
-Actor Messaging
-===============
+Actor
+=====
 
 Implementation of the actor computational model for ruby.
 
