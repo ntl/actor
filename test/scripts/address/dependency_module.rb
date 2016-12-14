@@ -9,7 +9,7 @@ context "Address, Dependency Module" do
     context "Object is instantiated" do
       object = cls.new
 
-      test "Reader attribute getter returns null address" do
+      test "Reader attribute getter returns substitute address" do
         assert object.address do
           instance_of? Messaging::Address::None
         end

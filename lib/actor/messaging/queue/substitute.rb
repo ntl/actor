@@ -31,6 +31,14 @@ module Actor
           record
         end
 
+        def max
+          Float::INFINITY
+        end
+
+        def size
+          0
+        end
+
         WouldBlockError = Class.new StandardError
 
         Record = Struct.new :message, :non_block

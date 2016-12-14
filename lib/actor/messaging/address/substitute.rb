@@ -1,9 +1,19 @@
 module Actor
   module Messaging
     class Address
-      module Substitute
+      class Substitute < None
         def self.build
-          None.build
+          instance = super
+          instance.extend Controls
+          instance
+        end
+
+        def queue_depth
+          @queue_depth ||= super
+        end
+
+        module Controls
+          attr_writer :queue_depth
         end
       end
     end

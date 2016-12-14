@@ -14,11 +14,11 @@ module Actor
         queue.num_waiting
       end
 
-      def queue_size
+      def queue_depth
         queue.size
       end
 
-      def queue_max_size
+      def queue_limit
         queue.max
       end
     end
