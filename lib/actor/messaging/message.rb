@@ -6,7 +6,7 @@ module Actor
           extend Matcher
           extend MessageName
 
-          include MessageName
+          include MessageName::InstanceMethod
         end
       end
 
@@ -36,6 +36,12 @@ module Actor
       module MessageName
         def message_name
           Name.get name
+        end
+
+        module InstanceMethod
+          def message_name
+            self.class.message_name
+          end
         end
       end
     end
