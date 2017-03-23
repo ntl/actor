@@ -3,8 +3,6 @@ Actor
 
 Implementation of the actor computational model for ruby.
 
-*NOTE*: Documentation is incomplete
-
 == Basic Usage
 
 === Installation
