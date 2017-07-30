@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/ntl/actor'
   s.email = 'nathanladd+github@gmail.com'
   s.licenses = %w(MIT)
-  s.summary = "Implementation of actor pattern for ruby"
-  s.description = "Implementation of actor pattern for ruby"
+  s.summary = "Implementation of actor pattern for Ruby"
+  s.description = "Implementation of actor pattern for Ruby"
 
   s.require_paths = %w(lib src)
   s.files = Dir.glob 'lib/**/*'
