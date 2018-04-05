@@ -4,7 +4,6 @@ module Actor
       def self.included cls
         cls.class_exec do
           extend Matcher
-          extend MessageName
 
           include MessageName
         end
@@ -34,8 +33,28 @@ module Actor
       end
 
       module MessageName
-        def message_name
-          Name.get name
+        def self.included cls
+          cls.class_exec do
+            extend ClassMethod
+
+            include InstanceMethod
+          end
+        end
+
+        def self.extended receiver
+          receiver.extend ClassMethod
+        end
+
+        module InstanceMethod
+          def message_name
+            self.class.message_name
+          end
+        end
+
+        module ClassMethod
+          def message_name
+            Name.get name
+          end
         end
       end
     end
