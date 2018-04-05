@@ -24,9 +24,9 @@ module Actor
     end
 
     def self.start &assembly_block
-      thread = Thread.new do
-        Thread.current.report_on_exception = false
+      Thread.report_on_exception = false
 
+      thread = Thread.new do
         instance = Build.(self, &assembly_block)
         instance.run_loop
       end

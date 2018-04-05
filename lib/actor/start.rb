@@ -22,8 +22,6 @@ module Actor
       send.(Messages::Start, address)
 
       thread = Thread.new do
-        Thread.current.report_on_exception = false
-
         actor_started
 
         begin
