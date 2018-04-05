@@ -14,7 +14,7 @@ echo
 echo "Tagging release"
 echo "= = ="
 git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION" &&
-  git push github "v$GEM_VERSION"
+  git push origin "v$GEM_VERSION"
 
 echo
 echo "Building version for fury.io/ntl"
