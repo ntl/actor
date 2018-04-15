@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -eu
+
+rm -rf gems
+
+export GEM_HOME=./gems/rubygems
+
+gem install \
+  --conservative \
+  --no-post-install-message \
+  --norc \
+  --no-document \
+  --install-dir ./gems/rubygems \
+  test_bench
+
+mkdir -p gems/lib
+
+for entry in gems/rubygems/gems/*/lib/*; do
+  ln -s ../../$entry gems/lib
+done

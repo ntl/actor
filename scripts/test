@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require_relative '../test/test_init'
+
+require 'test_bench/cli'
+
+TestBench::CLI.(
+  tests_directory: 'test/automated'
+) or exit 1
