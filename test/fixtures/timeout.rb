@@ -20,11 +20,9 @@ module Fixtures
     end
 
     def call
-      test_proc = proc { ::Timeout.timeout duration, &block }
-
       test prose do
-        refute test_proc do
-          raises_error? ::Timeout::Error
+        refute_raises ::Timeout::Error do
+          ::Timeout.timeout duration, &block
         end
       end
     end

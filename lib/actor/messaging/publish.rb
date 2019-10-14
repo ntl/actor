@@ -34,6 +34,10 @@ module Actor
           send.(message, address, wait: wait)
         end
       end
+
+      def registered? address
+        addresses.include? address
+      end
     end
   end
 end

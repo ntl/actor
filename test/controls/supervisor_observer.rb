@@ -21,10 +21,8 @@ module Controls
       @messages << msg
     end
 
-    module Assertions
-      def handled?(msg)
-        @messages.include? msg
-      end
+    def handled?(msg)
+      @messages.include? msg
     end
   end
 end

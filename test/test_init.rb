@@ -2,7 +2,7 @@ require 'pp'
 
 require_relative '../init'
 
-require 'test_bench/activate'
+require 'test_bench'; TestBench.activate
 
 require_relative './fixtures/fixtures_init'
 require_relative './controls/controls_init'

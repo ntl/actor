@@ -6,8 +6,6 @@ module Actor
           prepend Configure
           prepend Handle
           prepend Initialize
-
-          IncludeAssertions.(Assertions, self)
         end
       end
 
@@ -26,6 +24,25 @@ module Actor
 
           send.(deferred_message, address)
         end
+      end
+
+      def message_deferred? message=nil, wait: nil
+        non_block = wait == false
+
+        begin
+          msg = suspend_queue.deq true
+        rescue ThreadError
+        end
+
+        if message.nil?
+          msg ? true : false
+        else
+          msg == message
+        end
+      end
+
+      def suspended?
+        @suspended == true
       end
 
       def suspend_queue

@@ -31,6 +31,15 @@ module Actor
           record
         end
 
+        def enqueued? message=nil, wait: nil
+          @enqueued_records.any? do |record|
+            next unless message.nil? or record.message == message
+            next unless wait.nil? or record.non_block == !wait
+
+            true
+          end
+        end
+
         def max
           Float::INFINITY
         end
@@ -42,18 +51,6 @@ module Actor
         WouldBlockError = Class.new StandardError
 
         Record = Struct.new :message, :non_block
-
-        module Assertions
-          def enqueued? message=nil, wait: nil
-            @enqueued_records.any? do |record|
-              next unless message.nil? or record.message == message
-              next unless wait.nil? or record.non_block == !wait
-
-              true
-            end
-          end
-        end
-
         singleton_class.send :alias_method, :build, :new # subst-attr compat
       end
     end

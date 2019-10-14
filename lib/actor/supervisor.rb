@@ -105,6 +105,14 @@ module Actor
       super stop
     end
 
+    def registered_actor? actor
+      publish.registered? actor.address
+    end
+
+    def unregistered_actor? actor
+      publish.unregistered? actor.address
+    end
+
     def assembly_block
       @assembly_block ||= proc { }
     end

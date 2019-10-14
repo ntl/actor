@@ -36,10 +36,8 @@ module Controls
         msg
       end
 
-      module Assertions
-        def handled? msg
-          @handled_messages.include? msg
-        end
+      def handled? msg
+        @handled_messages.include? msg
       end
     end
 

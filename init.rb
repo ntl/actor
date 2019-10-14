@@ -1,7 +1,10 @@
-lib_dir = File.join __dir__, 'lib'
-$LOAD_PATH.unshift lib_dir unless $LOAD_PATH.include? lib_dir
+lib_dir = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
-gems_lib_dir = File.join __dir__, 'gems', 'lib'
-$LOAD_PATH.unshift gems_lib_dir unless $LOAD_PATH.include? gems_lib_dir
+libraries_dir = ENV['LIBRARIES_HOME']
+unless libraries_dir.nil?
+  libraries_dir = File.expand_path(libraries_dir)
+  $LOAD_PATH.unshift libraries_dir unless $LOAD_PATH.include?(libraries_dir)
+end
 
 require 'actor'
