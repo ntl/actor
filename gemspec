@@ -13,4 +13,6 @@ Gem::Specification.new do |s|
   s.require_paths = %w(lib src)
   s.files = Dir.glob 'lib/**/*'
   s.platform = Gem::Platform::RUBY
+
+  s.add_development_dependency 'test_bench'
 end
