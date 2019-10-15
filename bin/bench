@@ -6,4 +6,4 @@ else
   export RUBY="ruby --disable-gems --enable-frozen-string-literal --disable-did_you_mean --disable-rubyopt"
 fi
 
-eval $RUBY test/bench.rb "$@"
+eval $RUBY test/automated.rb "$@"
