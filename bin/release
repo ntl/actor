@@ -16,12 +16,14 @@ echo "= = ="
 git tag -a "v$GEM_VERSION" -m "Version $GEM_VERSION" &&
   git push origin "v$GEM_VERSION"
 
-echo
-echo "Building version for fury.io/ntl"
-echo "= = ="
-gem build --norc gemspec
+if [ ! -z "$PERSONAL_GEMFURY_SECRET"]; then
+  echo
+  echo "Building version for fury.io/ntl"
+  echo "= = ="
+  gem build --norc gemspec
 
-curl -F package="@actor-$GEM_VERSION.gem" "https://$PERSONAL_GEMFURY_SECRET@push.fury.io/ntl/"
+  curl -F package="@actor-$GEM_VERSION.gem" "https://$PERSONAL_GEMFURY_SECRET@push.fury.io/ntl/"
+end
 
 echo
 echo "Building version for rubygems.org"
