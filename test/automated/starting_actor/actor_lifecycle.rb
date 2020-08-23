@@ -3,9 +3,7 @@ require_relative '../../test_init'
 context "Actor Lifecycle" do
   supervisor_address = Messaging::Address.build
 
-  thread_group = ThreadGroup.new
-
-  actor, thread = Fixtures::ExecuteWithinThread.(thread_group) do
+  actor, thread = Fixtures::ExecuteWithinThread.() do
     Supervisor::Address::Put.(supervisor_address)
 
     Start.(Controls::Actor::StopsImmediately)

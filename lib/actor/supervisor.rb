@@ -9,7 +9,6 @@ module Actor
     attr_accessor :actor_count
     attr_writer :assembly_block
     attr_accessor :error
-    attr_writer :thread_group
 
     def initialize
       @actor_count = 0
@@ -39,8 +38,6 @@ module Actor
     end
 
     def configure
-      self.thread_group = Thread.current.group
-
       Address::Put.(address)
 
       assembly_block.(self)
@@ -130,10 +127,6 @@ module Actor
 
     def assembly_block
       @assembly_block ||= proc { }
-    end
-
-    def thread_group
-      @thread_group ||= ThreadGroup::Default
     end
 
     NoActorsStarted = Class.new StandardError

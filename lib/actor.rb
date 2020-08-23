@@ -47,9 +47,7 @@ require 'actor/controls'
 require 'actor/start'
 
 require 'actor/supervisor'
-require 'actor/supervisor/address/get'
-require 'actor/supervisor/address/put'
-require 'actor/supervisor/address/registry'
+require 'actor/supervisor/address'
 require 'actor/supervisor/observer'
 
 require 'actor/actor'
