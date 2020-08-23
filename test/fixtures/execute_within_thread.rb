@@ -14,20 +14,23 @@ module Fixtures
     end
 
     def call
-      result = nil
+      if RUBY_ENGINE == 'mruby'
+        thread = Thread.new(block) do |blk|
+          blk.()
+        end
 
-      thread = Thread.new do
-        sleep
+        thread.join
+      else
+        result = nil
 
-        result = block.()
+        thread = Thread.new do
+          result = block.()
+        end
+
+        thread.join
+
+        result
       end
-
-      Thread.pass until thread.stop?
-
-      thread.wakeup
-      thread.join
-
-      result
     end
   end
 end
