@@ -17,20 +17,23 @@ context "Send, Sends Message But Queue Is Full" do
   end
 
   context "Wait is enabled" do
-    blocked = false
+    mutex = Mutex.new
+
+    queue = address.queue
 
     read_thread = Thread.new do
-      Thread.pass until address.queue.num_waiting > 0
-      blocked = true
-      address.queue.deq
+      Thread.pass until queue.num_waiting > 0
+      mutex.lock
+      queue.deq
+      sleep
     end
 
     test "Thread is blocked until another thread sends a message to queue" do
       send.(:some_message, address, wait: true)
 
-      assert blocked
+      assert mutex.locked?
     end
 
-    read_thread.join
+    read_thread.kill
   end
 end

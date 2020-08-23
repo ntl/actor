@@ -19,6 +19,8 @@ context "Reader, Reads Message from an Empty Queue" do
   end
 
   context "Wait is disabled" do
+    read = Messaging::Read.new queue
+
     test "Nothing is returned" do
       message = read.(wait: false)
 
