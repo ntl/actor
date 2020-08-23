@@ -12,14 +12,14 @@ module Controls
         include ::Actor::Controls
         include ::Actor::Module::SuspendResume::Controls
 
-        class_exec &block if block
+        class_exec(&block) if block
       end
     end
 
     def self.define_singleton *arguments, &block
-      cls = define &block
+      cls = define(&block)
 
-      actor = cls.new *arguments
+      actor = cls.new(*arguments)
 
       actor
     end

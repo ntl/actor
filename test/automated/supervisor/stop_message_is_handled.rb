@@ -13,7 +13,7 @@ context "Supervisor Handles Stop Message" do
     supervisor.error = Controls::Error.example
 
     test "Error is reraised" do
-      assert_raises Controls::Error::SomeError do
+      assert_raises Controls::Error::Example do
         supervisor.handle Messages::Stop
       end
     end
