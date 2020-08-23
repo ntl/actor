@@ -9,4 +9,7 @@ require_relative './controls/controls_init'
 
 include Actor
 
-Thread.abort_on_exception = true
+unless RUBY_ENGINE == 'mruby'
+  Thread.abort_on_exception = true
+  Thread.report_on_exception = false
+end
