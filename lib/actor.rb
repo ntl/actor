@@ -2,14 +2,9 @@ require 'securerandom'
 require 'set'
 
 require 'actor/messaging/queue'
+require 'actor/messaging/queue/null'
 require 'actor/messaging/queue/substitute'
-require 'actor/messaging/queue/substitute'
-
-require 'actor/messaging/address'
-require 'actor/messaging/address/controls'
-require 'actor/messaging/address/dependency'
-require 'actor/messaging/address/none'
-require 'actor/messaging/address/substitute'
+require 'actor/messaging/queue/dependency'
 
 require 'actor/messaging/message'
 require 'actor/messaging/message/name'
@@ -47,7 +42,7 @@ require 'actor/controls'
 require 'actor/start'
 
 require 'actor/supervisor'
-require 'actor/supervisor/address'
+require 'actor/supervisor/queue'
 require 'actor/supervisor/observer'
 
 require 'actor/actor'

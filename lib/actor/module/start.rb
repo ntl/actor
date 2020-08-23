@@ -6,10 +6,10 @@ module Actor
 
         actor, thread = Actor::Start.(self, *arguments, &block)
 
-        address = actor.address
+        queue = actor.queue
 
         if include
-          return_values = [address]
+          return_values = [queue]
 
           Array(include).each do |label|
             argument = { :thread => thread, :actor => actor }.fetch label
@@ -19,7 +19,7 @@ module Actor
 
           return return_values
         else
-          return address
+          return queue
         end
       end
     end

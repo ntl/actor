@@ -3,7 +3,7 @@ module Actor
     include Messaging::Send::Dependency
 
     attr_reader :actor
-    attr_accessor :supervisor_address
+    attr_accessor :supervisor_queue
 
     def initialize actor
       @actor = actor
@@ -18,12 +18,12 @@ module Actor
 
       instance = new actor
       instance.send = Messaging::Send.new
-      instance.supervisor_address = Supervisor::Address::Get.()
+      instance.supervisor_queue = Supervisor::Queue::Get.()
       instance.()
     end
 
     def call
-      send.(Messages::Start, address)
+      send.(Messages::Start, queue)
 
       thread = Thread.new do
         actor_started
@@ -41,21 +41,21 @@ module Actor
 
     def actor_crashed error
       actor_crashed = Messages::ActorCrashed.new error, actor
-      send.(actor_crashed, supervisor_address)
+      send.(actor_crashed, supervisor_queue)
     end
 
     def actor_started
-      actor_started = Messages::ActorStarted.new address, actor
-      send.(actor_started, supervisor_address)
+      actor_started = Messages::ActorStarted.new queue, actor
+      send.(actor_started, supervisor_queue)
     end
 
     def actor_stopped
-      actor_stopped = Messages::ActorStopped.new address, actor
-      send.(actor_stopped, supervisor_address)
+      actor_stopped = Messages::ActorStopped.new queue, actor
+      send.(actor_stopped, supervisor_queue)
     end
 
-    def address
-      actor.address
+    def queue
+      actor.queue
     end
   end
 end

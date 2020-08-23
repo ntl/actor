@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Actor Handles a Message, Handler Returns New Message" do
-  address = Controls::Address.example
+  queue = Controls::Queue.example
   message = Controls::Message.example
 
   actor = Controls::Actor.define_singleton do
@@ -10,11 +10,11 @@ context "Actor Handles a Message, Handler Returns New Message" do
     end
   end
 
-  actor.address = address
+  actor.queue = queue
 
   actor.handle message
 
-  test "Message is sent to address of actor" do
-    assert actor.send.sent?(message, address: address)
+  test "Message is sent to queue of actor" do
+    assert actor.send.sent?(message, queue: queue)
   end
 end

@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Supervisor Start Class Method" do
-  supervisor_address = :not_assigned
+  supervisor_queue = :not_assigned
 
   Fixtures::ExecuteWithinThread.() do
     test_thread = Thread.current
@@ -10,14 +10,14 @@ context "Supervisor Start Class Method" do
     Supervisor.start do |supervisor|
       Controls::Actor::StopsImmediately.start
 
-      supervisor_address = supervisor.address
+      supervisor_queue = supervisor.queue
       supervisor_thread = Thread.current
     end
 
-    test "Supervisor address is assigned" do
-      address = Supervisor::Address::Get.()
+    test "Supervisor queue is assigned" do
+      queue = Supervisor::Queue::Get.()
 
-      assert address == supervisor_address
+      assert queue == supervisor_queue
     end
 
     test "Supervisor is run inside its own thread" do

@@ -1,8 +1,8 @@
 module Controls
   module Actor
-    def self.example address=nil
+    def self.example queue=nil
       actor = Example.new
-      actor.address = address if address
+      actor.queue = queue if queue
       actor
     end
 
@@ -45,10 +45,10 @@ module Controls
 
     class RequestResponse
       handle :some_request do |msg|
-        send.(:some_response, msg.reply_address)
+        send.(:some_response, msg.reply_queue)
       end
 
-      SomeRequest = Struct.new :reply_address do
+      SomeRequest = Struct.new :reply_queue do
         include Messaging::Message
       end
     end
@@ -67,9 +67,9 @@ module Controls
 
     module ActorStarted
       def self.example
-        address = Address.example
+        queue = Queue.example
 
-        Actor::Messages::ActorStarted.new address
+        Actor::Messages::ActorStarted.new queue
       end
     end
 

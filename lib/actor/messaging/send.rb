@@ -1,10 +1,8 @@
 module Actor
   module Messaging
     class Send
-      def call message, address, wait: nil
+      def call message, queue, wait: nil
         non_block = !wait
-
-        queue = address.queue
 
         if message.instance_of? ::Module
           message = message.message_name

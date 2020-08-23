@@ -1,4 +1,4 @@
-require_relative '../../test_init'
+require_relative '../../../test_init'
 
 context "Queue Substitute, Dequeuing" do
   substitute = Messaging::Queue::Substitute.build

@@ -1,10 +1,10 @@
 require_relative '../../test_init'
 
 context "Digest, Default Implementation" do
-  address = Controls::Address.example
-  actor = Controls::Actor.example address
+  queue = Controls::Queue.example
+  actor = Controls::Actor.example queue
 
-  test "Address is printed" do
-    assert actor.digest == "#{actor.class}[address=#{address}]"
+  test "Queue is printed" do
+    assert actor.digest == "#{actor.class}[queue=#{queue}]"
   end
 end

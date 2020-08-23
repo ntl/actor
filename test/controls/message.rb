@@ -25,18 +25,18 @@ module Controls
     end
 
     module ActorStarted
-      def self.example address=nil
-        address ||= Address.example
+      def self.example queue=nil
+        queue ||= Queue.example
 
-        actor = Actor.example address
+        actor = Actor.example queue
 
-        ::Actor::Messages::ActorStarted.new address, actor
+        ::Actor::Messages::ActorStarted.new queue, actor
       end
 
       def self.pair
-        address = Address.example
+        queue = Queue.example
 
-        actor_started = example address
+        actor_started = example queue
 
         actor = actor_started.actor
 
@@ -45,18 +45,18 @@ module Controls
     end
 
     module ActorStopped
-      def self.example address=nil
-        address ||= Address.example
+      def self.example queue=nil
+        queue ||= Queue.example
 
-        actor = Actor.example address
+        actor = Actor.example queue
 
-        ::Actor::Messages::ActorStopped.new address, actor
+        ::Actor::Messages::ActorStopped.new queue, actor
       end
 
       def self.pair
-        address = Address.example
+        queue = Queue.example
 
-        actor_stopped = example address
+        actor_stopped = example queue
 
         actor = actor_stopped.actor
 

@@ -1,57 +1,57 @@
 require_relative '../../test_init'
 
 context "Publisher Substitute" do
-  address = Controls::Address.example
+  queue = Controls::Queue.example
 
-  context "Address registration" do
+  context "Queue registration" do
     substitute = Messaging::Publish::Substitute.new
 
-    context "No address has been registered" do
+    context "No queue has been registered" do
       test "Registered predicate without argument returns false" do
         refute substitute.registered?
       end
     end
 
-    substitute.register address
+    substitute.register queue
 
     test "Registered predicate without argument returns true" do
       assert substitute.registered?
     end
 
-    test "Registered predicate returns true if argument matches address" do
-      assert substitute.registered?(address)
+    test "Registered predicate returns true if argument matches queue" do
+      assert substitute.registered?(queue)
     end
 
-    test "Registered predicate returns false if argument does not match address" do
-      other_address = Controls::Address::Other.example
+    test "Registered predicate returns false if argument does not match queue" do
+      other_queue = Controls::Queue::Other.example
 
-      refute substitute.registered?(other_address)
+      refute substitute.registered?(other_queue)
     end
   end
 
-  context "Address unregistration" do
+  context "Queue unregistration" do
     substitute = Messaging::Publish::Substitute.new
 
-    context "No address has been registered" do
+    context "No queue has been registered" do
       test "Unregistered predicate without argument returns false" do
         refute substitute.unregistered?
       end
     end
 
-    substitute.unregister address
+    substitute.unregister queue
 
     test "Unregistered predicate without argument returns true" do
       assert substitute.unregistered?
     end
 
-    test "Unregistered predicate returns true if argument matches address" do
-      assert substitute.unregistered?(address)
+    test "Unregistered predicate returns true if argument matches queue" do
+      assert substitute.unregistered?(queue)
     end
 
-    test "Registered predicate returns false if argument does not match address" do
-      other_address = Controls::Address::Other.example
+    test "Registered predicate returns false if argument does not match queue" do
+      other_queue = Controls::Queue::Other.example
 
-      refute substitute.unregistered?(other_address)
+      refute substitute.unregistered?(other_queue)
     end
   end
   

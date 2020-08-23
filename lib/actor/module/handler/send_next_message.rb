@@ -6,7 +6,7 @@ module Actor
           return_value = super
 
           if Messaging::Message === return_value
-            send.(return_value, address)
+            send.(return_value, queue)
           end
 
           return_value

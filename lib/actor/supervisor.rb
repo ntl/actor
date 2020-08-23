@@ -36,7 +36,7 @@ module Actor
     end
 
     def configure
-      Address::Put.(address)
+      Queue::Put.(queue)
 
       assembly_block.(self)
 
@@ -70,18 +70,18 @@ module Actor
     end
 
     handle Messages::ActorStarted do |message|
-      publish.register message.address
+      publish.register message.queue
 
       self.actor_count += 1
     end
 
     handle Messages::ActorStopped do |message|
-      publish.unregister message.address
+      publish.unregister message.queue
 
       self.actor_count -= 1
 
       if actor_count.zero?
-        send.(Messages::Stop, address)
+        send.(Messages::Stop, queue)
       end
     end
 
@@ -91,9 +91,9 @@ module Actor
       self.actor_count -= 1
 
       if actor_count.zero?
-        send.(Messages::Stop, address)
+        send.(Messages::Stop, queue)
       else
-        send.(Messages::Shutdown, address)
+        send.(Messages::Shutdown, queue)
       end
     end
 
@@ -116,11 +116,11 @@ module Actor
     end
 
     def registered_actor? actor
-      publish.registered? actor.address
+      publish.registered? actor.queue
     end
 
     def unregistered_actor? actor
-      publish.unregistered? actor.address
+      publish.unregistered? actor.queue
     end
 
     def assembly_block

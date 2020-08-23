@@ -7,14 +7,12 @@ module Actor
         @queue = queue
       end
 
-      def self.build address
-        queue = address.queue
-
+      def self.build queue
         new queue
       end
 
-      def self.call address, wait: nil
-        instance = build address
+      def self.call queue, wait: nil
+        instance = build queue
 
         instance.(wait: wait)
       end
@@ -28,8 +26,8 @@ module Actor
         return nil
       end
 
-      def address? address
-        queue? address.queue
+      def queue? queue
+        queue?(queue)
       end
 
       def next_message? message

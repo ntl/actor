@@ -3,12 +3,12 @@ require_relative '../../test_init'
 context "Send, Sends Module Message" do
   message = Controls::Message::ModuleMessage
 
-  address = Messaging::Address.build
+  queue = Messaging::Queue.get
 
   send = Messaging::Send.new
-  send.(message, address)
+  send.(message, queue)
 
   test "Message name, not module, is sent" do
-    assert address.queue.deq == :module_message
+    assert queue.deq == :module_message
   end
 end

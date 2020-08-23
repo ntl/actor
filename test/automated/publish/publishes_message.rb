@@ -1,27 +1,27 @@
 require_relative '../../test_init'
 
 context "Publisher, Publishes Message" do
-  address = Controls::Address.example
+  queue = Controls::Queue.example
 
-  context "Multiple addresses are registered" do
-    other_address = Controls::Address::Other.example
+  context "Multiple queuees are registered" do
+    other_queue = Controls::Queue::Other.example
 
     publish = Messaging::Publish.new
-    publish.register address
-    publish.register other_address
+    publish.register queue
+    publish.register other_queue
     publish.(:some_message)
 
-    test "Message is sent to each registered address" do
-      assert publish.send.sent?(:some_message, address: address)
+    test "Message is sent to each registered queue" do
+      assert publish.send.sent?(:some_message, queue: queue)
 
-      assert publish.send.sent?(:some_message, address: other_address)
+      assert publish.send.sent?(:some_message, queue: other_queue)
     end
   end
 
   [["Wait is not specified", nil], ["Wait is disabled", false]].each do |prose, wait|
     context prose do
       publish = Messaging::Publish.new
-      publish.register address
+      publish.register queue
       publish.(:some_message, wait: wait)
 
       test "Send operation is not permitted to block" do
@@ -32,7 +32,7 @@ context "Publisher, Publishes Message" do
 
   context "Wait is enabled" do
     publish = Messaging::Publish.new
-    publish.register address
+    publish.register queue
     publish.(:some_message, wait: true)
 
     test "Send operation is permitted to block" do

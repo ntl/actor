@@ -5,14 +5,14 @@ context "Actor Builder Configures Dependencies" do
 
   actor = Actor::Build.(actor_cls)
 
-  test "Address is assigned" do
-    assert actor.address_configured?
+  test "Queue is assigned" do
+    assert actor.queue_configured?
   end
 
-  test "Reader is configured with address assigned to actor" do
+  test "Reader is configured with queue assigned to actor" do
     assert actor.reader_configured?
 
-    assert actor.read.address?(actor.address)
+    assert actor.read.queue?(actor.queue)
   end
 
   test "Send is configured" do

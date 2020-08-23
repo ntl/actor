@@ -14,8 +14,8 @@ context "Reader, Dependency Module" do
       end
 
       context "Reader attribute is specified" do
-        address = Controls::Address.example
-        read = Messaging::Read.build address
+        queue = Controls::Queue.example
+        read = Messaging::Read.build queue
 
         object.read = read
 

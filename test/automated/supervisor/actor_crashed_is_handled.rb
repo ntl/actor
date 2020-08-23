@@ -12,7 +12,7 @@ context "Supervisor Handles Actor Crashed Message" do
     end
 
     test "Supervisor sends itself the shutdown message" do
-      assert supervisor.send.sent?(Messages::Shutdown, address: supervisor.address)
+      assert supervisor.send.sent?(Messages::Shutdown, queue: supervisor.queue)
     end
 
     test "Actor count is decreased" do

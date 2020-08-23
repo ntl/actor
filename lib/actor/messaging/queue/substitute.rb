@@ -2,6 +2,11 @@ module Actor
   module Messaging
     module Queue
       class Substitute
+        def size
+          @size ||= 0
+        end
+        attr_writer :size
+
         def initialize
           @enqueued_records = []
         end
@@ -42,10 +47,6 @@ module Actor
 
         def max
           Float::INFINITY
-        end
-
-        def size
-          0
         end
 
         WouldBlockError = Class.new StandardError

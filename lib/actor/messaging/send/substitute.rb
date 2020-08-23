@@ -8,18 +8,18 @@ module Actor
           @records = []
         end
 
-        def call message, address, wait: nil
+        def call message, queue, wait: nil
           wait = false if wait.nil?
 
-          record = Record.new message, address, wait
+          record = Record.new message, queue, wait
 
           records << record
         end
 
-        def sent? message=nil, address: nil, wait: nil
+        def sent? message=nil, queue: nil, wait: nil
           records.each do |record|
             next unless message.nil? or record.message? message
-            next unless address.nil? or record.address == address
+            next unless queue.nil? or record.queue == queue
             next unless wait.nil? or record.wait == wait
 
             return true
@@ -28,7 +28,7 @@ module Actor
           false
         end
 
-        Record = Struct.new :message, :address, :wait do
+        Record = Struct.new :message, :queue, :wait do
           def message? pattern
             return true if message == pattern
 

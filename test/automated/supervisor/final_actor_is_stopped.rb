@@ -9,6 +9,6 @@ context "Supervisor Handles Final Actor Stopped Message" do
   supervisor.handle actor_stopped
 
   test "Supervisor sends itself the stop message" do
-    assert supervisor.send.sent?(Messages::Stop, address: supervisor.address)
+    assert supervisor.send.sent?(Messages::Stop, queue: supervisor.queue)
   end
 end

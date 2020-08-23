@@ -1,7 +1,7 @@
 require_relative '../../test_init'
 
 context "Send Substitute" do
-  address = Controls::Address.example
+  queue = Controls::Queue.example
 
   context "Sent predicate" do
     context "No message has been sent" do
@@ -15,7 +15,7 @@ context "Send Substitute" do
     context "Message has been sent" do
       context "Message constraint" do
         substitute = Messaging::Send::Substitute.new
-        substitute.(:some_message, address)
+        substitute.(:some_message, queue)
 
         test "Predicate returns true if specified message matches sent message" do
           assert substitute.sent?(:some_message)
@@ -26,18 +26,18 @@ context "Send Substitute" do
         end
       end
 
-      context "Address constraint" do
+      context "Queue constraint" do
         substitute = Messaging::Send::Substitute.new
-        substitute.(:some_message, address)
+        substitute.(:some_message, queue)
 
-        test "Predicate returns true if specified address matches address of send operation" do
-          assert substitute.sent?(address: address)
+        test "Predicate returns true if specified queue matches queue of send operation" do
+          assert substitute.sent?(queue: queue)
         end
 
-        test "Predicate returns false if specified address does not match address of send operation" do
-          other_address = Controls::Address.example
+        test "Predicate returns false if specified queue does not match queue of send operation" do
+          other_queue = Controls::Queue.example
 
-          refute substitute.sent?(address: other_address)
+          refute substitute.sent?(queue: other_queue)
         end
       end
 
@@ -45,7 +45,7 @@ context "Send Substitute" do
         [["Wait was not specified at callsite", nil], ["Wait was disabled at callsite", false]].each do |prose, wait|
           context "Wait was not specified at callsite" do
             substitute = Messaging::Send::Substitute.new
-            substitute.(:some_message, address, wait: wait)
+            substitute.(:some_message, queue, wait: wait)
 
             test "Predicate returns true if specified wait value is false" do
               assert substitute.sent?(wait: false)
@@ -59,7 +59,7 @@ context "Send Substitute" do
 
         context "Wait is enabled at callsite" do
           substitute = Messaging::Send::Substitute.new
-          substitute.(:some_message, address, wait: true)
+          substitute.(:some_message, queue, wait: true)
 
           test "Predicate returns true if specified wait value is true" do
             assert substitute.sent?(wait: true)
@@ -77,7 +77,7 @@ context "Send Substitute" do
     message = Controls::Message::ModuleMessage
     substitute = Messaging::Send::Substitute.new
 
-    substitute.(message, address)
+    substitute.(message, queue)
 
     test "Predicate returns true if module is specified" do
       assert substitute.sent?(message)

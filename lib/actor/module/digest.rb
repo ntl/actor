@@ -2,7 +2,7 @@ module Actor
   module Module
     module Digest
       def digest
-        "#{self.class}[address=#{address}]"
+        "#{self.class}[queue=#{queue}]"
       end
     end
   end

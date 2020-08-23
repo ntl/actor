@@ -3,17 +3,17 @@ module Actor
     class Publish
       include Send::Dependency
 
-      attr_reader :addresses
+      attr_reader :queuees
 
       def initialize
-        @addresses = Set.new
+        @queuees = Set.new
       end
 
-      def self.build *addresses
+      def self.build *queuees
         instance = new
 
-        addresses.each do |address|
-          instance.register address
+        queuees.each do |queue|
+          instance.register queue
         end
 
         instance.send = Send.new
@@ -21,22 +21,22 @@ module Actor
         instance
       end
 
-      def register address
-        addresses << address
+      def register queue
+        queuees << queue
       end
 
-      def unregister address
-        addresses.delete address
+      def unregister queue
+        queuees.delete queue
       end
 
       def call message, wait: nil
-        addresses.each do |address|
-          send.(message, address, wait: wait)
+        queuees.each do |queue|
+          send.(message, queue, wait: wait)
         end
       end
 
-      def registered? address
-        addresses.include? address
+      def registered? queue
+        queuees.include? queue
       end
     end
   end

@@ -1,13 +1,13 @@
 require_relative '../../test_init'
 
 context "Publisher, Build Method" do
-  address1 = Controls::Address.example
-  address2 = Controls::Address::Other.example
+  queue1 = Controls::Queue.example
+  queue2 = Controls::Queue::Other.example
 
-  publish = Messaging::Publish.build address1, address2
+  publish = Messaging::Publish.build queue1, queue2
 
-  test "Each specified address is registered with publisher" do
-    assert publish.registered?(address1)
-    assert publish.registered?(address2)
+  test "Each specified queue is registered with publisher" do
+    assert publish.registered?(queue1)
+    assert publish.registered?(queue2)
   end
 end

@@ -3,21 +3,21 @@ module Actor
     class Publish
       class Substitute
         attr_reader :records
-        attr_reader :registered_addresses
-        attr_reader :unregistered_addresses
+        attr_reader :registered_queuees
+        attr_reader :unregistered_queuees
 
         def initialize
-          @registered_addresses = Set.new
-          @unregistered_addresses = Set.new
+          @registered_queuees = Set.new
+          @unregistered_queuees = Set.new
           @records = []
         end
 
-        def register address
-          registered_addresses << address
+        def register queue
+          registered_queuees << queue
         end
 
-        def unregister address
-          unregistered_addresses << address
+        def unregister queue
+          unregistered_queuees << queue
         end
 
         def call message, wait: nil
@@ -28,19 +28,19 @@ module Actor
           records << record
         end
 
-        def registered? address=nil
-          if address.nil?
-            registered_addresses.any?
+        def registered? queue=nil
+          if queue.nil?
+            registered_queuees.any?
           else
-            registered_addresses.include? address
+            registered_queuees.include? queue
           end
         end
 
-        def unregistered? address=nil
-          if address.nil?
-            unregistered_addresses.any?
+        def unregistered? queue=nil
+          if queue.nil?
+            unregistered_queuees.any?
           else
-            unregistered_addresses.include? address
+            unregistered_queuees.include? queue
           end
         end
 
