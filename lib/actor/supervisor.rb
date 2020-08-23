@@ -1,7 +1,5 @@
 module Actor
   class Supervisor
-    include Observable
-
     include Module::Dependencies
     include Module::Handler
     include Module::RunLoop
@@ -57,6 +55,23 @@ module Actor
       notify_observers message
 
       result
+    end
+
+    def changed
+    end
+
+    def notify_observers(message)
+      observers.each do |observer|
+        observer.handle(message)
+      end
+    end
+
+    def add_observer(observer)
+      observers << observer
+    end
+
+    def observers
+      @observers ||= []
     end
 
     handle Messages::ActorStarted do |message|

@@ -1,4 +1,3 @@
-require 'observer'
 require 'securerandom'
 require 'set'
 
