@@ -31,12 +31,14 @@ module Actor
       end
 
       module Configure
-        def configure
-          self.queue = Messaging::Queue.get
-          self.read = Messaging::Read.build(queue)
+        def configure(actor_queue: nil)
+          actor_queue ||= Messaging::Queue.get
+
+          self.queue = actor_queue
+          self.read = Messaging::Read.build(self.queue)
           self.send = Messaging::Send.new
 
-          super
+          super()
         end
       end
     end

@@ -1,34 +1,44 @@
 module Actor
   class Build
-    attr_reader :arguments
+    attr_reader :args
+    attr_reader :kwargs
     attr_reader :block
     attr_reader :cls
 
-    def initialize cls, arguments, &block
-      @arguments = arguments
-      @block = block
+    attr_accessor :queue
+
+    def initialize(cls, args, kwargs, block)
       @cls = cls
+      @args = args
+      @kwargs = kwargs
+      @block = block
     end
 
-    def self.call cls, *arguments, &block
-      instance = new cls, arguments, &block
+    def self.build(cls, *args, queue: nil, **kwargs, &block)
+      instance = new(cls, args, kwargs, block)
+      instance.queue = queue
+      instance
+    end
+
+    def self.call(cls, *args, queue: nil, **kwargs, &block)
+      instance = build(cls, *args, queue: queue, **kwargs, &block)
       instance.()
     end
 
     def call
-      if cls.respond_to? :build
-        method = cls.method :build
+      if cls.respond_to?(:build)
+        method = cls.method(:build)
       else
-        method = cls.method :new
+        method = cls.method(:new)
       end
 
       if block
-        actor = method.(*arguments, &block)
+        actor = method.(*args, **kwargs, &block)
       else
-        actor = method.(*arguments)
+        actor = method.(*args, **kwargs)
       end
 
-      actor.configure
+      actor.configure(actor_queue: queue)
 
       actor
     end

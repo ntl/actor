@@ -30,14 +30,14 @@ module Actor
         queue?(queue)
       end
 
-      def next_message? message
+      def next_message? message_cls
         begin
           next_message = @queue.deq true
         rescue ThreadError
           return false
         end
 
-        next_message == message
+        message_cls === next_message
       end
 
       def queue? queue

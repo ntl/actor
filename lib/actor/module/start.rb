@@ -1,18 +1,18 @@
 module Actor
   module Module
     module Start
-      def start *arguments, include: nil, **keyword_arguments, &block
-        arguments << keyword_arguments if keyword_arguments.any?
+      def start *args, include: nil, **kwargs, &block
+        queue = Messaging::Queue.get
 
-        actor, thread = Actor::Start.(self, *arguments, &block)
-
-        queue = actor.queue
+        thread = Actor::Start.(self, queue, *args, queue: queue, **kwargs, &block)
 
         if include
           return_values = [queue]
 
+          values = { :thread => thread }
+
           Array(include).each do |label|
-            argument = { :thread => thread, :actor => actor }.fetch label
+            argument = values.fetch(label)
 
             return_values << argument
           end

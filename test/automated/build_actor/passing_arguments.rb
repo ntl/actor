@@ -1,6 +1,6 @@
 require_relative '../../test_init'
 
-context "Actor is Started Via Class Method, Passing Arguments to Actor" do
+context "Build Actor, Passing Arguments" do
   context "Initializer includes only positional or block arguments" do
     actor_cls = Controls::Actor.define do
       attr_reader :positional, :block
@@ -9,13 +9,9 @@ context "Actor is Started Via Class Method, Passing Arguments to Actor" do
         block ||= :no_block
         @positional, @block = positional, block
       end
-
-      handle :start do
-        :stop
-      end
     end
 
-    _, actor = actor_cls.start 'positional', include: :actor do
+    actor = Actor::Build.(actor_cls, 'positional') do
       :block_invoked
     end
 
@@ -35,13 +31,9 @@ context "Actor is Started Via Class Method, Passing Arguments to Actor" do
       def initialize positional, keyword: nil
         @positional, @keyword = positional, keyword
       end
-
-      handle :start do
-        :stop
-      end
     end
 
-    _, actor = actor_cls.start 'positional', keyword: 'keyword', include: :actor
+    actor = Actor::Build.(actor_cls,'positional', keyword: 'keyword')
 
     test "Positional argument is passed to constructor" do
       assert actor.positional == 'positional'
