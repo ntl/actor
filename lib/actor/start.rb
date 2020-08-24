@@ -9,12 +9,8 @@ module Actor
       @actor = actor
     end
 
-    def self.call actor_or_actor_class, *arguments, &block
-      if actor_or_actor_class.is_a? Actor and not actor_or_actor_class.is_a? Class
-        actor = actor_or_actor_class
-      else
-        actor = Build.(actor_or_actor_class, *arguments, &block)
-      end
+    def self.call actor_class, *arguments, &block
+      actor = Build.(actor_class, *arguments, &block)
 
       instance = new actor
       instance.send = Messaging::Send.new
