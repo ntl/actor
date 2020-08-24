@@ -8,7 +8,7 @@ context "Supervisor Handles Actor Crashed Message" do
     supervisor.handle actor_crashed
 
     test "Error is set" do
-      assert supervisor.error == Controls::Error.example
+      assert supervisor.error == actor_crashed.error
     end
 
     test "Supervisor sends itself the shutdown message" do

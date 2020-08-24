@@ -14,7 +14,7 @@ module Actor
 
         def call wait: nil
           if next_message.nil?
-            super
+            super(wait: wait)
           else
             next_message
           end

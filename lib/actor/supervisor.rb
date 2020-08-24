@@ -1,3 +1,10 @@
+ACTOR_START_SUPERVISOR_THREAD = Proc.new { |assembly_block|
+  supervisor_cls = Object.const_get(:Actor).const_get(:Supervisor)
+
+  instance = Actor::Build.(supervisor_cls, &assembly_block)
+  instance.run_loop
+}
+
 module Actor
   class Supervisor
     include Module::Dependencies
@@ -21,15 +28,16 @@ module Actor
     end
 
     def self.start &assembly_block
-      thread = Thread.new do
-        instance = Build.(self, &assembly_block)
-        instance.run_loop
-      end
+      thread = Thread.new(assembly_block, &ACTOR_START_SUPERVISOR_THREAD)
 
       loop do
-        ten_seconds = 10
+        if RUBY_ENGINE == 'mruby'
+          result = thread.join
+        else
+          ten_seconds = 10
 
-        result = thread.join ten_seconds
+          result = thread.join(ten_seconds)
+        end
 
         break unless result.nil?
       end

@@ -32,10 +32,22 @@ module Actor
         method = cls.method(:new)
       end
 
-      if block
-        actor = method.(*args, **kwargs, &block)
+      if kwargs.any?
+        args << kwargs
+      end
+
+      if method.arity == 0
+        if block
+          actor = method.(&block)
+        else
+          actor = method.()
+        end
       else
-        actor = method.(*args, **kwargs)
+        if block
+          actor = method.(*args, &block)
+        else
+          actor = method.(*args)
+        end
       end
 
       actor.configure(actor_queue: queue)
