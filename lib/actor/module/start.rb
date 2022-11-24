@@ -2,9 +2,7 @@ module Actor
   module Module
     module Start
       def start *arguments, include: nil, **keyword_arguments, &block
-        arguments << keyword_arguments if keyword_arguments.any?
-
-        actor, thread = Actor::Start.(self, *arguments, &block)
+        actor, thread = Actor::Start.(self, *arguments, **keyword_arguments, &block)
 
         address = actor.address
 
