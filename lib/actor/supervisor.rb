@@ -60,7 +60,14 @@ module Actor
     end
 
     handle Messages::ActorStarted do |message|
-      publish.register message.address
+      actor_address = message.address
+
+      if error
+        send.(Messages::Stop, actor_address)
+        return
+      end
+
+      publish.register actor_address
 
       self.actor_count += 1
     end
