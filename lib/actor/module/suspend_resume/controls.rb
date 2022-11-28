@@ -6,9 +6,9 @@ module Actor
           self.suspended = true
         end
 
-        def defer_message *messages
+        def defer_message(*messages)
           messages.each do |message|
-            suspend_queue.enq message
+            suspend_queue.enq(message)
           end
         end
       end

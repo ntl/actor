@@ -4,7 +4,7 @@ module Actor
     # order to bring the constants contained in within the Actor namespace to
     # the top level. When we do so, it is necessary to prevent the actual mixin
     # from altering the main object.
-    return if cls.eql? Object
+    return if cls.eql?(Object)
 
     cls.class_exec do
       extend Module::Start

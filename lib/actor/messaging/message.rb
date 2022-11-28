@@ -17,7 +17,7 @@ module Actor
       end
 
       def self.=== object
-        if object.is_a? Symbol
+        if object.is_a?(Symbol)
           true
         else
           super
@@ -26,14 +26,14 @@ module Actor
 
       module Matcher
         def === other
-          other_message_name = Name.get other
+          other_message_name = Name.get(other)
 
           message_name == other_message_name
         end
       end
 
       module MessageName
-        def self.included cls
+        def self.included(cls)
           cls.class_exec do
             extend ClassMethod
 
@@ -41,8 +41,8 @@ module Actor
           end
         end
 
-        def self.extended receiver
-          receiver.extend ClassMethod
+        def self.extended(receiver)
+          receiver.extend(ClassMethod)
         end
 
         module InstanceMethod
@@ -53,7 +53,7 @@ module Actor
 
         module ClassMethod
           def message_name
-            Name.get name
+            Name.get(name)
           end
         end
       end

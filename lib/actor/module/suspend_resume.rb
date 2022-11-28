@@ -1,7 +1,7 @@
 module Actor
   module Module
     module SuspendResume
-      def self.included cls
+      def self.included(cls)
         cls.class_exec do
           prepend Configure
           prepend Handle
@@ -26,11 +26,11 @@ module Actor
         end
       end
 
-      def message_deferred? message=nil, wait: nil
+      def message_deferred?(message=nil, wait: nil)
         non_block = wait == false
 
         begin
-          msg = suspend_queue.deq true
+          msg = suspend_queue.deq(true)
         rescue ThreadError
         end
 

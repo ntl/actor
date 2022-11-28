@@ -2,7 +2,7 @@ module Actor
   module Module
     module SuspendResume
       module Initialize
-        def initialize ...
+        def initialize(...)
           @suspended = false
 
           super

@@ -1,13 +1,13 @@
 module Actor
   module Messaging
-    Address = Struct.new :id, :queue
+    Address = Struct.new(:id, :queue)
 
     class Address
-      def self.build max_queue_size: nil
+      def self.build(max_queue_size: nil)
         id = SecureRandom.uuid
-        queue = Queue.get max_size: max_queue_size
+        queue = Queue.get(max_size: max_queue_size)
 
-        new id, queue
+        new(id, queue)
       end
 
       def actors_waiting

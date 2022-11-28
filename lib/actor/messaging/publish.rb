@@ -9,11 +9,11 @@ module Actor
         @addresses = Set.new
       end
 
-      def self.build *addresses
+      def self.build(*addresses)
         instance = new
 
         addresses.each do |address|
-          instance.register address
+          instance.register(address)
         end
 
         instance.send = Send.new
@@ -21,22 +21,22 @@ module Actor
         instance
       end
 
-      def register address
+      def register(address)
         addresses << address
       end
 
-      def unregister address
-        addresses.delete address
+      def unregister(address)
+        addresses.delete(address)
       end
 
-      def call message, wait: nil
+      def call(message, wait: nil)
         addresses.each do |address|
           send.(message, address, wait: wait)
         end
       end
 
-      def registered? address
-        addresses.include? address
+      def registered?(address)
+        addresses.include?(address)
       end
     end
   end

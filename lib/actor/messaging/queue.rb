@@ -1,10 +1,10 @@
 module Actor
   module Messaging
     module Queue
-      def self.get max_size: nil
+      def self.get(max_size: nil)
         max_size ||= Defaults.maximum_size
 
-        SizedQueue.new max_size
+        SizedQueue.new(max_size)
       end
 
       module Defaults

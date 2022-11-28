@@ -19,21 +19,21 @@ module Actor
       end
 
       def address_configured?
-        address.instance_of? Messaging::Address
+        address.instance_of?(Messaging::Address)
       end
 
       def reader_configured?
-        read.instance_of? Messaging::Read
+        read.instance_of?(Messaging::Read)
       end
 
       def send_configured?
-        send.instance_of? Messaging::Send
+        send.instance_of?(Messaging::Send)
       end
 
       module Configure
         def configure
           self.address = Messaging::Address.build
-          self.read = Messaging::Read.build address
+          self.read = Messaging::Read.build(address)
           self.send = Messaging::Send.new
 
           super

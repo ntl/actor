@@ -17,13 +17,13 @@ module Actor
       @actor_count = 0
     end
 
-    def self.build &assembly_block
+    def self.build(&assembly_block)
       instance = new
       instance.assembly_block = assembly_block
       instance
     end
 
-    def self.start &assembly_block
+    def self.start(&assembly_block)
       Thread.report_on_exception = false
 
       thread = Thread.new do
@@ -34,7 +34,7 @@ module Actor
       loop do
         ten_seconds = 10
 
-        result = thread.join ten_seconds
+        result = thread.join(ten_seconds)
 
         break unless result.nil?
       end
@@ -50,11 +50,11 @@ module Actor
       self.publish = Messaging::Publish.build
     end
 
-    def handle message
+    def handle(message)
       result = super
 
       changed
-      notify_observers message
+      notify_observers(message)
 
       result
     end
@@ -67,13 +67,13 @@ module Actor
         return
       end
 
-      publish.register actor_address
+      publish.register(actor_address)
 
       self.actor_count += 1
     end
 
     handle Messages::ActorStopped do |message|
-      publish.unregister message.address
+      publish.unregister(message.address)
 
       self.actor_count -= 1
 
@@ -112,12 +112,12 @@ module Actor
       super stop
     end
 
-    def registered_actor? actor
-      publish.registered? actor.address
+    def registered_actor?(actor)
+      publish.registered?(actor.address)
     end
 
-    def unregistered_actor? actor
-      publish.unregistered? actor.address
+    def unregistered_actor?(actor)
+      publish.unregistered?(actor.address)
     end
 
     def assembly_block
@@ -128,6 +128,6 @@ module Actor
       @thread_group ||= ThreadGroup::Default
     end
 
-    NoActorsStarted = Class.new StandardError
+    NoActorsStarted = Class.new(StandardError)
   end
 end

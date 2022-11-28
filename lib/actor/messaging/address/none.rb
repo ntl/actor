@@ -6,7 +6,7 @@ module Actor
           id = ID.get
           queue = Queue::Substitute.build
 
-          new id, queue
+          new(id, queue)
         end
 
         def self.instance

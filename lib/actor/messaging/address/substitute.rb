@@ -4,7 +4,7 @@ module Actor
       class Substitute < None
         def self.build
           instance = super
-          instance.extend Controls
+          instance.extend(Controls)
           instance
         end
 

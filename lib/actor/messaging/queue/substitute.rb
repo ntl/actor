@@ -11,7 +11,7 @@ module Actor
           instance
         end
 
-        def deq non_block=nil
+        def deq(non_block=nil)
           if non_block
             raise ThreadError
           else
@@ -23,15 +23,15 @@ module Actor
           true
         end
 
-        def enq message, non_block=nil
+        def enq(message, non_block=nil)
           non_block = false if non_block.nil?
 
-          record = Record.new message, non_block
+          record = Record.new(message, non_block)
           @enqueued_records << record
           record
         end
 
-        def enqueued? message=nil, wait: nil
+        def enqueued?(message=nil, wait: nil)
           @enqueued_records.any? do |record|
             next unless message.nil? or record.message == message
             next unless wait.nil? or record.non_block == !wait
@@ -48,10 +48,10 @@ module Actor
           0
         end
 
-        WouldBlockError = Class.new StandardError
+        WouldBlockError = Class.new(StandardError)
 
-        Record = Struct.new :message, :non_block
-        singleton_class.send :alias_method, :build, :new # subst-attr compat
+        Record = Struct.new(:message, :non_block)
+        singleton_class.send(:alias_method, :build, :new) # subst-attr compat
       end
     end
   end

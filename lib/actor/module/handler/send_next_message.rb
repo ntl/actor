@@ -2,7 +2,7 @@ module Actor
   module Module
     module Handler
       module SendNextMessage
-        def handle message
+        def handle(message)
           return_value = super
 
           if Messaging::Message === return_value
