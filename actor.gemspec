@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = [ENV['GEM_NAME_PREFIX'], 'actor'].compact.join '-'
-  s.version = ENV.fetch 'GEM_VERSION'
+  s.name = 'ntl-actor'
+  s.version = '1.4.2'
 
   s.authors = ['Nathan Ladd']
   s.homepage = 'https://github.com/ntl/actor'
