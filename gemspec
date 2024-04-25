@@ -14,5 +14,7 @@ Gem::Specification.new do |s|
   s.files = Dir.glob 'lib/**/*'
   s.platform = Gem::Platform::RUBY
 
+  s.add_runtime_dependency 'observer'
+
   s.add_development_dependency 'test_bench'
 end
